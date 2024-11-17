@@ -25,7 +25,6 @@ public class Usuario {
 	}
 
 	public boolean fazerCadastro() {
-		System.out.println("Cadastro realizado com sucesso.");
 		return true;
 	}
 	

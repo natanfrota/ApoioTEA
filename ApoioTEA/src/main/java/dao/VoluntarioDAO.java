@@ -11,7 +11,7 @@ import modelo.Voluntario;
 public class VoluntarioDAO {
 	private List<Voluntario> voluntarios;
 
-	public void inserirVoluntario(Voluntario voluntario) {
+	public boolean inserirVoluntario(Voluntario voluntario) {
 		String insercaoUsuario = "insert into usuario (nome, email, senha, cidade, "
 				+ "estado, tipo) values (?,?,?,?,?,?)";
 		String insercaoVoluntario = "insert into voluntario (usuario_id, experiencia, "
@@ -50,7 +50,8 @@ public class VoluntarioDAO {
 
 			conexao.commit();
 			conexao.setAutoCommit(true);
-
+			
+			return true;
 		} catch (SQLException e) {
 			if (conexao != null) {
 				try {
@@ -59,6 +60,7 @@ public class VoluntarioDAO {
 					System.err.println(e2);
 				}
 			}
+			return false;
 		} finally {
 			try {
 				if(rs != null)

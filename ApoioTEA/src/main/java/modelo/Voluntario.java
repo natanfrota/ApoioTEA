@@ -1,5 +1,7 @@
 package modelo;
 
+import dao.VoluntarioDAO;
+
 public class Voluntario extends Usuario {
 	private String experiencia;
 	private String habilidades;
@@ -10,7 +12,10 @@ public class Voluntario extends Usuario {
 		super(nome, email, senha, cidade, estado);
 	}
 
-	
+	@Override
+	public boolean fazerCadastro() {
+		return new VoluntarioDAO().inserirVoluntario(this);
+	}
 	
 	public String getExperiencia() {
 		return experiencia;
