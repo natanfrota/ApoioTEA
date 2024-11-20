@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import modelo.Usuario;
 
 public class UsuarioDAO {
-	public Usuario buscarEmailESenha(Usuario usuario) {		
+	public Usuario buscarEmailESenha(Usuario usuario) {
 		String consulta = "select email, senha from usuario where email = ? and senha = ?";
 		Usuario usuario1 = null;
 		Connection conexao = null;

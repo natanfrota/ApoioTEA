@@ -20,7 +20,7 @@
             </div>
             <div class="direita">
                 <h2>Entre na Plataforma</h2>
-                <form action="#" method="POST">
+                <form action="Login.jsp" method="POST">
                     <input type="email" name="email" placeholder="Email">
                     <input type="password" name="senha" placeholder="Senha">
                     <button type="submit">Entrar</button>
@@ -31,6 +31,15 @@
             </div>
         </div>
     </div>
+    <% 
+    Boolean login = (Boolean) request.getAttribute("login");
+    	if(login != null && login == false)  { 
+    	%>
+    		<div>
+    			<p>	Email ou senha incorretos.</p>
+    		</div>
+		<% } %>
+    
     <footer>
         <div class="barra rodape"></div>
     </footer>
