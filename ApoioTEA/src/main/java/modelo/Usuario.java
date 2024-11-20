@@ -50,6 +50,7 @@ public class Usuario {
 		Usuario usuario = usuarioDAO.buscarEmailESenha(this);
 		
 		return (usuario != null);
+		
 	}
 	
 	public void editarPerfil() {

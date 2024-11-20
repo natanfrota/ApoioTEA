@@ -55,5 +55,6 @@ public class Voluntario extends Usuario {
 	
 	public List<Voluntario> retornarVoluntarios(){
 		return new VoluntarioDAO().selecionarVoluntarios();
+
 	}
 }

@@ -23,7 +23,7 @@ public class UsuarioDAO {
 			rs = ps.executeQuery();
 
 			if(rs.next()) {
-				System.out.println("dentro de usuarioDAO");
+				//System.out.println("dentro de usuarioDAO");
 				usuario1 = new Usuario();
 				usuario1.setEmail(rs.getString("email"));
 				usuario1.setSenha(rs.getString("senha"));

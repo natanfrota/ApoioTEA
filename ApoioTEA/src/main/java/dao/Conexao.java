@@ -18,6 +18,7 @@ public class Conexao {
 			
 		} catch (SQLException e) {
 			throw e;
+			
 		} catch (ClassNotFoundException e) {
 			System.out.println(e);
 		}
