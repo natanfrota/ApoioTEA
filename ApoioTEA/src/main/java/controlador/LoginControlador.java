@@ -14,7 +14,7 @@ import modelo.Usuario;
 /**
  * Servlet implementation class LoginControlador
  */
-@WebServlet(urlPatterns = {"/LoginControlador", "/Login.jsp"})
+@WebServlet(urlPatterns = {"/LoginControlador", "/login"})
 public class LoginControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,6 +30,13 @@ public class LoginControlador extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
 		
@@ -42,17 +49,9 @@ public class LoginControlador extends HttpServlet {
 		}
 		else {
 			request.setAttribute("login", false);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
 		    dispatcher.forward(request, response);
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

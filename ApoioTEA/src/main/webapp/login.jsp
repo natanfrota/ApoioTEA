@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ApoioTEA</title>
-    <link rel="stylesheet" href="css/Login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <header>
@@ -16,11 +16,11 @@
     <div class="conteiner">
         <div class="caixa">
             <div class="esquerda">
-                <img src="Imagens/TEA.png" alt="Quebra-cabeça em forma de coração">
+                <img src="imagens/TEA.jpg" alt="Quebra-cabeça em forma de coração">
             </div>
             <div class="direita">
                 <h2>Entre na Plataforma</h2>
-                <form action="Login.jsp" method="POST">
+                <form action="login" method="POST">
                     <input type="email" name="email" placeholder="Email">
                     <input type="password" name="senha" placeholder="Senha">
                     <button type="submit">Entrar</button>
@@ -31,14 +31,14 @@
             </div>
         </div>
     </div>
-    <% 
+    <% /*
     Boolean login = (Boolean) request.getAttribute("login");
     	if(login != null && login == false)  { 
     	%>
     		<div>
     			<p>	Email ou senha incorretos.</p>
     		</div>
-		<% } %>
+		<% } */%>
     
     <footer>
         <div class="barra rodape"></div>
