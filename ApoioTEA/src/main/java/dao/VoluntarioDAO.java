@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import modelo.Voluntario;
 
 public class VoluntarioDAO {
-	private List<Voluntario> voluntarios;
-
 	public boolean inserirVoluntario(Voluntario voluntario) {
 		String insercaoUsuario = "insert into usuario (nome, email, senha, cidade, "
 				+ "estado, tipo) values (?,?,?,?,?,?)";
@@ -78,6 +78,38 @@ public class VoluntarioDAO {
 	}
 
 	public List<Voluntario> selecionarVoluntarios() {
+		List<Voluntario> voluntarios = null;
+		
+		String selecao = "select * from usuario u "
+				+ "join voluntario v on u.id = v.usuario_id";
+		
+		try(PreparedStatement ps = Conexao.criarConexao().prepareStatement(selecao);
+			ResultSet rs = ps.executeQuery()) {
+			voluntarios = new ArrayList<>();
+			System.out.println("dentro de voluntarioDAO");
+			while(rs.next()) {
+				
+				int id = rs.getInt("id");
+				String nome = rs.getString("nome");
+				String email = rs.getString("email");
+				String senha = rs.getString("senha");
+				String foto = rs.getString("foto");
+				LocalDate dataNascimento = rs.getDate("data_nascimento").toLocalDate();
+				LocalDate dataCadastro = rs.getDate("data_cadastro").toLocalDate();
+				String cidade = rs.getString("cidade");
+				String estado = rs.getString("estado");
+				String descricao = rs.getString("descricao");
+				String statusConta = rs.getString("statusConta");
+				String tipo = rs.getString("tipo");
+				String experiencia = rs.getString("experiencia");
+				String habilidade = rs.getString("habilidades");
+				
+				voluntarios.add(new Voluntario(id, nome, email, senha, dataNascimento, cidade, estado, null));
+			}			
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		
 		return voluntarios;
 	}
 }

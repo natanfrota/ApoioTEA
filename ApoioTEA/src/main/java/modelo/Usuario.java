@@ -2,34 +2,54 @@ package modelo;
 
 import java.time.LocalDate;
 
+import dao.UsuarioDAO;
+
 public class Usuario {
 	private int id;
 	private String nome;
 	private String email;
 	private String senha;
 	private String foto;
+	private LocalDate dataNascimento;
 	private LocalDate dataCadastro;
 	private String cidade;
 	private String estado;
 	private String descricao;
-	private StatusConta status;
+	private StatusConta statusConta;
 	
-	public Usuario(String nome, String email, String senha, String cidade,
-			String estado) {
+	public Usuario() {
+		
+	}
+	
+	public Usuario(String nome, String email, String senha, LocalDate dataNascimento, 
+			String cidade, String estado, StatusConta statusConta) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.cidade = cidade;
 		this.estado = estado;
-		this.status = StatusConta.ATIVA;
-	}
-
-	public boolean fazerCadastro() {
-		return true;
+		this.statusConta = statusConta;
 	}
 	
-	public void fazerLogin() {
+	public Usuario(int id, String nome, String email, String senha, LocalDate dataNascimento, 
+			String cidade, String estado, StatusConta statusConta) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.cidade = cidade;
+		this.estado = estado;
+		this.statusConta = statusConta;
+	}
+
+	public void fazerCadastro() { // método a ser implementado pelas classes filhas
+	}
+	
+	public boolean fazerLogin() {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.buscarEmailESenha(this);
 		
+		return (usuario != null);
 	}
 	
 	public void editarPerfil() {
@@ -83,6 +103,14 @@ public class Usuario {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+	
+	public LocalDate getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public void setDataNascimento(LocalDate dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 
 	public LocalDate getDataCadastro() {
 		return dataCadastro;
@@ -117,10 +145,10 @@ public class Usuario {
 	}
 
 	public StatusConta getStatus() {
-		return status;
+		return statusConta;
 	}
 
-	public void setStatus(StatusConta status) {
-		this.status = status;
+	public void setStatus(StatusConta statusConta) {
+		this.statusConta = statusConta;
 	}
 }

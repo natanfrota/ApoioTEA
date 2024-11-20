@@ -1,5 +1,8 @@
 package modelo;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import dao.VoluntarioDAO;
 
 public class Voluntario extends Usuario {
@@ -7,14 +10,23 @@ public class Voluntario extends Usuario {
 	private String habilidades;
 	private double avaliacaoMedia;
 	
-	public Voluntario(String nome, String email, String senha, String cidade,
-			String estado) {
-		super(nome, email, senha, cidade, estado);
+	public Voluntario() {
+		
+	}
+	
+	public Voluntario(String nome, String email, String senha, LocalDate dataNascimento, 
+			String cidade, String estado, StatusConta statusConta) {
+		super(nome, email, senha, dataNascimento, cidade, estado, statusConta);
+	}
+	
+	public Voluntario(int id, String nome, String email, String senha, LocalDate dataNascimento, 
+			String cidade, String estado, StatusConta statusConta) {
+		super(id, nome, email, senha, dataNascimento, cidade, estado, statusConta);
 	}
 
 	@Override
-	public boolean fazerCadastro() {
-		return new VoluntarioDAO().inserirVoluntario(this);
+	public void fazerCadastro() {
+		new VoluntarioDAO().inserirVoluntario(this);
 	}
 	
 	public String getExperiencia() {
@@ -39,5 +51,9 @@ public class Voluntario extends Usuario {
 	
 	public void setAvaliacaoMedia(double avaliacaoMedia) {
 		this.avaliacaoMedia = avaliacaoMedia;
+	}
+	
+	public List<Voluntario> retornarVoluntarios(){
+		return new VoluntarioDAO().selecionarVoluntarios();
 	}
 }
