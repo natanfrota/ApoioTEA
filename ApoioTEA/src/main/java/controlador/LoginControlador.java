@@ -30,28 +30,30 @@ public class LoginControlador extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		String email = request.getParameter("email");
+		String senha = request.getParameter("senha");
+		
+		Usuario usuario;
+		if(email != null && senha != null) {
+			usuario = new Usuario();
+			usuario.setEmail(email);
+			usuario.setSenha(senha);
+			
+			if (usuario.fazerLogin()) {
+				response.sendRedirect("inicio.jsp");
+			}
+			else {
+				request.setAttribute("login", false);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+			    dispatcher.forward(request, response);
+			}
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String senha = request.getParameter("senha");
-		
-		Usuario usuario = new Usuario();
-		usuario.setEmail(email);
-		usuario.setSenha(senha);
-				
-		if (usuario.fazerLogin()) {
-			response.sendRedirect("inicio.jsp");
-		}
-		else {
-			request.setAttribute("login", false);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-		    dispatcher.forward(request, response);
-		}
+		doGet(request, response);
 	}
-
 }
