@@ -8,13 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.Usuario;
 
 /**
  * Servlet implementation class LoginControlador
  */
-@WebServlet(urlPatterns = {"/LoginControlador", "/login"})
+@WebServlet(urlPatterns = {"/login"})
 public class LoginControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,13 +40,11 @@ public class LoginControlador extends HttpServlet {
 			usuario.setEmail(email);
 			usuario.setSenha(senha);
 			
-			if (usuario.fazerLogin()) {
+			if (usuario.fazerLogin()) {//  && usuario.getTipo().equals("")
 				response.sendRedirect("inicio.jsp");
 			}
 			else {
-				request.setAttribute("login", false);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-			    dispatcher.forward(request, response);
+				response.sendRedirect("login.jsp?login=false");
 			}
 		}
 	}

@@ -15,6 +15,7 @@ public class Usuario {
 	private String cidade;
 	private String estado;
 	private String descricao;
+	private String tipo;
 	private StatusConta statusConta;
 	
 	public Usuario() {
@@ -145,11 +146,11 @@ public class Usuario {
 		this.descricao = descricao;
 	}
 
-	public StatusConta getStatus() {
+	public StatusConta getStatusConta() {
 		return statusConta;
 	}
 
-	public void setStatus(StatusConta statusConta) {
+	public void setStatusConta(StatusConta statusConta) {
 		this.statusConta = statusConta;
 	}
 }
