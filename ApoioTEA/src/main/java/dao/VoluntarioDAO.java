@@ -171,7 +171,8 @@ public class VoluntarioDAO {
 	/*
 	public static void main(String[] args) {
 		Voluntario voluntario = new Voluntario();
-		voluntario.setNome("Natan");
+		voluntario.setNome("Natan"); 
+		
 		voluntario.setCidade("Sao Paulo");
 		voluntario.setEstado("SP");
 		voluntario.setDescricao("busco ajudar e contribuir para a sociedade");
