@@ -181,9 +181,7 @@ public class VoluntarioDAO {
 		for (Voluntario voluntario2 : v) {
 			System.out.println(voluntario2.getNome());
 		}
-		
 		//voluntario.alterarDadosPerfil();
 		
-	}*/
-	
+	}*/	
 }
