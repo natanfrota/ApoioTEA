@@ -12,11 +12,12 @@ body {
 }
 
 .barraTarefas {
+    position: fixed;
     width: 250px;
     background-color: #2b8cc4;
     color: white;
     padding: 20px;
-    height: 100vh;
+    height: 100%;
 }
 
 .barraTarefas h1 {
@@ -31,9 +32,16 @@ body {
 .barraTarefas li {
     margin: 15px 0;
     cursor: pointer;
+    padding: 5px;
+}
+
+.barraTarefas li:hover {
+    background-color: #1a6a9e;
+    transition: background-color 0.3s ease;
 }
 
 .main-content {
+    margin-left: 250px;
     flex: 1;
     padding: 20px;
 }
@@ -76,15 +84,66 @@ body {
     cursor: pointer;
 }
 
+.botao-editarperfil:hover {
+    background-color: #1e90ff; 
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.publicarAtividade-foto {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
 .nova-atividade {
+    display: flex;
+    align-items: flex-start;
+    background-color: #6CD1FF;
+    border-radius: 10px;
+    padding: 10px;
     margin-bottom: 20px;
 }
 
-.nova-atividade input {
+.conteudo-texto-botao {
+    display: flex;
+    flex-direction: column; 
+    flex: 1;
+}
+
+.nova-atividade textarea{
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    border: none; 
+    border-radius: 5px; 
+    padding: 10px; 
+    font-size: 14px; 
+    min-height: 50px; 
+    max-height: 150px; 
+    overflow-y: auto;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+.botao-publicar {
+    align-self: flex-start;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
     border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.botao-publicar:hover {
+    background-color: #145a99;
+    transition: background-color 0.3s ease;
+}
+
+.nova-atividade textarea :focus {
+    outline: none;
 }
 
 .atividades-secao h3 {
@@ -115,4 +174,9 @@ body {
     border-radius: 5px;
     margin-right: 5px;
     cursor: pointer;
+}
+
+.atividade-botoes button:hover {
+    background-color: #0f5a9c;
+    transition: background-color 0.3s ease;
 }
