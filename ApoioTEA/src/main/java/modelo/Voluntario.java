@@ -55,6 +55,13 @@ public class Voluntario extends Usuario {
 	
 	public List<Voluntario> retornarVoluntarios(){
 		return new VoluntarioDAO().selecionarVoluntarios();
-
+	}
+	
+	public boolean selecionarVoluntario() {
+		return new VoluntarioDAO().selecionarVoluntario(this);
+	}
+	
+	public void alterarDadosPerfil() {
+		new VoluntarioDAO().alterarDadosPerfil(this);
 	}
 }

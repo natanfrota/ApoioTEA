@@ -8,21 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import modelo.Usuario;
+import modelo.Voluntario;
 
 /**
- * Servlet implementation class LoginControlador
+ * Servlet implementation class PerfilVoluntarioControlador
  */
-@WebServlet(urlPatterns = {"/login"})
-public class LoginControlador extends HttpServlet {
+@WebServlet(urlPatterns = {"/perfilvoluntario"})
+public class PerfilVoluntarioControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginControlador() {
+    public PerfilVoluntarioControlador() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,28 +30,34 @@ public class LoginControlador extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String senha = request.getParameter("senha");
+		Integer id = null;
+
+		try {
+			id = Integer.valueOf(request.getParameter("id"));
+		} catch (NumberFormatException e) {
+			System.err.println(e);
+		}
 		
-		Usuario usuario;
-		if(email != null && senha != null) {
-			usuario = new Usuario();
-			usuario.setEmail(email);
-			usuario.setSenha(senha);
-			
-			if (usuario.fazerLogin()) {//  && usuario.getTipo().equals("")
-				response.sendRedirect("inicio.jsp");
-			}
-			else {
-				response.sendRedirect("login.jsp?login=false");
+		if(id != null) { // parâmetro id não está ausente
+			Voluntario voluntario = new Voluntario();
+			voluntario.setId(id);
+			boolean encontrado = voluntario.selecionarVoluntario();
+						
+			if(encontrado) { // esse usuário existe no BD
+				request.setAttribute("voluntario", voluntario);
+				RequestDispatcher rd = request.getRequestDispatcher("perfilvoluntario.jsp");
+				rd.forward(request, response);
+				return;
 			}
 		}
+		response.sendRedirect("erro.jsp");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 }

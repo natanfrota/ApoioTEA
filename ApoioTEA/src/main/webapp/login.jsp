@@ -31,14 +31,12 @@
             </div>
         </div>
     </div>
-    <% /*
-    Boolean login = (Boolean) request.getAttribute("login");
-    	if(login != null && login == false)  { 
-    	%>
+    
+    <% if ("false".equals(request.getParameter("login"))) { %>
     		<div>
     			<p>	Email ou senha incorretos.</p>
     		</div>
-		<% } */%>
+	<% } %>
     
     <footer>
         <div class="barra rodape"></div>

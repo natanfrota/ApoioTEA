@@ -176,7 +176,10 @@ body {
     cursor: pointer;
 }
 
+<<<<<<< HEAD
+=======
 .atividade-botoes button:hover {
     background-color: #0f5a9c;
     transition: background-color 0.3s ease;
 }
+>>>>>>> branch 'master' of https://github.com/SamuelHenrique007/ApoioTEA.git

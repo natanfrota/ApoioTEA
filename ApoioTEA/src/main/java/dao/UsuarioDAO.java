@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import modelo.Usuario;
+import modelo.Voluntario;
 
 public class UsuarioDAO {
 	public Usuario buscarEmailESenha(Usuario usuario) {
@@ -47,5 +48,41 @@ public class UsuarioDAO {
 		}
 
 		return usuario1;
+	}
+	
+	public void alterarDadosPerfilUsuario(Usuario usuario) {
+		String alteracao = "update usuario set nome = ?, cidade = ?, estado = ?, "
+				+ "descricao = ? where id = ?";
+		
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(alteracao);
+			ps.setString(1, usuario.getNome());
+			ps.setString(2, usuario.getCidade());
+			ps.setString(3, usuario.getEstado());
+			ps.setString(4, usuario.getDescricao());
+			ps.setInt(5, usuario.getId());
+			
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			System.err.println(e);
+			
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
 	}
 }

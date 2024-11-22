@@ -33,7 +33,6 @@ public class VoluntarioDAO {
 			ps.setString(4, voluntario.getCidade());
 			ps.setString(5, voluntario.getEstado());
 			ps.setString(6, "voluntário");
-			System.out.println("Dados inseridos na tabelas usuário.");
 
 			ps.executeUpdate();
 
@@ -81,12 +80,12 @@ public class VoluntarioDAO {
 		List<Voluntario> voluntarios = null;
 		
 		String selecao = "select * from usuario u "
-				+ "join voluntario v on u.id = v.usuario_id";
+				+ "join voluntario v on u.id = v.usuario_id where status_conta = 'ativa'";
 		
 		try(PreparedStatement ps = Conexao.criarConexao().prepareStatement(selecao);
 			ResultSet rs = ps.executeQuery()) {
 			voluntarios = new ArrayList<>();
-			System.out.println("dentro de voluntarioDAO");
+
 			while(rs.next()) {
 				
 				int id = rs.getInt("id");
@@ -99,7 +98,7 @@ public class VoluntarioDAO {
 				String cidade = rs.getString("cidade");
 				String estado = rs.getString("estado");
 				String descricao = rs.getString("descricao");
-				String statusConta = rs.getString("statusConta");
+				String statusConta = rs.getString("status_conta");
 				String tipo = rs.getString("tipo");
 				String experiencia = rs.getString("experiencia");
 				String habilidade = rs.getString("habilidades");
@@ -112,4 +111,77 @@ public class VoluntarioDAO {
 		
 		return voluntarios;
 	}
+	
+	public boolean selecionarVoluntario(Voluntario voluntario) {
+		String selecaoVoluntario = "select * from usuario u join voluntario v on u.id = v.usuario_id "
+								  + "where u.id = ? and status_conta = 'ativa'";
+
+		Connection conexao = null;
+		PreparedStatement ps = null, ps2 = null;
+		ResultSet rs = null;
+
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(selecaoVoluntario);
+			ps.setInt(1, voluntario.getId());
+			rs = ps.executeQuery();
+			if(rs.next()) {			
+				voluntario.setNome(rs.getString("nome"));
+				voluntario.setEmail(rs.getString("email"));
+				voluntario.setSenha(rs.getString("senha"));
+				//voluntario.setFoto(rs.getString("foto"));
+				voluntario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
+				voluntario.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
+				voluntario.setCidade(rs.getString("cidade"));
+				voluntario.setEstado(rs.getString("estado"));
+				voluntario.setDescricao(rs.getString("descricao"));
+				//voluntario.setStatusConta(rs.getString("status_conta"));
+				//voluntario.setTipo(rs.getString("tipo"));
+				voluntario.setExperiencia(rs.getString("experiencia"));
+				voluntario.setHabilidades(rs.getString("habilidades"));
+				
+				return true;
+			}
+			
+		} catch (SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+		return false;
+	}
+	
+	public void alterarDadosPerfil(Voluntario voluntario) {
+		new UsuarioDAO().alterarDadosPerfilUsuario(voluntario);
+	}
+	
+	public void excluirConta() {
+		
+	}
+	
+	/*
+	public static void main(String[] args) {
+		Voluntario voluntario = new Voluntario();
+		voluntario.setNome("Natan"); 
+		
+		voluntario.setCidade("Sao Paulo");
+		voluntario.setEstado("SP");
+		voluntario.setDescricao("busco ajudar e contribuir para a sociedade");
+		voluntario.setId(4);
+		List<Voluntario> v = voluntario.retornarVoluntarios();
+		for (Voluntario voluntario2 : v) {
+			System.out.println(voluntario2.getNome());
+		}
+		//voluntario.alterarDadosPerfil();
+		
+	}*/	
 }
