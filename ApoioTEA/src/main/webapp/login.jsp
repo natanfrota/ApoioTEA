@@ -30,14 +30,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    
-    <% if ("false".equals(request.getParameter("login"))) { %>
-    		<div>
-    			<p>	Email ou senha incorretos.</p>
-    		</div>
-	<% } %>
-    
+    </div>    
     <footer>
         <div class="barra rodape"></div>
     </footer>

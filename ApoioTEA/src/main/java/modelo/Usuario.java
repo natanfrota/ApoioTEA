@@ -16,54 +16,66 @@ public class Usuario {
 	private String estado;
 	private String descricao;
 	private String tipo;
-	private StatusConta statusConta;
+	private String statusConta;
 	
 	public Usuario() {
 		
 	}
 	
-	public Usuario(String nome, String email, String senha, LocalDate dataNascimento, 
-			String cidade, String estado, StatusConta statusConta) {
+	public Usuario(String nome, String email, LocalDate dataNascimento, 
+			String cidade, String estado, String descricao, String tipo,
+			String statusConta) {
 		this.nome = nome;
 		this.email = email;
-		this.senha = senha;
+		this.dataNascimento = dataNascimento;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.descricao = descricao;
+		this.tipo = tipo;
 		this.statusConta = statusConta;
 	}
 	
-	public Usuario(int id, String nome, String email, String senha, LocalDate dataNascimento, 
-			String cidade, String estado, StatusConta statusConta) {
+	public Usuario(int id, String nome, String email, LocalDate dataNascimento, 
+			String cidade, String estado, String descricao, String tipo,
+			String statusConta) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.senha = senha;
+		this.dataNascimento = dataNascimento;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.descricao = descricao;
+		this.tipo = tipo;
 		this.statusConta = statusConta;
 	}
 
-	public void fazerCadastro() { // método a ser implementado pelas classes filhas
+	public void fazerCadastro() {
 	}
 	
 	public boolean fazerLogin() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
 		Usuario usuario = usuarioDAO.buscarEmailESenha(this);
-		
 		return (usuario != null);
-		
 	}
 	
 	public void editarPerfil() {
-		
+		new UsuarioDAO().alterarDadosPerfilUsuario(this);
 	}
 	
 	public void excluirConta() {
-		
+		new UsuarioDAO().excluirConta(this);
 	}
 	
-	public void sair() {
+	public int calcularIdade() {
+		LocalDate hoje = LocalDate.now();
+		int anos = hoje.getYear() - dataNascimento.getYear();
+		int meses = hoje.getMonthValue() - dataNascimento.getMonthValue();
+		int dias = hoje.getDayOfMonth() - dataNascimento.getDayOfMonth();
 		
+		if(meses < 0 || (meses == 0 && dias < 0))
+			anos -= 1;		
+		
+		return anos;
 	}
 	
 	public int getId() {
@@ -146,11 +158,19 @@ public class Usuario {
 		this.descricao = descricao;
 	}
 
-	public StatusConta getStatusConta() {
+	public String getStatusConta() {
 		return statusConta;
 	}
 
-	public void setStatusConta(StatusConta statusConta) {
+	public void setStatusConta(String statusConta) {
 		this.statusConta = statusConta;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

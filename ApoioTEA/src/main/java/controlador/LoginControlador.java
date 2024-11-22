@@ -43,9 +43,6 @@ public class LoginControlador extends HttpServlet {
 			if (usuario.fazerLogin()) {//  && usuario.getTipo().equals("")
 				response.sendRedirect("inicio.jsp");
 			}
-			else {
-				response.sendRedirect("login.jsp?login=false");
-			}
 		}
 	}
 
