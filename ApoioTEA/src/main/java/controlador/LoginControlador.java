@@ -48,14 +48,14 @@ public class LoginControlador extends HttpServlet {
 					v.setId(usuario.getId());
 					v.selecionarVoluntario();
 					sessao.setAttribute("voluntario", v);
+					response.sendRedirect("inicioVoluntario.jsp");
 				} else if(usuario.getTipo().equals("familia")){
 					Familia f = new Familia();
 					f.setId(usuario.getId());
 					f.selecionarFamilia();
 					sessao.setAttribute("familia", f);
+					response.sendRedirect("inicioFamilia.jsp");
 				}
-				
-				response.sendRedirect("inicio.jsp");
 			} else {
 				response.sendRedirect("login.jsp");
 			}

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import modelo.Familia;
 import modelo.Voluntario;
@@ -50,12 +51,18 @@ public class CadastroControlador extends HttpServlet {
 						cidade, estado, descricao, "ativa");
 				familia.setSenha(senha);
 				familia.fazerCadastro();
+				HttpSession sessao = request.getSession();
+				sessao.setAttribute("familia", familia);
+				response.sendRedirect("inicioFamilia.jsp");
 			}
 			else if(tipo.equalsIgnoreCase("voluntario") && experiencia != null && habilidades != null) {
 				Voluntario voluntario = new Voluntario(nome, email, LocalDate.parse(dataNascimento),
 						cidade, estado, descricao, experiencia, habilidades, "ativa");
 				voluntario.setSenha(senha);
 				voluntario.fazerCadastro();
+				HttpSession sessao = request.getSession();
+				sessao.setAttribute("voluntario", voluntario);
+				response.sendRedirect("inicioFamilia.jsp");
 			}
 		}
 	}

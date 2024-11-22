@@ -18,6 +18,7 @@ body {
     color: white;
     padding: 20px;
     height: 100%;
+    text-align: center;
 }
 
 .barraTarefas h1 {
@@ -27,6 +28,7 @@ body {
 
 .barraTarefas ul {
     list-style: none;
+    font-size: 1.2rem;
 }
 
 .barraTarefas li {
@@ -38,6 +40,16 @@ body {
 .barraTarefas li:hover {
     background-color: #1a6a9e;
     transition: background-color 0.3s ease;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inherit;
+}
+
+a:link, a:visited {
+    text-decoration: none;
 }
 
 .main-content {
@@ -61,8 +73,8 @@ body {
 
 .perfil-foto {
     border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    width: 200px;
+    height: 200px;
     margin-right: 20px;
 }
 
@@ -176,10 +188,7 @@ body {
     cursor: pointer;
 }
 
-<<<<<<< HEAD
-=======
 .atividade-botoes button:hover {
     background-color: #0f5a9c;
     transition: background-color 0.3s ease;
 }
->>>>>>> branch 'master' of https://github.com/SamuelHenrique007/ApoioTEA.git

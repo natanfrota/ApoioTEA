@@ -15,19 +15,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= (voluntario.getNome() != null ? voluntario.getNome() : "") %></title>
-    <link rel="stylesheet" href="visaoF.css">
+    <link rel="stylesheet" href="css/perfil.css">
 </head>
 <body>
     <div class="barraTarefas">
-        <h1>ApoioTEA</h1>
+        <a href="">
+            <h1>ApoioTEA</h1>
+        </a>
         <nav>
             <ul>
-                <li>Início</li>
-                <li>Perfil</li>
-                <li>Atividades</li>
-                <li>Conversas</li>
-                <li>Notificações</li>
-                <li>Sair</li>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Perfil</a></li>
+                <li><a href="#">Atividades agendadas</a></li>
+                <li><a href="#">Conversas</a></li>
+                <li><a href="#">Notificações</a></li>
+                <li><a href="#">Sair</a></li>
             </ul>
         </nav>
     </div>

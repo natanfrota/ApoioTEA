@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="barra topo">
-            <h1>ApoioTEA</h1>
+            <a href=#><h1>ApoioTEA</h1></a>
         </div>
     </header>
     <div class="conteiner">
@@ -19,7 +19,7 @@
                 <img src="imagens/TEA.jpg" alt="Quebra-cabeça em forma de coração">
             </div>
             <div class="direita">
-                <h2>Entre na Plataforma</h2>
+                <h2>Entre na plataforma</h2>
                 <form action="login" method="POST">
                     <input type="email" name="email" placeholder="Email">
                     <input type="password" name="senha" placeholder="Senha">
