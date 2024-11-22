@@ -54,8 +54,7 @@ public class Usuario {
 	
 	public boolean fazerLogin() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();
-		Usuario usuario = usuarioDAO.buscarEmailESenha(this);
-		return (usuario != null);
+		return usuarioDAO.buscarEmailESenha(this);
 	}
 	
 	public void editarPerfil() {

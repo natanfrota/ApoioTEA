@@ -2,7 +2,6 @@ package controlador;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelo.Familia;
 import modelo.Usuario;
+import modelo.Voluntario;
 
 /**
  * Servlet implementation class LoginControlador
@@ -40,8 +41,23 @@ public class LoginControlador extends HttpServlet {
 			usuario.setEmail(email);
 			usuario.setSenha(senha);
 			
-			if (usuario.fazerLogin()) {//  && usuario.getTipo().equals("")
+			if (usuario.fazerLogin()) {
+				HttpSession sessao = request.getSession();
+				if(usuario.getTipo().equals("voluntario")) {
+					Voluntario v = new Voluntario();
+					v.setId(usuario.getId());
+					v.selecionarVoluntario();
+					sessao.setAttribute("voluntario", v);
+				} else if(usuario.getTipo().equals("familia")){
+					Familia f = new Familia();
+					f.setId(usuario.getId());
+					f.selecionarFamilia();
+					sessao.setAttribute("familia", f);
+				}
+				
 				response.sendRedirect("inicio.jsp");
+			} else {
+				response.sendRedirect("login.jsp");
 			}
 		}
 	}

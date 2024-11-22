@@ -26,7 +26,7 @@
                     <button type="submit">Entrar</button>
                 </form>
                 <div class="cadastro">
-                    Não tem conta? <a href="#">Cadastre-se</a>
+                    Não tem conta? <a href="cadastro.jsp">Cadastre-se</a>
                 </div>
             </div>
         </div>

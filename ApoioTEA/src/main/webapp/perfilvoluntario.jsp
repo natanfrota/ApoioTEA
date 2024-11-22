@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="modelo.Voluntario" %>
 
-<% Voluntario voluntario = (Voluntario) request.getAttribute("voluntario");
+<% Voluntario voluntario = (Voluntario) session.getAttribute("voluntario");
 	if(voluntario == null){
 		voluntario = new Voluntario();
 	}

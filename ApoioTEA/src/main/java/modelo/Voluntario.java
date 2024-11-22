@@ -15,12 +15,10 @@ public class Voluntario extends Usuario {
 	}
 
 	public Voluntario(String nome, String email, LocalDate dataNascimento, String cidade, String estado,
-			String descricao, String statusConta, String experiencia, String habilidades,
-			double avaliacaoMedia) {
+			String descricao, String statusConta, String experiencia, String habilidades) {
 		super(nome, email, dataNascimento, cidade, estado, descricao, "voluntario", statusConta);
 		this.experiencia = experiencia;
 		this.habilidades = habilidades;
-		this.avaliacaoMedia = avaliacaoMedia;
 	}
 
 	public Voluntario(int id, String nome, String email, LocalDate dataNascimento, String cidade, String estado,

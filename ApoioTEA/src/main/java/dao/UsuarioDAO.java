@@ -8,10 +8,10 @@ import java.sql.SQLException;
 import modelo.Usuario;
 
 public class UsuarioDAO {
-	public Usuario buscarEmailESenha(Usuario usuario) {
-		String consulta = "select email, senha from usuario where email = ? and senha = ?"
-				+ "and status_conta = 'ativa'";
-		Usuario usuario1 = null;
+	public boolean buscarEmailESenha(Usuario usuario) {
+		String consulta = "select id, email, senha, tipo from usuario "
+				+ "where email = ? and senha = ? and status_conta = 'ativa'";
+
 		Connection conexao = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -24,9 +24,9 @@ public class UsuarioDAO {
 			rs = ps.executeQuery();
 
 			if(rs.next()) {
-				usuario1 = new Usuario();
-				usuario1.setEmail(rs.getString("email"));
-				usuario1.setSenha(rs.getString("senha"));
+				usuario.setTipo(rs.getString("tipo"));
+				usuario.setId(rs.getInt("id"));
+				return true;
 			}
 			
 		} catch (SQLException e) {
@@ -45,8 +45,7 @@ public class UsuarioDAO {
 				System.err.println(e);
 			}
 		}
-
-		return usuario1;
+		return false;
 	}
 	
 	public void alterarDadosPerfilUsuario(Usuario usuario) {
