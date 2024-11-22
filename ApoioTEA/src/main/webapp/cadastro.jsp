@@ -65,6 +65,6 @@
        
     </footer>
 
-    <script src="js/cadastro.js"></script>
+    <script src="Js/cadastro.js"></script>
 </body>
 </html>

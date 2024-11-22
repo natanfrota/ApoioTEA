@@ -1,0 +1,119 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    background-color: #e3f2fd;
+    color: #333;
+}
+
+
+.barraTarefas {
+    position: fixed;
+    width: 250px;
+    background-color: #1e88e5;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.barraTarefas h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.barraTarefas ul {
+    list-style: none;
+    font-size: 1.2rem;
+}
+
+.barraTarefas li {
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.barraTarefas li:hover {
+    background-color: #1565c0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.barraTarefas a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+    flex: 1;
+}
+
+.main-content h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.atividade-cartao {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+.atividade-cartao:hover {
+    transform: scale(1.02);
+}
+
+.atividade-cartao h3 {
+    font-size: 18px;
+    color: #1e88e5;
+    margin-bottom: 5px;
+}
+
+.atividade-cartao h4 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.atividade-cartao p {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.descricao {
+    margin: 10px 0;
+}
+
+.botao-voluntariar {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-voluntariar:hover {
+    background-color: #1565c0;
+}
+
+.link-familia {
+    color: #1565c0;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link-familia:hover {
+    text-decoration: underline;
+}
