@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #A0D8EF;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+header {
+    background-color: #42A5F5;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+header .logo {
+    color: white;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+
+footer {
+    background-color: #42A5F5;
+    color: white;
+    text-align: center;
+    font-size: 0.9em;
+    padding: 5px 0;
+    min-height: 40px; 
+}
+
+
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+}
+
+form input, form select, form textarea, form button {
+    width: 100%; 
+    padding: 8px; 
+    margin-bottom: 12px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    box-sizing: border-box;
+}
+
+form select {
+    appearance: none;
+}
+
+
+form button {
+    padding: 10px; 
+    font-size: 14px; 
+}
+
+h1 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+}
+
+form input[type="number"] {
+    -moz-appearance: textfield; /* Remove setas no Firefox */
+}
+
+form button {
+    width: 60%; 
+    padding: 8px; 
+    font-size: 14px; 
+    background-color: #42A5F5;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block; 
+    margin: 0 auto; 
+}
+
+form button:hover {
+    background-color: #1E88E5; 
+}
+
+
+.especificos {
+    display: none;
+}
