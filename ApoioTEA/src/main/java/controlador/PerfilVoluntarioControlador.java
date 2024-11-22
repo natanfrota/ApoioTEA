@@ -14,7 +14,7 @@ import modelo.Voluntario;
 /**
  * Servlet implementation class PerfilVoluntarioControlador
  */
-@WebServlet(urlPatterns = {"/perfilvoluntario"})
+@WebServlet(urlPatterns = {"/perfilVoluntario"})
 public class PerfilVoluntarioControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,7 +33,7 @@ public class PerfilVoluntarioControlador extends HttpServlet {
 		Integer id = null;
 
 		try {
-			id = Integer.valueOf(request.getParameter("id"));
+			id = Integer.valueOf(request.getParameter("idUsuario"));
 		} catch (NumberFormatException e) {
 			System.err.println(e);
 		}
@@ -45,7 +45,7 @@ public class PerfilVoluntarioControlador extends HttpServlet {
 						
 			if(encontrado) { // esse usuário existe no BD
 				request.setAttribute("voluntario", voluntario);
-				RequestDispatcher rd = request.getRequestDispatcher("perfilvoluntario.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("perfilVoluntario.jsp");
 				rd.forward(request, response);
 				return;
 			}

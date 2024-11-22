@@ -4,12 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Início</title>
 </head>
 <body>
-	olá
-	<form action="inicio" >
-	<button type="submit">aqui</button>
-	</form>
+	olá, familia
 </body>
 </html>

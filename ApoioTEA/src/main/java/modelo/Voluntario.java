@@ -13,20 +13,32 @@ public class Voluntario extends Usuario {
 	public Voluntario() {
 		
 	}
-	
-	public Voluntario(String nome, String email, String senha, LocalDate dataNascimento, 
-			String cidade, String estado, StatusConta statusConta) {
-		super(nome, email, senha, dataNascimento, cidade, estado, statusConta);
+
+	public Voluntario(String nome, String email, LocalDate dataNascimento, String cidade, String estado,
+			String descricao, String statusConta, String experiencia, String habilidades) {
+		super(nome, email, dataNascimento, cidade, estado, descricao, "voluntario", statusConta);
+		this.experiencia = experiencia;
+		this.habilidades = habilidades;
 	}
-	
-	public Voluntario(int id, String nome, String email, String senha, LocalDate dataNascimento, 
-			String cidade, String estado, StatusConta statusConta) {
-		super(id, nome, email, senha, dataNascimento, cidade, estado, statusConta);
+
+	public Voluntario(int id, String nome, String email, LocalDate dataNascimento, String cidade, String estado,
+			String descricao, String statusConta, String experiencia, String habilidades,
+			double avaliacaoMedia) {
+		super(id, nome, email, dataNascimento, cidade, estado, descricao, "voluntario", statusConta);
+		this.experiencia = experiencia;
+		this.habilidades = habilidades;
+		this.avaliacaoMedia = avaliacaoMedia;
 	}
 
 	@Override
 	public void fazerCadastro() {
 		new VoluntarioDAO().inserirVoluntario(this);
+	}
+	
+	@Override
+	public void editarPerfil() {
+		super.editarPerfil();
+		new VoluntarioDAO().alterarDadosPerfil(this);
 	}
 	
 	public String getExperiencia() {
@@ -59,9 +71,5 @@ public class Voluntario extends Usuario {
 	
 	public boolean selecionarVoluntario() {
 		return new VoluntarioDAO().selecionarVoluntario(this);
-	}
-	
-	public void alterarDadosPerfil() {
-		new VoluntarioDAO().alterarDadosPerfil(this);
 	}
 }

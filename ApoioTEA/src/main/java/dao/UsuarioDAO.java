@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import modelo.Usuario;
-import modelo.Voluntario;
 
 public class UsuarioDAO {
-	public Usuario buscarEmailESenha(Usuario usuario) {
-		String consulta = "select email, senha from usuario where email = ? and senha = ?";
-		Usuario usuario1 = null;
+	public boolean buscarEmailESenha(Usuario usuario) {
+		String consulta = "select id, email, senha, tipo from usuario "
+				+ "where email = ? and senha = ? and status_conta = 'ativa'";
+
 		Connection conexao = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -24,10 +24,9 @@ public class UsuarioDAO {
 			rs = ps.executeQuery();
 
 			if(rs.next()) {
-				//System.out.println("dentro de usuarioDAO");
-				usuario1 = new Usuario();
-				usuario1.setEmail(rs.getString("email"));
-				usuario1.setSenha(rs.getString("senha"));
+				usuario.setTipo(rs.getString("tipo"));
+				usuario.setId(rs.getInt("id"));
+				return true;
 			}
 			
 		} catch (SQLException e) {
@@ -46,13 +45,12 @@ public class UsuarioDAO {
 				System.err.println(e);
 			}
 		}
-
-		return usuario1;
+		return false;
 	}
 	
 	public void alterarDadosPerfilUsuario(Usuario usuario) {
-		String alteracao = "update usuario set nome = ?, cidade = ?, estado = ?, "
-				+ "descricao = ? where id = ?";
+		String alteracao = "update usuario set nome = ?, email = ?, cidade = ?, "
+				+ "estado = ?, descricao = ? where id = ?";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
@@ -62,11 +60,11 @@ public class UsuarioDAO {
 			conexao = Conexao.criarConexao();
 			ps = conexao.prepareStatement(alteracao);
 			ps.setString(1, usuario.getNome());
-			ps.setString(2, usuario.getCidade());
-			ps.setString(3, usuario.getEstado());
-			ps.setString(4, usuario.getDescricao());
-			ps.setInt(5, usuario.getId());
-			
+			ps.setString(2, usuario.getEmail());
+			ps.setString(3, usuario.getCidade());
+			ps.setString(4, usuario.getEstado());
+			ps.setString(5, usuario.getDescricao());
+			ps.setInt(6, usuario.getId());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -79,6 +77,35 @@ public class UsuarioDAO {
 				if(ps != null)
 					ps.close();
 				if (conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+	}
+	
+	public void excluirConta(Usuario usuario) {
+		String exclusao = "update usuario set status_conta = 'excluida' "
+				+ "where id = ?";
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(exclusao);
+			ps.setInt(1, usuario.getId());
+			ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(conexao != null)
 					conexao.close();			
 			} catch (SQLException e2) {
 				System.err.println(e2);
