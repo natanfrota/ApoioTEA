@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApoioTEA - Publicar Atividade</title>
+    <title>ApoioTEA</title>
     <link rel="stylesheet" href="css/publicar.css">
 </head>
 <body>
@@ -56,9 +56,10 @@
                 <div class="form-grupo">
                     <label for="tipo">Tipo da Atividade:</label>
                     <select id="tipo" name="tipo" required>
-                        <option value="?">?</option>
-                        <option value="?">?</option>
-                        <option value="?">?</option>
+                    	<option value="">Selecione</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Educação">Educação</option>
+                        <option value="Evento">Evento</option>
                     </select>
                 </div>
 
