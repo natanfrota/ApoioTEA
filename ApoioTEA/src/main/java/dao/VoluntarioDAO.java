@@ -55,7 +55,7 @@ public class VoluntarioDAO {
 			conexao.setAutoCommit(true);
 			
 			return true;
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			if (conexao != null) {
 				try {
 					conexao.rollback();
@@ -107,7 +107,7 @@ public class VoluntarioDAO {
 				voluntarios.add(new Voluntario(id, nome, email, dataNascimento, cidade, 
 						estado, descricao, statusConta, experiencia, habilidades, id));
 			}			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		}
 		
@@ -146,7 +146,7 @@ public class VoluntarioDAO {
 				return true;
 			}
 			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		} finally {
 			try {
@@ -179,7 +179,7 @@ public class VoluntarioDAO {
 			ps.setInt(3, voluntario.getId());
 			
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 				
 		} finally {

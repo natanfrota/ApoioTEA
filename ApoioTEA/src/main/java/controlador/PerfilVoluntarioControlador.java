@@ -49,6 +49,8 @@ public class PerfilVoluntarioControlador extends HttpServlet {
 				rd.forward(request, response);
 				return;
 			}
+		} else {
+			
 		}
 		response.sendRedirect("erro.jsp");
 	}

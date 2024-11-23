@@ -10,18 +10,17 @@ public class Conexao {
 	private final static String SENHA = "";
 	private static Connection con;
 	
-	public static Connection criarConexao() throws SQLException {
+	public static Connection criarConexao() throws SQLException, ClassNotFoundException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			con = DriverManager.getConnection(URL, USUARIO, SENHA);
 			
-		} catch (SQLException e) {
-			throw e;
-			
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println(e);
+			throw e;
 		}
+		
 		return con;
 	}
 }
