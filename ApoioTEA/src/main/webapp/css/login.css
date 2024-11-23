@@ -18,6 +18,16 @@ body {
     align-items: center;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inherit;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+}
+
 .topo h1 {
     color: white;
     margin: 0;

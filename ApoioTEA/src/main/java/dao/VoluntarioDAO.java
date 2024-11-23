@@ -37,7 +37,8 @@ public class VoluntarioDAO {
 			ps.setDate(7, Date.valueOf(voluntario.getDataNascimento()));
 			ps.setString(8, voluntario.getDescricao());
 
-			ps.executeUpdate();
+			int linhas = ps.executeUpdate();
+			System.out.println("Linhas alteradas com ps: " + linhas);
 
 			rs = ps.getGeneratedKeys();
 			rs.next();
@@ -47,8 +48,9 @@ public class VoluntarioDAO {
 			ps2.setInt(1, idUsuario);
 			ps2.setString(2, voluntario.getExperiencia());
 			ps2.setString(3, voluntario.getHabilidades());
-			ps2.executeUpdate();
-
+			linhas = ps2.executeUpdate();
+			System.out.println("Linhas alteradas com ps2: " + linhas);
+			
 			conexao.commit();
 			conexao.setAutoCommit(true);
 			

@@ -33,7 +33,7 @@ public class PerfilVoluntarioControlador extends HttpServlet {
 		Integer id = null;
 
 		try {
-			id = Integer.valueOf(request.getParameter("idUsuario"));
+			id = Integer.valueOf(request.getParameter("id"));
 		} catch (NumberFormatException e) {
 			System.err.println(e);
 		}
