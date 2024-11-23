@@ -37,7 +37,8 @@ public class VoluntarioDAO {
 			ps.setDate(7, Date.valueOf(voluntario.getDataNascimento()));
 			ps.setString(8, voluntario.getDescricao());
 
-			ps.executeUpdate();
+			int linhas = ps.executeUpdate();
+			System.out.println("Linhas alteradas com ps: " + linhas);
 
 			rs = ps.getGeneratedKeys();
 			rs.next();
@@ -47,13 +48,14 @@ public class VoluntarioDAO {
 			ps2.setInt(1, idUsuario);
 			ps2.setString(2, voluntario.getExperiencia());
 			ps2.setString(3, voluntario.getHabilidades());
-			ps2.executeUpdate();
-
+			linhas = ps2.executeUpdate();
+			System.out.println("Linhas alteradas com ps2: " + linhas);
+			
 			conexao.commit();
 			conexao.setAutoCommit(true);
 			
 			return true;
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			if (conexao != null) {
 				try {
 					conexao.rollback();
@@ -105,7 +107,7 @@ public class VoluntarioDAO {
 				voluntarios.add(new Voluntario(id, nome, email, dataNascimento, cidade, 
 						estado, descricao, statusConta, experiencia, habilidades, id));
 			}			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		}
 		
@@ -144,7 +146,7 @@ public class VoluntarioDAO {
 				return true;
 			}
 			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		} finally {
 			try {
@@ -177,7 +179,7 @@ public class VoluntarioDAO {
 			ps.setInt(3, voluntario.getId());
 			
 			ps.executeUpdate();
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 				
 		} finally {

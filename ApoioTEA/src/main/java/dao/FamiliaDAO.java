@@ -50,7 +50,7 @@ public class FamiliaDAO {
 			conexao.setAutoCommit(true);
 			
 			return true;
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			if (conexao != null) {
 				try {
 					conexao.rollback();
@@ -100,7 +100,7 @@ public class FamiliaDAO {
 				familias.add(new Familia(id, nome, email, dataNascimento, cidade, estado,
 						descricao, statusConta));
 			}			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		}
 		
@@ -137,7 +137,7 @@ public class FamiliaDAO {
 				return true;
 			}
 			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		} finally {
 			try {

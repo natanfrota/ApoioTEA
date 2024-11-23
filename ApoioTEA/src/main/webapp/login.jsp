@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="barra topo">
-            <a href=#><h1>ApoioTEA</h1></a>
+            <a href=""><h1>ApoioTEA</h1></a>
         </div>
     </header>
     <div class="conteiner">

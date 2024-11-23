@@ -29,7 +29,7 @@ public class UsuarioDAO {
 				return true;
 			}
 			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 			
 		} finally {
@@ -67,7 +67,7 @@ public class UsuarioDAO {
 			ps.setInt(6, usuario.getId());
 			ps.executeUpdate();
 
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 			
 		} finally {
@@ -97,7 +97,7 @@ public class UsuarioDAO {
 			ps.setInt(1, usuario.getId());
 			ps.executeUpdate();
 			
-		} catch (SQLException e) {
+		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		} finally {
 			try {

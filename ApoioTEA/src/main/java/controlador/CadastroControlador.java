@@ -43,6 +43,8 @@ public class CadastroControlador extends HttpServlet {
 		String experiencia = (String) request.getParameter("experiencia");
 		String habilidades = (String) request.getParameter("habilidades");
 		
+		System.out.println("Tipo de usuário" + tipo);
+		
 		if(tipo != null && nome != null && email != null && senha != null && 
 			dataNascimento != null &&	cidade != null && estado != null 
 			&& descricao != null) {
@@ -62,7 +64,7 @@ public class CadastroControlador extends HttpServlet {
 				voluntario.fazerCadastro();
 				HttpSession sessao = request.getSession();
 				sessao.setAttribute("voluntario", voluntario);
-				response.sendRedirect("inicioFamilia.jsp");
+				response.sendRedirect("inicioVoluntario.jsp");
 			}
 		}
 	}
