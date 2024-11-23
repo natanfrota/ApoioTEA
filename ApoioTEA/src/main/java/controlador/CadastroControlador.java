@@ -64,7 +64,7 @@ public class CadastroControlador extends HttpServlet {
 				voluntario.fazerCadastro();
 				HttpSession sessao = request.getSession();
 				sessao.setAttribute("voluntario", voluntario);
-				response.sendRedirect("inicioFamilia.jsp");
+				response.sendRedirect("inicioVoluntario.jsp");
 			}
 		}
 	}
