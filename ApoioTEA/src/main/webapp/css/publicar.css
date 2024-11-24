@@ -121,3 +121,14 @@ button {
 .btn-cancelar:hover {
     background-color: #aaa;
 }
+
+@media (max-width: 768px) {
+    .barraTarefas {
+        display: none; 
+    }
+
+    .conteudo {
+        margin-left: 0; 
+        width: 100%;
+    }
+}

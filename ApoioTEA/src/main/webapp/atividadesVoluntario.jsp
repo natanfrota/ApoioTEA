@@ -1,5 +1,11 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="modelo.Atividade"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<% List<Atividade> atividades = (List<Atividade>) request.getAttribute("atividades");%>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -24,6 +30,31 @@
     </div>
     <div class="main-content">
         <h2>Atividades</h2>
+        
+        
+        
+        <%
+        DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+        
+        for(int i = 0; i < atividades.size(); i++) { 
+        	Atividade atv = atividades.get(i); %>
+        	<div class="atividade-cartao">
+            <h3><%= atv.getTitulo() %></h3>
+            <h4>Postado por: <a href="perfil_familia.html" class="link-familia"> </a></h4>
+            <p><strong>Data:</strong> <%= atv.getData().format(dt) %> <strong>Hora:</strong> <%= atv.getHora() %></p>
+            <p><strong>Localização:</strong> <%= atv.getLocalizacao() %></p>
+            <p class="descricao"><%= atv.getDescricao() %></p>
+            <button class="botao-voluntariar">Voluntariar-se</button>
+        </div>
+        	
+        	
+        	
+        	
+        	
+        	
+		<% } %>
+        
+        
 
         <div class="atividade-cartao">
             <h3>Acompanhamento em consulta médica</h3>
@@ -59,6 +90,7 @@
             <p><strong>Localização:</strong> Escola Joaquim Dias, Guanambi</p>
             <p class="descricao">Treino de futebol.</p>
             <button class="botao-voluntariar">Voluntariar-se</button>
+       </div>
     </div>
 
 </body>

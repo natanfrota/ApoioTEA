@@ -1,3 +1,4 @@
+<%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,7 +14,7 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
+                <li><a href="atividadesVoluntario.jsp">Início</a></li>
                 <li><a href="#">Perfil</a></li>
                 <li><a href="#">Atividades</a></li>
                 <li><a href="#">Conversas</a></li>
@@ -24,18 +25,19 @@
     </div>
     <div class="conteudo">
         <header>
-            <h2>Publicar Nova Atividade</h2>
+            <h2>Publicar uma nova atividade</h2>
         </header>
         <main>
-            <form class="formulario">
+            <form class="formulario" action="publicar" method="get">
                 <div class="form-grupo">
-                    <label for="titulo">Título da Atividade:</label>
+                    <label for="titulo">Título da atividade:</label>
                     <input type="text" id="titulo" name="titulo" placeholder="Digite o título da atividade" required>
                 </div>
 
                 <div class="form-grupo">
                     <label for="data">Data:</label>
-                    <input type="date" id="data" name="data" required>
+                    <input type="date" id="data" name="data" 
+                    min="<%= LocalDate.now() %>" max="<%= LocalDate.now().plusYears(3) %>" required>
                 </div>
 
                 <div class="form-grupo">
@@ -44,8 +46,8 @@
                 </div>
 
                 <div class="form-grupo">
-                    <label for="local">Localização:</label>
-                    <input type="text" id="local" name="local" placeholder="Informe o local da atividade" required>
+                    <label for="localizacao">Localização:</label>
+                    <input type="text" id="localizacao" name="localizacao" placeholder="Informe o local da atividade" required>
                 </div>
 
                 <div class="form-grupo">
@@ -54,7 +56,7 @@
                 </div>
 
                 <div class="form-grupo">
-                    <label for="tipo">Tipo da Atividade:</label>
+                    <label for="tipo">Tipo da atividade:</label>
                     <select id="tipo" name="tipo" required>
                     	<option value="">Selecione</option>
                         <option value="Saúde">Saúde</option>

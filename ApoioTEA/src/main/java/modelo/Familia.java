@@ -34,4 +34,13 @@ public class Familia extends Usuario{
 	public boolean selecionarFamilia() {
 		return new FamiliaDAO().selecionarFamilia(this);
 	}
+	
+	public void criarAtividade(Atividade atividade) {
+		atividade.setFamilia(this);
+		atividade.cadastrar();
+	}
+	
+	public void excluirAtividade(Atividade atividade) {
+		atividade.excluir();
+	}
 }

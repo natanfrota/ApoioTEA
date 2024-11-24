@@ -124,8 +124,8 @@ public class FamiliaDAO {
 			if(rs.next()) {			
 				familia.setNome(rs.getString("nome"));
 				familia.setEmail(rs.getString("email"));
-				//voluntario.setSenha(rs.getString("senha"));
-				//voluntario.setFoto(rs.getString("foto"));
+				//familia.setSenha(rs.getString("senha"));
+				//familia.setFoto(rs.getString("foto"));
 				familia.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
 				familia.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
 				familia.setCidade(rs.getString("cidade"));

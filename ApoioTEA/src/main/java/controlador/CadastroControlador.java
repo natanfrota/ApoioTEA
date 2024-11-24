@@ -32,16 +32,16 @@ public class CadastroControlador extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tipo = (String) request.getParameter("tipo"); 
-		String nome = (String) request.getParameter("nome");
-		String email = (String) request.getParameter("email");
-		String senha = (String) request.getParameter("senha");
-		String dataNascimento = (String) request.getParameter("data_nascimento");
-		String cidade = (String) request.getParameter("cidade");
-		String estado = (String) request.getParameter("estado");
-		String descricao = (String) request.getParameter("descricao");
-		String experiencia = (String) request.getParameter("experiencia");
-		String habilidades = (String) request.getParameter("habilidades");
+		String tipo = request.getParameter("tipo"); 
+		String nome = request.getParameter("nome");
+		String email = request.getParameter("email");
+		String senha = request.getParameter("senha");
+		String dataNascimento = request.getParameter("data_nascimento");
+		String cidade = request.getParameter("cidade");
+		String estado = request.getParameter("estado");
+		String descricao = request.getParameter("descricao");
+		String experiencia = request.getParameter("experiencia");
+		String habilidades = request.getParameter("habilidades");
 		
 		System.out.println("Tipo de usuário" + tipo);
 		

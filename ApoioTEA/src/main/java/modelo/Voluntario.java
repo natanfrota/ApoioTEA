@@ -9,6 +9,7 @@ public class Voluntario extends Usuario {
 	private String experiencia;
 	private String habilidades;
 	private double avaliacaoMedia;
+	private List<Atividade> atividadesAgendadas;
 	
 	public Voluntario() {
 		
