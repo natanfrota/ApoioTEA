@@ -36,10 +36,12 @@
         for(Atividade atv : atividades) { %>
         	<div class="atividade-cartao">
             <h3><%= atv.getTitulo() %></h3>
-            <h4>Postado por: <a href="perfil_familia.html" class="link-familia"> </a></h4>
+            <h4>Postado por: <a href="perfil-familia?id=<%=atv.getFamilia().getId() %>"
+            	 class="link-familia">
+            	<%= atv.getFamilia().getNome() %> </a></h4>
             <p><strong>Data:</strong> <%= atv.getData().format(dt) %> <strong>Hora:</strong> <%= atv.getHora() %></p>
             <p><strong>Localização:</strong> <%= atv.getLocalizacao() %></p>
-            <p class="descricao"><%= atv.getDescricao() %></p>
+            <p class="descricao">Descrição: <%= atv.getDescricao() %></p>
             <button class="botao-voluntariar" onclick="voluntariar(<%= atv.getId() %>, '<%= indiceBotao %>')">
             Voluntariar-se</button>
         </div> 

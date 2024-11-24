@@ -2,6 +2,7 @@ package modelo;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.AtividadeDAO;
@@ -16,7 +17,7 @@ public class Atividade {
 	private LocalDate data;
 	private LocalTime hora;
 	private Familia familia;
-	private Voluntario voluntariosCandidatos;
+	private List<Voluntario> voluntariosCandidatos;
 	private Voluntario voluntarioEscolhido;
 	
 	public Atividade() {
@@ -32,6 +33,7 @@ public class Atividade {
 		this.status = "aberta";
 		this.data = data;
 		this.hora = hora;
+		this.voluntariosCandidatos = new ArrayList<Voluntario>();
 	}
 
 	public Atividade(int id, String titulo, String categoria, String descricao, 
@@ -44,6 +46,7 @@ public class Atividade {
 		this.status = status;
 		this.data = data;
 		this.hora = hora;
+		this.voluntariosCandidatos = new ArrayList<Voluntario>();
 	}
 	
 	public void cadastrar() {
@@ -54,9 +57,15 @@ public class Atividade {
 		return new AtividadeDAO().selecionarTodasAsAtividades();
 	}
 	
+	public List<Atividade> selecionarAtividadesDeUmaFamilia(int id){
+		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(id);
+	}
+	
 	public void excluir() {
 		new AtividadeDAO().excluirAtividade(id);
 	}
+	
+	
 
 	public Familia getFamilia() {
 		return familia;
@@ -73,9 +82,13 @@ public class Atividade {
 	public void setVoluntarioEscolhido(Voluntario voluntarioEscolhido) {
 		this.voluntarioEscolhido = voluntarioEscolhido;
 	}
-	
-	public Voluntario getVoluntariosCandidatos() {
+
+	public List<Voluntario> getVoluntariosCandidatos() {
 		return voluntariosCandidatos;
+	}
+
+	public void setVoluntariosCandidatos(List<Voluntario> voluntariosCandidatos) {
+		this.voluntariosCandidatos = voluntariosCandidatos;
 	}
 
 	public int getId() {
@@ -140,5 +153,10 @@ public class Atividade {
 
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
+	}
+
+	public void setVoluntario(Voluntario voluntario) {
+		// TODO Auto-generated method stub
+		
 	}
 }

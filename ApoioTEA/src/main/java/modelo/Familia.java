@@ -22,6 +22,14 @@ public class Familia extends Usuario{
 		super(id, nome, email, dataNascimento, cidade, estado, descricao, "familia", statusConta);
 	}
 	
+	public List<Atividade> getAtividades() {
+		return atividades;
+	}
+
+	public void setAtividades(List<Atividade> atividades) {
+		this.atividades = atividades;
+	}
+
 	@Override
 	public void fazerCadastro() {
 		new FamiliaDAO().inserirFamilia(this);

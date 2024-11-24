@@ -1,9 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@ page import="modelo.Usuario" %>
 <%@ page import="modelo.Familia" %>
 <%@ page import="modelo.Atividade" %>
+<%@page import="java.time.format.DateTimeFormatter"%>
 
-<% Familia familia = (Familia) session.getAttribute("familia"); %>
+<%  Usuario usuarioDaSessao = (Usuario) session.getAttribute("usuario");
+
+	Familia familia = (Familia) request.getAttribute("familia"); 
+	List<Atividade> atividades = familia.getAtividades(); 
+%>
+	
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -19,8 +27,8 @@
         </a>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Perfil</a></li>
+                <li><a href="inicio-<%=usuarioDaSessao.getTipo() %>">Início</a></li>
+                <li><a href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
                 <li><a href="#">Atividades agendadas</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>
@@ -39,41 +47,51 @@
                     <p class="descricao">
                         Descrição: <%= familia.getDescricao()%>
                     </p>
-                    <a href=#><button class="botao-editarperfil">Editar perfil</button></a>
+                    
+                    <% if(usuarioDaSessao != null && familia.getId() 
+                    		== usuarioDaSessao.getId()){ %>
+                    	<button class="botao-editarperfil">Editar perfil</button>
+                	<% } %>
                 </div>
             </div>
         </div>
-  
+  		
+  		<% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
         <div class="nova-atividade">
-            <img src="WhatsApp Image 2024-11-20 at 15.57.03.jpeg" alt="Foto da família" class="publicarAtividade-foto">
+            <img src="img-perfil-padrao.jpeg" alt="Foto da família" class="publicarAtividade-foto">
             <div class="conteudo-texto-botao">
                 <textarea placeholder="Publicar uma nova atividade:"></textarea>
                 <button class="botao-publicar">Publicar</button>
             </div>
         </div>
+        <% } %>
+        
         <div class="atividades-secao">
-            <h3>Suas atividades</h3>
-            
-            <%  Atividade atividade = new Atividade();
-            
-            %>
+            <h3>Atividades</h3>
             
             
+           <%
+           DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+           for(Atividade atividade : atividades) { %>
             <div class="atividade-cartao">
                 <h4><%=atividade.getTitulo() %></h4>
-                <p>Data: <%=atividade.getData() %> 
+                <p>Data: <%=atividade.getData().format(dt) %> 
                    Horário: <%=atividade.getHora() %></p>
                 <p>Localização: <%= atividade.getLocalizacao() %></p>
                 <p class="atividade-descricao">
                     Descrição: <%=atividade.getDescricao() %>
                 </p>
-                <div class="atividade-botoes">
-                    <button>Editar</button>
-                    <button>Voluntários</button>
-                    <button>Cancelar</button>
-                    <button>Excluir</button>
-                </div>
+                
+                <% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
+                	<div class="atividade-botoes">
+                    	<button>Editar</button>
+                    	<button>Voluntários</button>
+                    	<button>Cancelar</button>
+                    	<button>Excluir</button>
+                	</div> 
+               	<% } %>
             </div>
+            <% } %>
         </div>
 	</div>
 </body>

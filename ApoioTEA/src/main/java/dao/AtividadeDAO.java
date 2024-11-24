@@ -13,6 +13,8 @@ import java.util.List;
 
 import modelo.Atividade;
 import modelo.Familia;
+import modelo.Usuario;
+import modelo.Voluntario;
 
 public class AtividadeDAO {
 	public void inserirAtividade(Atividade atividade) {
@@ -61,6 +63,7 @@ public class AtividadeDAO {
 			ResultSet rs = ps.executeQuery()) {
 			
 			atividades = new ArrayList<Atividade>();
+			List<Familia> familias = new FamiliaDAO().selecionarFamilias();
 			
 			while(rs.next()) {
 				int id = rs.getInt("id");
@@ -71,14 +74,15 @@ public class AtividadeDAO {
 				String status = rs.getString("status");
 				LocalDate data = rs.getDate("data").toLocalDate();
 				LocalTime hora = rs.getTime("hora").toLocalTime();
-				//int idFamilia = rs.getInt("familia_usuario_id");
+				int idFamilia = rs.getInt("familia_usuario_id");
 				
 				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
 						localizacao, status, data, hora);
 				atividades.add(atividade);
-				// ainda não associa as familias com as atividades
+				
+				associarFamiliasAAtividades(familias, atividade,
+						idFamilia);
 			}
-			
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -87,9 +91,16 @@ public class AtividadeDAO {
 		return atividades;
 	}
 	
+	private void associarFamiliasAAtividades(List<Familia> familias,
+			Atividade atividade, int idFamilia) {
+		for (Familia familia : familias) {
+			if(familia.getId() == idFamilia) {
+				atividade.setFamilia(familia);
+				break;
+			}
+		}
+	}
 	
-	
-	// não testada
 	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
 		String consulta = "select * from atividade where familia_usuario_id = ?";
 		List<Atividade> atividades = null;
@@ -118,6 +129,7 @@ public class AtividadeDAO {
 				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
 						localizao, status, data, hora);
 				atividades.add(atividade);
+				
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -135,10 +147,6 @@ public class AtividadeDAO {
 		}
 		return atividades;
 	}
-	
-	
-	
-	
 	
 	public void excluirAtividade(int id) {
 		String exclusao = "delete from atividade where id = ?";
