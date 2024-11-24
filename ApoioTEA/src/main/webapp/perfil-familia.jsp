@@ -3,11 +3,7 @@
 <%@ page import="modelo.Familia" %>
 <%@ page import="modelo.Atividade" %>
 
-<% Familia familia = (Familia) session.getAttribute("familia");
-	if(familia == null){
-		familia = new Familia();
-	}
-%>
+<% Familia familia = (Familia) session.getAttribute("familia"); %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

@@ -3,7 +3,6 @@ package controlador;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -20,7 +19,7 @@ import modelo.Familia;
 /**
  * Servlet implementation class AtividadesControlador
  */
-@WebServlet(urlPatterns = {"/publicar", "/atividadesVoluntario"})
+@WebServlet(urlPatterns = {"/publicar", "/inicio-voluntario1", "/adicionar-candidato"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,10 +38,13 @@ public class AtividadesControlador extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String action = request.getServletPath();
+		System.out.println(action);
 		if (action.equals("/publicar")) {
 			publicarAtividade(request, response);
-		} else if (action.equals("/atividadesVoluntario")) {
+		} else if (action.equals("/inicio-voluntario1")) {
 			exibirAtividades(request, response);
+		} else if(action.equals("/adicionar-candidato")) {
+			adicionarCandidato(request, response);
 		}
 		
 	
@@ -77,7 +79,7 @@ public class AtividadesControlador extends HttpServlet {
 			Atividade atividade = new Atividade(titulo, categoria, descricao, localizacao, 
 					 LocalDate.parse(data), LocalTime.parse(hora));
 			familia.criarAtividade(atividade);
-			response.sendRedirect("perfilFamilia.jsp");
+			response.sendRedirect("perfil-familia.jsp");
 			
 		} else {
 			response.sendRedirect("login.jsp");
@@ -85,12 +87,17 @@ public class AtividadesControlador extends HttpServlet {
 	}
 	
 	protected void exibirAtividades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		List<Atividade> atividades = new Atividade().selecionarTodasAsAtividades();
-
 		request.setAttribute("atividades", atividades);
-		RequestDispatcher rd = request.getRequestDispatcher("atividadesVoluntario.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("inicio-voluntario1.jsp");
 		rd.forward(request, response);
+		
+	}
+	
+	protected void adicionarCandidato(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
+		System.out.println(atividadeId);
+		
 		
 	}
 

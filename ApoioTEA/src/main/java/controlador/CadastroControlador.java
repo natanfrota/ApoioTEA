@@ -55,7 +55,7 @@ public class CadastroControlador extends HttpServlet {
 				familia.fazerCadastro();
 				HttpSession sessao = request.getSession();
 				sessao.setAttribute("familia", familia);
-				response.sendRedirect("inicioFamilia.jsp");
+				response.sendRedirect("inicio-familia.jsp");
 			}
 			else if(tipo.equalsIgnoreCase("voluntario") && experiencia != null && habilidades != null) {
 				Voluntario voluntario = new Voluntario(nome, email, LocalDate.parse(dataNascimento),
@@ -64,7 +64,7 @@ public class CadastroControlador extends HttpServlet {
 				voluntario.fazerCadastro();
 				HttpSession sessao = request.getSession();
 				sessao.setAttribute("voluntario", voluntario);
-				response.sendRedirect("inicioVoluntario.jsp");
+				response.sendRedirect("inicio-voluntario1");
 			}
 		}
 	}

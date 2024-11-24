@@ -7,7 +7,6 @@
 <title>Início</title>
 </head>
 <body>
-	olá, familia
-	<a href="atividadesVoluntario">clique aqui</a>
+	
 </body>
 </html>
