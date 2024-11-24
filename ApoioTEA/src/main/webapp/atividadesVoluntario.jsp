@@ -11,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApoioTEA - Atividades</title>
+    <title>ApoioTEA</title>
     <link rel="stylesheet" href="css/atividades.css">
 </head>
 <body>

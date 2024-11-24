@@ -31,10 +31,11 @@
             <div class="filtro">
                 <label for="filtro-status">Filtrar por:</label>
                 <select id="filtro-status">
-                    <option value="Aberta">Aberta</option>
-                    <option value="Concluida">Concluida</option>
-                    <option value="Confirmada">Confirmada</option>
-                    <option value="Cancelada">Cancelada</option>
+                	<option value="">Status</option>
+                    <option value="aberta">Aberta</option>
+                    <option value="concluida">Concluida</option>
+                    <option value="confirmada">Confirmada</option>
+                    <option value="cancelada">Cancelada</option>
                 </select>
             </div>
             <div class="atividade">

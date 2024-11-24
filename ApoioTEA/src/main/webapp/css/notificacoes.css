@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    background-color: #e3f2fd;
+    color: #333;
+}
+
+.barraTarefas {
+    position: fixed;
+    width: 250px;
+    background-color: #1e88e5;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.barraTarefas h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.barraTarefas ul {
+    list-style: none;
+    font-size: 1.2rem;
+}
+
+.barraTarefas li {
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.barraTarefas li:hover {
+    background-color: #1565c0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.barraTarefas a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.barraTarefas a.ativo {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.conteudo {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+header h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #1e88e5;
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.notificacao {
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #1e88e5;
+    position: relative;
+}
+
+.notificacao h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    color: #1e88e5;
+}
+
+.notificacao p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.notificacao .horario {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 0.9rem;
+    color: #999;
+}

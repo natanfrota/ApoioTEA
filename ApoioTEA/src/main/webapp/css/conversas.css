@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e3f2fd;
+    display: flex;
+    color: #333;
+}
+
+.barraTarefas {
+    position: fixed;
+    width: 250px;
+    background-color: #1e88e5;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.barraTarefas h1 {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.barraTarefas ul {
+    list-style: none;
+    font-size: 1.2rem;
+}
+
+.barraTarefas li {
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.barraTarefas li:hover {
+    background-color: #1565c0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.barraTarefas a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+
+.conteudo {
+    margin-left: 250px;
+    padding: 20px;
+    width: calc(100% - 250px);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+header h2 {
+    font-size: 24px;
+}
+
+header input {
+    width: 50%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.conversa {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.conversa:hover {
+    background-color: #f1f1f1;
+}
+
+.conversa img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.detalhes h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.detalhes p {
+    margin: 5px 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.hora {
+    margin-left: auto;
+    font-size: 0.9rem;
+    color: #999;
+}
