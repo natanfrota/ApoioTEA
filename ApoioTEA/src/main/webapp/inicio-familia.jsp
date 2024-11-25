@@ -24,7 +24,8 @@
     </div>
     <div class="conteudo">
         <header>
-            <button class="botao-publicar">Publicar uma nova atividade</button>
+            <button class="botao-publicar" onclick="window.location.href='publicar-atividade.jsp'"
+            >Publicar uma nova atividade</button>
         </header>
         <main>
             <h2>Atividades publicadas por você</h2>
