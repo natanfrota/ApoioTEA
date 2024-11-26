@@ -73,6 +73,7 @@ header .botao-publicar {
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    position: center;
 }
 
 header .botao-publicar:hover {
@@ -98,41 +99,6 @@ h2 {
     margin-bottom: 20px;
 }
 
-.filtro {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
-    gap: 10px;
-    font-size: 1rem;
-}
-
-.filtro label {
-    font-weight: bold;
-    color: #555;
-}
-
-.filtro select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #333;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.filtro select:hover {
-    border-color: #1e88e5;
-    box-shadow: 0 0 5px rgba(30, 136, 229, 0.5);
-}
-
-.filtro select:focus {
-    outline: none;
-    border-color: #1e88e5;
-    box-shadow: 0 0 8px rgba(30, 136, 229, 0.8);
-}
-
 .atividade {
     border: 1px solid #ccc;
     padding: 15px;
@@ -151,21 +117,83 @@ h2 {
 
 .botoes {
     display: flex;
-    justify-content: space-between;
+    justify-content:100px;
     margin-top: 10px;
 }
 
 .botoes button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #1e88e5;
+    background-color: #1e90ff;
     color: white;
-    transition: background-color 0.3s ease;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
 }
 
 .botoes button:hover {
     background-color: #1565c0;
 }
+.main-content {
+    margin: auto;
+    flex: 1;
+    
+}
+
+.perfil-secao {
+    background-color: #1963c5;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    width:1020px;
+}
+
+.perfil-cartao {
+    display: flex;
+    align-items: center;
+}
+
+.perfil-foto {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    margin-right: 20px;
+}
+
+.perfil-info h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.descricao {
+    margin: 10px 0;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-direction: column; /* Adicione esta linha */
+}
+
+header .botao-publicar {
+    margin-top: 20px; /* Pode ajustar o valor conforme necessário */
+}
+
+.botao-editarperfil {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-editarperfil:hover {
+    background-color: #1e90ff; 
+    color: white;
+    transition: background-color 0.3s ease;
+}
+

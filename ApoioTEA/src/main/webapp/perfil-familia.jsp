@@ -84,9 +84,10 @@
                 
                 <% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
                 	<div class="atividade-botoes">
-                    	<button onclick="window.location.href='editar-atividade?atividadeId=<%= atividade.getId()%>'">Editar</button>
+                    	<button>Editar</button>
                     	<button>Voluntários</button>
-                    	<button >Excluir</button>
+                    	<button>Cancelar</button>
+                    	<button>Excluir</button>
                 	</div> 
                	<% } %>
             </div>
