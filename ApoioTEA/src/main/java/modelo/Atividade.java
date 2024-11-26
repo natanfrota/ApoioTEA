@@ -61,8 +61,8 @@ public class Atividade {
 		return new AtividadeDAO().selecionarTodasAsAtividades();
 	}
 	
-	public List<Atividade> selecionarAtividadesDeUmaFamilia(int id){
-		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(id);
+	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
+		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(idFamilia);
 	}
 	
 	public void editarAtividade() {
