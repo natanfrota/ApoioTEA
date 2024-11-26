@@ -20,7 +20,7 @@ import modelo.Voluntario;
 
 
 @WebServlet(urlPatterns = {"/publicar", "/editar-atividade", "/salvar-edicao-atividade", 
-		"/adicionar-candidato", "/cancelar-candidatura"})
+		"/adicionar-candidato", "/cancelar-candidatura", "/excluir-atividade"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,10 +35,13 @@ public class AtividadesControlador extends HttpServlet {
 		
 		String action = request.getServletPath();
 		System.out.println(action);
+		
 		if (action.equals("/publicar")) {
 			publicarAtividade(request, response);
 		} else if (action.equals("/editar-atividade")) {
 			editarAtividade(request, response);
+		} else if (action.equals("/excluir-atividade")) {
+			excluirAtividade(request, response);
 		} else if (action.equals("/salvar-edicao-atividade")) {
 			salvarEdicaoAtividade(request, response);
 		} else if(action.equals("/adicionar-candidato")) {
@@ -94,6 +97,29 @@ public class AtividadesControlador extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("editar-atividade.jsp");
 				rd.forward(request, response);
 				return;
+			}
+		}
+	}
+	
+	protected void excluirAtividade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Integer id = null;
+
+		try {
+			id = Integer.valueOf(request.getParameter("atividadeId"));
+		} catch (NumberFormatException e) {
+			System.err.println(e);
+		}
+		
+		if(id != null) {
+			Atividade atividade = new Atividade();
+			atividade.setId(id);
+			boolean encontrado = atividade.selecionarAtividade();
+						
+			if(encontrado) {
+				atividade.excluir();
+				String url = request.getRequestURL().toString();
+				System.out.println(url);
+		        response.sendRedirect(url);
 			}
 		}
 	}
