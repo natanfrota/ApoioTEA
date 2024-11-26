@@ -13,25 +13,19 @@ import modelo.Familia;
 import modelo.Usuario;
 import modelo.Voluntario;
 
-/**
- * Servlet implementation class LoginControlador
- */
 @WebServlet(urlPatterns = {"/login"})
 public class LoginControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public LoginControlador() {
         super();
         // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		String email = request.getParameter("email");
 		String senha = request.getParameter("senha");
 		
@@ -60,10 +54,5 @@ public class LoginControlador extends HttpServlet {
 				response.sendRedirect("login.jsp");
 			}
 		}
-	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 }

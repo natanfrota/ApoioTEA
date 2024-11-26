@@ -20,7 +20,7 @@ import modelo.Voluntario;
 
 
 @WebServlet(urlPatterns = {"/publicar", "/editar-atividade", "/salvar-edicao-atividade", 
-		"/inicio-voluntario", "/adicionar-candidato", "/cancelar-candidatura"})
+		"/adicionar-candidato", "/cancelar-candidatura"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -41,19 +41,12 @@ public class AtividadesControlador extends HttpServlet {
 			editarAtividade(request, response);
 		} else if (action.equals("/salvar-edicao-atividade")) {
 			salvarEdicaoAtividade(request, response);
-		} else if (action.equals("/inicio-voluntario")) {
-			exibirAtividades(request, response);
 		} else if(action.equals("/adicionar-candidato")) {
 			adicionarCandidatura(request, response);
 		} else if(action.equals("/cancelar-candidatura")) {
 			removerCandidatura(request, response);
 		}
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-	
 	
 	protected void publicarAtividade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		String titulo = request.getParameter("titulo");
@@ -126,16 +119,6 @@ public class AtividadesControlador extends HttpServlet {
 		} else {
 			response.sendRedirect("login.jsp");
 		}
-	}
-	
-	
-	
-	protected void exibirAtividades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Atividade> atividades = new Atividade().selecionarTodasAsAtividades();
-		request.setAttribute("atividades", atividades);
-		RequestDispatcher rd = request.getRequestDispatcher("inicio-voluntario.jsp");
-		rd.forward(request, response);
-		
 	}
 	
 	protected void adicionarCandidatura(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
