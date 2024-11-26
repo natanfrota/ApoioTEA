@@ -13,24 +13,18 @@ import modelo.Atividade;
 import modelo.Familia;
 import modelo.Voluntario;
 
-/**
- * Servlet implementation class PerfilVoluntarioControlador
- */
+
 @WebServlet(urlPatterns = {"/perfil-voluntario", "/perfil-familia"})
 public class PerfilControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+    
     public PerfilControlador() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
 		System.out.println(action);
@@ -41,10 +35,7 @@ public class PerfilControlador extends HttpServlet {
 			exibirFamilia(request, response);
 		}
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void exibirVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = null;
 

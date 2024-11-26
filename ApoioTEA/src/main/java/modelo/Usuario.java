@@ -52,8 +52,9 @@ public class Usuario {
 	public void fazerCadastro() {
 	}
 	
-	//public boolean isEmailUnico(String email) {
-		//return new UsuarioDAO().verificarEmail(email);}
+	public boolean isEmailUnico(String email) {
+		return new UsuarioDAO().verificarEmailUnico(email);
+	}
 	
 	public boolean fazerLogin() {
 		UsuarioDAO usuarioDAO = new UsuarioDAO();

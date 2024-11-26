@@ -13,8 +13,6 @@ import java.util.List;
 
 import modelo.Atividade;
 import modelo.Familia;
-import modelo.Usuario;
-import modelo.Voluntario;
 
 public class AtividadeDAO {
 	public void inserirAtividade(Atividade atividade) {
@@ -101,6 +99,39 @@ public class AtividadeDAO {
 		}
 	}
 	
+	public boolean selecionarAtividade(Atividade atividade){
+		String consulta = "select * from atividade where id = ?";
+		
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try{
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(consulta);
+			ps.setInt(1, atividade.getId());
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				atividade.setId(rs.getInt("id"));
+				atividade.setTitulo(rs.getString("titulo"));
+				atividade.setCategoria(rs.getString("categoria"));
+				atividade.setDescricao(rs.getString("descricao"));
+				atividade.setLocalizacao(rs.getString("localizacao"));
+				atividade.setStatus(rs.getString("status"));
+				atividade.setData(rs.getDate("data").toLocalDate());
+				atividade.setHora(rs.getTime("hora").toLocalTime());
+				
+				return true;
+			} 
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		}
+		
+		return false;
+	}
+	
 	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
 		String consulta = "select * from atividade where familia_usuario_id = ?";
 		List<Atividade> atividades = null;
@@ -148,6 +179,95 @@ public class AtividadeDAO {
 		return atividades;
 	}
 	
+	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int familiaId,
+			int voluntarioId) {
+		String insercao = "insert into atividade_has_voluntario "
+						+ "(atividade_id, atividade_familia_usuario_id, voluntario_usuario_id) "
+						+ "values (?,?,?)";
+		
+		try(Connection conexao = Conexao.criarConexao();
+			PreparedStatement ps = conexao.prepareStatement(insercao)){
+			ps.setInt(1, atividadeId);
+			ps.setInt(2, familiaId);
+			ps.setInt(3, voluntarioId);
+			int linhas = ps.executeUpdate();
+			
+			if (linhas > 0) {
+				System.out.println("linhas: " + linhas);
+				return true;
+			}
+			
+		} catch(ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		}
+		
+		return false;
+	}
+	
+	
+	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int familiaId, int voluntarioId) {
+		String remocao = "delete from atividade_has_voluntario " 
+					   + "where atividade_id = ? "
+					   + "and atividade_familia_usuario_id = ? " 
+					   + "and voluntario_usuario_id = ?";
+
+		try (Connection conexao = Conexao.criarConexao(); 
+			 PreparedStatement ps = conexao.prepareStatement(remocao)) {
+			ps.setInt(1, atividadeId);
+			ps.setInt(2, familiaId);
+			ps.setInt(3, voluntarioId);
+			int linhas = ps.executeUpdate();
+
+			if (linhas > 0) {
+				System.out.println("linhas deletadas: " + linhas);
+				return true;
+			}
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		}
+
+		return false;
+	}
+	
+	
+	public void editarAtividade(Atividade atividade) {
+		String edicao = "update atividade set titulo = ?, categoria = ?, "
+				+ "descricao = ?, localizacao = ?, status = ?, " + "data = ?, hora = ? where id = ?";
+
+		Connection conexao = null;
+		PreparedStatement ps = null;
+
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(edicao);
+			ps.setString(1, atividade.getTitulo());
+			ps.setString(2, atividade.getCategoria());
+			ps.setString(3, atividade.getDescricao());
+			ps.setString(4, atividade.getLocalizacao());
+			ps.setString(5, atividade.getStatus());
+			ps.setDate(6, Date.valueOf(atividade.getData()));
+			ps.setTime(7, Time.valueOf(atividade.getHora()));
+			ps.setInt(8, atividade.getId());
+
+			int linhas = ps.executeUpdate();
+			System.out.println("Linhas atualizadas: " + linhas);
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+	}
+	
+	
 	public void excluirAtividade(int id) {
 		String exclusao = "delete from atividade where id = ?";
 		
@@ -176,26 +296,4 @@ public class AtividadeDAO {
 		}
 		
 	}
-	
-	
-	/*
-	public static void main(String[] args) {
-		Atividade atividade = new Atividade();
-		Familia f = new Familia();
-		//atividade.setId(9);
-		
-		//f.excluirAtividade(atividade);
-		
-		f.setId(2);
-		new FamiliaDAO().selecionarFamilia(f);
-		atividade.setTitulo("fumo, sancho");
-		atividade.setData(LocalDate.now());
-		atividade.setHora(LocalTime.now());
-		atividade.setFamilia(f);
-		atividade.cadastrar();
-		
-		List<Atividade> as = atividade.selecionarTodasAsAtividades();
-		System.out.println(as.size());
-	}
-	*/
 }

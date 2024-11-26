@@ -25,12 +25,12 @@ public class Atividade {
 	}
 	
 	public Atividade(String titulo, String categoria, String descricao, 
-			String localizacao, LocalDate data, LocalTime hora) {
+			String localizacao, String status, LocalDate data, LocalTime hora) {
 		this.titulo = titulo;
 		this.categoria = categoria;
 		this.descricao = descricao;
 		this.localizacao = localizacao;
-		this.status = "aberta";
+		this.status = status;
 		this.data = data;
 		this.hora = hora;
 		this.voluntariosCandidatos = new ArrayList<Voluntario>();
@@ -53,6 +53,10 @@ public class Atividade {
 		new AtividadeDAO().inserirAtividade(this);
 	}
 	
+	public boolean selecionarAtividade() {
+		return new AtividadeDAO().selecionarAtividade(this); 
+	}
+	
 	public List<Atividade> selecionarTodasAsAtividades(){
 		return new AtividadeDAO().selecionarTodasAsAtividades();
 	}
@@ -61,11 +65,21 @@ public class Atividade {
 		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(id);
 	}
 	
+	public void editarAtividade() {
+		new AtividadeDAO().editarAtividade(this);
+	}
+	
 	public void excluir() {
 		new AtividadeDAO().excluirAtividade(id);
 	}
 	
+	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int familiaId, int voluntarioId) {
+		return new AtividadeDAO().registrarCandidaturaDeUmVoluntario(atividadeId, familiaId, voluntarioId);
+	}
 	
+	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int familiaId, int voluntarioId) {
+		return new AtividadeDAO().removerCandidaturaDeUmaAtividade(atividadeId, familiaId, voluntarioId);
+	}
 
 	public Familia getFamilia() {
 		return familia;
@@ -153,10 +167,5 @@ public class Atividade {
 
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
-	}
-
-	public void setVoluntario(Voluntario voluntario) {
-		// TODO Auto-generated method stub
-		
 	}
 }

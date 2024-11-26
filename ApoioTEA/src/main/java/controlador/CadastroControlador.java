@@ -11,26 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.Familia;
+import modelo.Usuario;
 import modelo.Voluntario;
 
-/**
- * Servlet implementation class CadastroControlador
- */
 @WebServlet("/cadastro")
 public class CadastroControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+   
     public CadastroControlador() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String tipo = request.getParameter("tipo"); 
 		String nome = request.getParameter("nome");
@@ -43,11 +36,12 @@ public class CadastroControlador extends HttpServlet {
 		String experiencia = request.getParameter("experiencia");
 		String habilidades = request.getParameter("habilidades");
 		
-		System.out.println("Tipo de usuário" + tipo);
+		boolean unico = new Usuario().isEmailUnico(email);
+		System.out.println("Único?:" + unico);
 		
 		if(tipo != null && nome != null && email != null && senha != null && 
 			dataNascimento != null &&	cidade != null && estado != null 
-			&& descricao != null) {
+			&& descricao != null && unico) {
 			if (tipo.equalsIgnoreCase("familia")) {
 				Familia familia =  new Familia(nome, email, LocalDate.parse(dataNascimento),
 						cidade, estado, descricao, "ativa");
@@ -55,7 +49,7 @@ public class CadastroControlador extends HttpServlet {
 				familia.fazerCadastro();
 				HttpSession sessao = request.getSession();
 				sessao.setAttribute("familia", familia);
-				response.sendRedirect("inicio-familia.jsp");
+				response.sendRedirect("inicio-familia");
 			}
 			else if(tipo.equalsIgnoreCase("voluntario") && experiencia != null && habilidades != null) {
 				Voluntario voluntario = new Voluntario(nome, email, LocalDate.parse(dataNascimento),
@@ -64,7 +58,7 @@ public class CadastroControlador extends HttpServlet {
 				voluntario.fazerCadastro();
 				HttpSession sessao = request.getSession();
 				sessao.setAttribute("voluntario", voluntario);
-				response.sendRedirect("inicio-voluntario1");
+				response.sendRedirect("inicio-voluntario");
 			}
 		}
 	}

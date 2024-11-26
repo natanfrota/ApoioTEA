@@ -48,6 +48,40 @@ public class UsuarioDAO {
 		return false;
 	}
 	
+	public boolean verificarEmailUnico(String email) {
+		String consulta = "select * from usuario where email = ?";
+		
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(consulta);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			
+			if(rs.next())
+				return false; //o email já está cadastrado
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+		
+		return true;
+	}
+	
 	public void alterarDadosPerfilUsuario(Usuario usuario) {
 		String alteracao = "update usuario set nome = ?, email = ?, cidade = ?, "
 				+ "estado = ?, descricao = ? where id = ?";

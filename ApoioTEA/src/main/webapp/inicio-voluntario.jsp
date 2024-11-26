@@ -42,14 +42,14 @@
             <p><strong>Data:</strong> <%= atv.getData().format(dt) %> <strong>Hora:</strong> <%= atv.getHora() %></p>
             <p><strong>Localização:</strong> <%= atv.getLocalizacao() %></p>
             <p class="descricao">Descrição: <%= atv.getDescricao() %></p>
-            <button class="botao-voluntariar" onclick="voluntariar(<%= atv.getId() %>, '<%= indiceBotao %>')">
+            <button class="botao-voluntariar" onclick="candidatar(<%= atv.getId() %>, <%= atv.getFamilia().getId() %>, <%= indiceBotao %>)">
             Voluntariar-se</button>
         </div> 
         <% indiceBotao++; %>       	
 		<% } %>
     </div>
 
-	<script src="js/voluntariar.js"></script>
+	<script src="js/voluntariar1.js"></script>
 </body>
 </html>
 

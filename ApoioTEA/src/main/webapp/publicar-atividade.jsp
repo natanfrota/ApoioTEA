@@ -14,7 +14,7 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="atividadesVoluntario.jsp">Início</a></li>
+                <li><a href="">Início</a></li>
                 <li><a href="#">Perfil</a></li>
                 <li><a href="#">Atividades</a></li>
                 <li><a href="#">Conversas</a></li>

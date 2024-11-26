@@ -48,7 +48,7 @@ public class LoginControlador extends HttpServlet {
 					v.setId(usuario.getId());
 					v.selecionarVoluntario();
 					sessao.setAttribute("usuario", v);
-					response.sendRedirect("inicio-voluntario1");
+					response.sendRedirect("inicio-voluntario");
 				} else if(usuario.getTipo().equals("familia")){
 					Familia f = new Familia();
 					f.setId(usuario.getId());
@@ -62,9 +62,7 @@ public class LoginControlador extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

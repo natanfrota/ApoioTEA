@@ -195,4 +195,49 @@ public class VoluntarioDAO {
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	// testar
+	private List<Voluntario> selecionarCandidatosDeUmaAtividade(int atividadeId) {
+		String consulta = "select * from atividade_has_voluntario "
+						+ "where atividade_id = ? "
+						+ "and atividade_familia_usuario_id = ?";
+
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		List<Voluntario> candidatos = null;
+
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(consulta);
+			ps.setInt(1, atividadeId);
+			rs = ps.executeQuery();
+
+			candidatos = new ArrayList<Voluntario>();
+
+			while (rs.next()) {
+				
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+
+		return candidatos;
+	}
 }
