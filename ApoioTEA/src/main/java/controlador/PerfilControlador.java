@@ -43,7 +43,7 @@ public class PerfilControlador extends HttpServlet {
 		} else if (action.equals("/inicio-familia")) {
 			exibirPaginaInicialDaFamilia(request, response);
 		} else if (action.equals("/sair")) {
-			
+			sair(request, response);
 		}
 	}
 	
@@ -120,7 +120,9 @@ public class PerfilControlador extends HttpServlet {
 	}
 	
 	protected void sair(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession sessao = request.getSession();
+		System.out.println("dentro de sair");
+		HttpSession sessao = request.getSession(false);
+		System.out.println(sessao);
 		sessao.invalidate();
 		response.sendRedirect("login.jsp");
 	}
