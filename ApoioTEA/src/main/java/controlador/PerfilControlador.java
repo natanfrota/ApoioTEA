@@ -17,7 +17,7 @@ import modelo.Voluntario;
 
 
 @WebServlet(urlPatterns = {"/perfil-voluntario", "/perfil-familia", "/inicio-voluntario",
-		"/inicio-familia"})
+		"/inicio-familia", "/sair"})
 public class PerfilControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -42,6 +42,8 @@ public class PerfilControlador extends HttpServlet {
 			exibirPaginaInicialDoVoluntario(request, response);
 		} else if (action.equals("/inicio-familia")) {
 			exibirPaginaInicialDaFamilia(request, response);
+		} else if (action.equals("/sair")) {
+			
 		}
 	}
 	
@@ -115,5 +117,11 @@ public class PerfilControlador extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("inicio-familia.jsp");
 			rd.forward(request, response);
 		}
+	}
+	
+	protected void sair(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sessao = request.getSession();
+		sessao.invalidate();
+		response.sendRedirect("login.jsp");
 	}
 }

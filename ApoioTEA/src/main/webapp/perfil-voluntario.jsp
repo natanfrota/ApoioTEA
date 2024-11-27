@@ -26,7 +26,7 @@
                 <li>Atividades agendadas</li>
                 <li>Conversas</li>
                 <li>Notificações</li>
-                <li>Sair</li>
+                <li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>

@@ -20,10 +20,10 @@
             <ul>
                 <li><a href="inicio-familia">Início</a></li>
                 <li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
-                <li><a href="#">Atividades</a></li>
+                <li><a href="#">Atividades agendadas</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>
-                <li><a href="#">Sair</a></li>
+                <li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>
