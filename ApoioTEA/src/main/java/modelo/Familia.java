@@ -48,7 +48,16 @@ public class Familia extends Usuario{
 		atividade.cadastrar();
 	}
 	
-	public void excluirAtividade(Atividade atividade) {
-		atividade.excluir();
+	public void excluirAtividade(int atividadeId) {
+		if(atividades == null)
+			return;
+		
+		for (Atividade atividade : atividades) {
+			if(atividade != null && atividade.getId() == atividadeId) {
+				atividade.excluir();
+				break;
+			}
+				
+		}
 	}
 }

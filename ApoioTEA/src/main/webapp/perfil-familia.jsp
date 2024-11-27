@@ -4,6 +4,7 @@
 <%@ page import="modelo.Usuario" %>
 <%@ page import="modelo.Familia" %>
 <%@ page import="modelo.Atividade" %>
+<%@ page import="modelo.Voluntario" %>
 <%@page import="java.time.format.DateTimeFormatter"%>
 
 <%  Usuario usuarioDaSessao = (Usuario) session.getAttribute("usuario");
@@ -92,6 +93,21 @@
                     	Excluir</button>
                 	</div> 
                	<% } %>
+               	
+               	
+               	<% if(atividade.getVoluntariosCandidatos() != null){
+            	 	for(Voluntario v : atividade.getVoluntariosCandidatos()){ %>
+            		 	<div class="exibicao-voluntarios">
+                    		<div>
+                        		<%= v.getNome()%>
+                        		<button>Conversar</button>
+                        		<button>Aceitar</button>
+                   		</div>
+             		</div> 
+            		<%}	
+            	 } %> 
+            	 
+            	 
             </div>
             <% } %>
         </main>

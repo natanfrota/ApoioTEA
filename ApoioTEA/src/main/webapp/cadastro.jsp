@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ApoioTEA</title>
-    <link rel="stylesheet" href="css/cadastro.css">
+    <link rel="stylesheet" href="css/cadastro1.css">
 </head>
 <body>
     <header class="barra topo">
@@ -58,13 +58,17 @@
                 </div>
 
                 <button type="submit">Cadastrar-se</button>
+                <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
             </form>
         </div>
     </main>
+    <div class="caixa-mensagem" id="caixaMensagem">
+        <%= request.getAttribute("mensagem") %>
+    </div>
     <footer class="barra rodape">
        
     </footer>
 
-    <script src="js/cadastro.js"></script>
+    <script src="js/cadastro1.js"></script>
 </body>
 </html>

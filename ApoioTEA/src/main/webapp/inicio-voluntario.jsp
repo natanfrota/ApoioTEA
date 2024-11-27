@@ -43,6 +43,7 @@
             <p><strong>Localização:</strong> <%= atv.getLocalizacao() %></p>
             <p class="descricao">Descrição: <%= atv.getDescricao() %></p>
             <button class="botao-voluntariar">Voluntariar-se</button>
+             <-- if para o botao -->
         </div> 
 		<% } %>
     </div>

@@ -110,21 +110,19 @@ public class AtividadesControlador extends HttpServlet {
 			System.err.println(e);
 		}
 		
-		if(id != null) {
-			Atividade atividade = new Atividade();
-			atividade.setId(id);
-			boolean encontrado = atividade.selecionarAtividade();
-						
-			if(encontrado) {
-				atividade.excluir();
-				String paginaAnterior = request.getHeader("Referer");
-				if (paginaAnterior != null) {
-				    System.out.println(paginaAnterior);
-				    response.sendRedirect(paginaAnterior);
-				}
+		if(id != null) {				
+			Familia familia = (Familia) request.getAttribute("usuario");
+			if(familia != null && familia.getAtividades() != null) {
+				familia.excluirAtividade(id);
+			}
+			
+			String paginaAnterior = request.getHeader("Referer");
+			if (paginaAnterior != null) {
+			    System.out.println(paginaAnterior);
+			    response.sendRedirect(paginaAnterior);
 			}
 		}
-	}
+}
 	
 	protected void salvarEdicaoAtividade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		System.out.println("entrou aqui");

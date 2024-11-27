@@ -38,19 +38,22 @@ public class CadastroControlador extends HttpServlet {
 		String experiencia = request.getParameter("experiencia");
 		String habilidades = request.getParameter("habilidades");
 		
-		boolean unico = new Usuario().isEmailUnico(email);
-		System.out.println("Único?:" + unico);
-		
 		if(tipo != null && nome != null && email != null && senha != null && 
 			dataNascimento != null &&	cidade != null && estado != null 
-			&& descricao != null && unico) {
-			if (tipo.equalsIgnoreCase("familia")) {
+			&& descricao != null) {
+			boolean unico = new Usuario().isEmailUnico(email);
+			if(!unico) {
+				request.setAttribute("status", "erro");
+				request.setAttribute("mensagem", "O email inserido já está cadastrado.");
+				request.getRequestDispatcher("cadastro.jsp").forward(request, response);
+			}
+			else if (tipo.equalsIgnoreCase("familia")) {
 				Familia familia =  new Familia(nome, email, LocalDate.parse(dataNascimento),
 						cidade, estado, descricao, "ativa");
 				familia.setSenha(senha);
 				familia.fazerCadastro();
 				HttpSession sessao = request.getSession();
-				sessao.setAttribute("familia", familia);
+				sessao.setAttribute("usuario", familia);
 				response.sendRedirect("inicio-familia");
 			}
 			else if(tipo.equalsIgnoreCase("voluntario") && experiencia != null && habilidades != null) {
@@ -59,7 +62,7 @@ public class CadastroControlador extends HttpServlet {
 				voluntario.setSenha(senha);
 				voluntario.fazerCadastro();
 				HttpSession sessao = request.getSession();
-				sessao.setAttribute("voluntario", voluntario);
+				sessao.setAttribute("usuario", voluntario);
 				response.sendRedirect("inicio-voluntario");
 			}
 		}
