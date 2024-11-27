@@ -64,6 +64,7 @@
                         <option value="Saúde">Saúde</option>
                         <option value="Educação">Educação</option>
                         <option value="Evento">Evento</option>
+                        <option value="Evento">Outro</option>
                     </select>
                 </div>
 

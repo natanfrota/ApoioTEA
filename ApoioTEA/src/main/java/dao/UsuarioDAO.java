@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class UsuarioDAO {
 			rs = ps.executeQuery();
 			
 			if(rs.next())
-				return false; //o email já está cadastrado
+				return false; 
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -82,9 +83,10 @@ public class UsuarioDAO {
 		return true;
 	}
 	
+	//ainda não testada
 	public void alterarDadosPerfilUsuario(Usuario usuario) {
-		String alteracao = "update usuario set nome = ?, email = ?, cidade = ?, "
-				+ "estado = ?, descricao = ? where id = ?";
+		String alteracao = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
+				+ " cidade = ?, estado = ?, descricao = ? where id = ?";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
@@ -95,10 +97,11 @@ public class UsuarioDAO {
 			ps = conexao.prepareStatement(alteracao);
 			ps.setString(1, usuario.getNome());
 			ps.setString(2, usuario.getEmail());
-			ps.setString(3, usuario.getCidade());
-			ps.setString(4, usuario.getEstado());
-			ps.setString(5, usuario.getDescricao());
-			ps.setInt(6, usuario.getId());
+			ps.setDate(3, Date.valueOf(usuario.getDataNascimento()));
+			ps.setString(4, usuario.getCidade());
+			ps.setString(5, usuario.getEstado());
+			ps.setString(6, usuario.getDescricao());
+			ps.setInt(7, usuario.getId());
 			ps.executeUpdate();
 
 		} catch (ClassNotFoundException | SQLException e) {
@@ -118,6 +121,7 @@ public class UsuarioDAO {
 		}
 	}
 	
+	//ainda não testada
 	public void excluirConta(Usuario usuario) {
 		String exclusao = "update usuario set status_conta = 'excluida' "
 				+ "where id = ?";

@@ -33,7 +33,6 @@
         <h2>Atividades</h2>
         <%
         DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
-        int indiceBotao = 0;
         for(Atividade atv : atividades) { %>
         	<div class="atividade-cartao">
             <h3><%= atv.getTitulo() %></h3>
@@ -43,14 +42,10 @@
             <p><strong>Data:</strong> <%= atv.getData().format(dt) %> <strong>Hora:</strong> <%= atv.getHora() %></p>
             <p><strong>Localização:</strong> <%= atv.getLocalizacao() %></p>
             <p class="descricao">Descrição: <%= atv.getDescricao() %></p>
-            <button class="botao-voluntariar" onclick="candidatar(<%= atv.getId() %>, <%= atv.getFamilia().getId() %>, <%= indiceBotao %>)">
-            Voluntariar-se</button>
+            <button class="botao-voluntariar">Voluntariar-se</button>
         </div> 
-        <% indiceBotao++; %>       	
 		<% } %>
     </div>
-
-	<script src="js/voluntariar1.js"></script>
 </body>
 </html>
 

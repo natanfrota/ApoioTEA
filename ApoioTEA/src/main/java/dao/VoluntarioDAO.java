@@ -201,7 +201,7 @@ public class VoluntarioDAO {
 	
 	
 	// testar
-	private List<Voluntario> selecionarCandidatosDeUmaAtividade(int atividadeId) {
+	public List<Voluntario> selecionarCandidatosDeUmaAtividade(int atividadeId) {
 		String consulta = "select * from atividade_has_voluntario "
 						+ "where atividade_id = ? "
 						+ "and atividade_familia_usuario_id = ?";
