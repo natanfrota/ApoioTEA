@@ -3,8 +3,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<% List<Atividade> atividades = (List<Atividade>) request.getAttribute("atividades");%>
+<%@ page import="modelo.Voluntario" %>
+<% Voluntario voluntario = (Voluntario) session.getAttribute("usuario");
+	List<Atividade> atividades = (List<Atividade>) request.getAttribute("atividades");%>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,8 +20,8 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="inicio-voluntario1">Início</a></li>
-                <li><a href="">Perfil</a></li>
+                <li><a href="inicio-voluntario">Início</a></li>
+                <li><a href="perfil-voluntario?id=<%= voluntario.getId()%>">Perfil</a></li>
                 <li><a href="#">Atividades</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>

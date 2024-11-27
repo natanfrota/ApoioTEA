@@ -1,13 +1,15 @@
+@charset "UTF-8";
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
 body {
+    font-family: Arial, sans-serif;
+    background-color: #e3f2fd;
     display: flex;
-    background-color: #B3E5FC;
     color: #333;
 }
 
@@ -16,14 +18,14 @@ body {
     width: 250px;
     background-color: #1e88e5;
     color: white;
+    height: 100vh;
     padding: 20px;
-    height: 100%;
     text-align: center;
 }
 
 .barraTarefas h1 {
     font-size: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .barraTarefas ul {
@@ -34,57 +36,173 @@ body {
 .barraTarefas li {
     margin: 15px 0;
     cursor: pointer;
-    padding: 5px;
 }
 
 .barraTarefas li:hover {
-    background-color: #1a6a9e;
-    transition: background-color 0.3s ease;
+    background-color: #1565c0;
+    padding: 5px;
+    border-radius: 5px;
 }
 
-a {
+.barraTarefas a {
     text-decoration: none;
-    color: inherit;
-    display: inherit;
-}
-
-a:link, a:visited {
-    text-decoration: none;
-}
-
-.main-content {
-    margin-left: 250px;
-    flex: 1;
-    padding: 20px;
-}
-
-.perfil-secao {
-    background-color: #1963c5;
     color: white;
-    border-radius: 10px;
+    display: block;
+}
+
+.conteudo {
+    margin-left: 250px;
     padding: 20px;
+    width: calc(100% - 250px);
+}
+
+header {
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
-.perfil-cartao {
-    display: flex;
-    align-items: center;
+header .botao-publicar {
+    padding: 10px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #1e88e5;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    position: center;
 }
 
-.perfil-foto {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    margin-right: 20px;
+header .botao-publicar:hover {
+    background-color: #1565c0;
+    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-.perfil-info h2 {
-    font-size: 18px;
+header .botao-publicar:active {
+    background-color: #0d47a1;
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+main {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.atividade {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.atividade h3 {
     margin-bottom: 10px;
 }
 
-.descricao {
-    margin: 10px 0;
+.info p {
+    margin: 5px 0;
+}
+
+.botoes {
+    display: flex;
+    justify-content:100px;
+    margin-top: 10px;
+}
+
+.botoes button {
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.botoes button:hover {
+    background-color: #1565c0;
+}
+
+.main-content {
+    margin: auto;
+    flex: 1;
+    
+}
+
+.perfil-container {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	padding: 20px;
+	border-radius: 8px;
+	margin: auto;
+	align-items: center;
+}
+
+.perfil-header {
+	display: grid;
+	grid-template-columns: 0.5fr 2fr;
+	align-items: center;
+}
+
+.img-container {
+	display: inline;
+	width: 150px;
+	height: 150px;
+	margin: auto;
+}
+
+.perfil-photo {
+	width: 100%;
+	height: auto;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.perfil-name {
+	font-size: 28px;
+	margin: 0;
+}
+
+.perfil-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.attributes {
+	list-style: none;
+	padding: 0;
+}
+
+.attributes li {
+	display: block;
+	text-align: justify;
+	background: #fff;
+	margin: 5px 0;
+	padding: 10px;
+	border-radius: 4px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+header .botao-publicar {
+    margin-top: 20px; 
 }
 
 .botao-editarperfil {
@@ -99,96 +217,5 @@ a:link, a:visited {
 .botao-editarperfil:hover {
     background-color: #1e90ff; 
     color: white;
-    transition: background-color 0.3s ease;
-}
-
-.publicarAtividade-foto {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
-}
-
-.nova-atividade {
-    display: flex;
-    align-items: flex-start;
-    background-color: #6CD1FF;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.conteudo-texto-botao {
-    display: flex;
-    flex-direction: column; 
-    flex: 1;
-}
-
-.nova-atividade textarea{
-    width: 100%;
-    border: none; 
-    border-radius: 5px; 
-    padding: 10px; 
-    font-size: 14px; 
-    min-height: 50px; 
-    max-height: 150px; 
-    overflow-y: auto;
-    resize: none;
-    margin-bottom: 10px;
-}
-
-.botao-publicar {
-    align-self: flex-start;
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.botao-publicar:hover {
-    background-color: #145a99;
-    transition: background-color 0.3s ease;
-}
-
-.nova-atividade textarea :focus {
-    outline: none;
-}
-
-.atividades-secao h3 {
-    margin-bottom: 10px;
-}
-
-.atividade-cartao {
-    background-color: white;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.atividade-cartao h4 {
-    margin-bottom: 5px;
-}
-
-.atividade-descricao {
-    margin: 10px 0;
-}
-
-.atividade-botoes button {
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 5px;
-    cursor: pointer;
-}
-
-.atividade-botoes button:hover {
-    background-color: #0f5a9c;
     transition: background-color 0.3s ease;
 }

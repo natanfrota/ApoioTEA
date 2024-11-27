@@ -71,7 +71,7 @@ public class AtividadesControlador extends HttpServlet {
 			Atividade atividade = new Atividade(titulo, categoria, descricao, localizacao, 
 					 "aberta", LocalDate.parse(data), LocalTime.parse(hora));
 			familia.criarAtividade(atividade);
-			response.sendRedirect("perfil-familia.jsp");
+			response.sendRedirect("inicio-familia");
 			
 		} else {
 			response.sendRedirect("login.jsp");
@@ -117,9 +117,11 @@ public class AtividadesControlador extends HttpServlet {
 						
 			if(encontrado) {
 				atividade.excluir();
-				String url = request.getRequestURL().toString();
-				System.out.println(url);
-		        response.sendRedirect(url);
+				String paginaAnterior = request.getHeader("Referer");
+				if (paginaAnterior != null) {
+				    System.out.println(paginaAnterior);
+				    response.sendRedirect(paginaAnterior);
+				}
 			}
 		}
 	}

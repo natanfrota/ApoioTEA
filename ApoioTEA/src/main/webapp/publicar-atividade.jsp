@@ -1,6 +1,8 @@
 <%@page import="java.time.LocalDate"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="modelo.Familia"%>
+<% Familia familia = (Familia) session.getAttribute("usuario"); %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -14,8 +16,8 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="">Início</a></li>
-                <li><a href="#">Perfil</a></li>
+                <li><a href="inicio-familia">Início</a></li>
+                <li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
                 <li><a href="#">Atividades</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>

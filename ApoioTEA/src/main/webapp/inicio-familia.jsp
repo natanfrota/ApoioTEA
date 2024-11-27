@@ -1,5 +1,18 @@
-S<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="java.util.List"%>
+<%@ page import="modelo.Usuario" %>
+<%@ page import="modelo.Familia" %>
+<%@ page import="modelo.Atividade" %>
+<%@page import="java.time.format.DateTimeFormatter"%>    
+    
+<%  Familia familia = (Familia) session.getAttribute("usuario");
+	List<Atividade> atividades = null;
+	if (familia != null) {
+    	atividades = (List<Atividade>) request.getAttribute("atividades"); 
+	}
+%>    
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,9 +26,9 @@ S<%@ page language="java" contentType="text/html; charset=UTF-8"
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Perfil</a></li>
-                <li><a href="#">Atividades</a></li>
+                <li><a href="inicio-familia">Início</a></li>
+                <li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
+                <li><a href="#">Atividades agendadas</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>
                 <li><a href="#">Sair</a></li>
@@ -29,51 +42,32 @@ S<%@ page language="java" contentType="text/html; charset=UTF-8"
         </header>
         <main>
             <h2>Atividades publicadas por você</h2>
-            <div class="filtro">
-                <label for="filtro-status">Filtrar por:</label>
-                <select id="filtro-status">
-                	<option value="">Status</option>
-                    <option value="aberta">Aberta</option>
-                    <option value="concluida">Concluida</option>
-                    <option value="confirmada">Confirmada</option>
-                    <option value="cancelada">Cancelada</option>
-                </select>
-            </div>
+           
+           <% if(atividades != null) { 
+           		DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+           		for(Atividade atividade : atividades) { %>
+            
             <div class="atividade">
                 <div class="info">
-                    <h3>Acompanhamento em consulta médica</h3>
-                    <p><strong>Data:</strong> 15 de novembro</p>
-                    <p><strong>Hora:</strong> 10h</p>
-                    <p><strong>Tipo:</strong> Saúde</p>
-                    <p><strong>Localização:</strong> Centro de Guanambi</p>
-                    <p><strong>Descrição:</strong> Precisamos de um voluntário para acompanhar Aurora em uma consulta médica.</p>
-                    <p><strong>Voluntário:</strong> Valéria Albuquerque</p>
-                    <p><strong>Status:</strong> Confirmada</p>
+                    <h3><%=atividade.getTitulo() %></h3>
+                    <p><strong>Data:</strong><%=atividade.getData().format(dt) %></p>
+                    <p><strong>Hora:</strong> <%=atividade.getHora() %></p>
+                    <p><strong>Localização:</strong> <%= atividade.getLocalizacao() %></p>
+                    <p><strong>Tipo:</strong> <%=atividade.getCategoria() %></p>
+                    <p><strong>Descrição:</strong>  <%=atividade.getDescricao() %></p>
                 </div>
-                <div class="botoes">
-                    <button>Editar</button>
-                    <button>Voluntários</button>
-                    <button>Cancelar</button>
-                    <button>Excluir</button>
-                </div>
-            </div>
-            <div class="atividade">
-                <div class="info">
-                    <h3>Ajuda em evento escolar</h3>
-                    <p><strong>Data:</strong> 25 de novembro</p>
-                    <p><strong>Hora:</strong> 9h</p>
-                    <p><strong>Tipo:</strong> Evento</p>
-                    <p><strong>Localização:</strong> Escola Joaquim Dias, Guanambi</p>
-                    <p><strong>Descrição:</strong> Estamos buscando voluntários para ajudar durante o evento escolar.</p>
-                    <p><strong>Status:</strong> Aberta</p>
-                </div>
-                <div class="botoes">
-                    <button>Editar</button>
-                    <button>Voluntários</button>
-                    <button>Cancelar</button>
-                    <button>Excluir</button>
-                </div>
-            </div>
+                
+                
+                	<div class="botoes">
+                    	<button onclick="window.location.href='editar-atividade?atividadeId=<%=atividade.getId()%>'">
+                    	Editar</button>
+                    	<button>Voluntários</button>
+                    	<button onclick="window.location.href='excluir-atividade?atividadeId=<%=atividade.getId()%>'">
+                    	Excluir</button>
+                	</div> 
+          </div>  	
+          		<% } %>
+       	<% } %>
         </main>
     </div>
 </body>

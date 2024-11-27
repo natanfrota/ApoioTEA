@@ -23,36 +23,44 @@
             <ul>
                 <li>Início</li>
                 <li>Perfil</li>
-                <li>Atividades</li>
+                <li>Atividades agendadas</li>
                 <li>Conversas</li>
                 <li>Notificações</li>
                 <li>Sair</li>
             </ul>
         </nav>
     </div>
-    <div class="main-content">
-        <div class="perfil-secao">
-            <div class="perfil-cartao">
-                <img src="imagens/img-perfil-padrao.jpeg" alt="Foto da família" class="perfil-foto">
-                <div class="perfil-info">
-                    <h2>Nome: <%= voluntario.getNome() %></h2>
-                    <p>Cidade: <%=voluntario.getCidade() %>, <%= voluntario.getEstado() %></p>
-                    <p>Idade: <%= voluntario.calcularIdade() %></p>
-                    <p>Avaliação média: <%= voluntario.getAvaliacaoMedia() %></p>
-                    <p class="descricao">
-                        Descrição:
-                        <%= voluntario.getDescricao() %>
-                    </p>
-                    <p> Habilidades: <%= voluntario.getHabilidades() %></p>
-                    <p> Experiências: <%= voluntario.getExperiencia() %></p>
-                    
-                    <% if(usuarioDaSessao != null && voluntario.getId() 
+    <div class="conteudo">
+         <div class="perfil-container">
+			<div class="perfil-header">
+				<div class="img-container">
+					<img src="imagens/img-perfil-padrao.jpeg" alt="Foto de Perfil"
+						class="perfil-photo">
+				</div>
+				<div class="perfil-info">
+					<h1 class="perfil-name"><%= voluntario.getNome() %></h1>
+					<ul class="attributes">
+						<li><strong>Cidade:</strong> <%= voluntario.getCidade() %></li>
+						<li><strong>Estado:</strong> <%= voluntario.getEstado() %></li>
+						<li><strong>Idade:</strong> <%= voluntario.calcularIdade() %></li>
+						<li><strong>Avaliação média:</strong> <%= voluntario.getAvaliacaoMedia() %></li>
+					</ul>
+				</div>
+			</div>
+			<ul class="attributes">
+				<li><strong>Descrição:</strong><%= voluntario.getDescricao() %></li>
+				<li><strong>Habilidades:</strong> <%= voluntario.getHabilidades() %></li>
+				<li><strong>Experiência:</strong> <%= voluntario.getExperiencia() %></li>
+			</ul>
+		</div>
+		<% if(usuarioDaSessao != null && voluntario.getId() 
                     		== usuarioDaSessao.getId()){ %>
                     	<button class="botao-editarperfil">Editar perfil</button>
                 	<% } %>
-                </div>
-            </div>
-        </div>
-    </div>
+	<header>
+		<h2>Avaliações</h2>
+	</header>
+	</div>
+
 </body>
 </html>
