@@ -25,8 +25,8 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="inicio-familia">Início</a></li>
-                <li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
+                <li><a href="inicio-<%= usuarioDaSessao.getTipo()%>">Início</a></li>
+                <li><a href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
                 <li><a href="#">Atividades agendadas</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>
