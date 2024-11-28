@@ -132,3 +132,10 @@ button {
         width: 100%;
     }
 }
+
+input::placeholder, textarea::placeholder{
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
+    color: #666;
+    opacity: 1;
+}
