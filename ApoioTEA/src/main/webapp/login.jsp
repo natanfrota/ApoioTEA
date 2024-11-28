@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ApoioTEA</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/login1.css">
 </head>
 <body>
     <header>
@@ -23,6 +23,7 @@
                 <form action="login" method="POST">
                     <input type="email" name="email" placeholder="Email">
                     <input type="password" name="senha" placeholder="Senha">
+                    <input type="hidden" id="status" value="<%= request.getAttribute("status")%>">
                     <button type="submit">Entrar</button>
                 </form>
                 <div class="cadastro">
@@ -31,8 +32,12 @@
             </div>
         </div>
     </div>    
+    <div class="caixa-mensagem" id="caixaMensagem">
+        Email ou senha incorretos!
+    </div>
     <footer>
         <div class="barra rodape"></div>
     </footer>
+    <script src="js/login.js"></script>
 </body>
 </html>

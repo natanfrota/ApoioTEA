@@ -21,12 +21,12 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li>Início</li>
-                <li>Perfil</li>
+                <li><a href="inicio-<%= usuarioDaSessao.getTipo()%>">Início</a></li>
+                <li><a href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
                 <li>Atividades agendadas</li>
                 <li>Conversas</li>
                 <li>Notificações</li>
-                <li>Sair</li>
+                <li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>

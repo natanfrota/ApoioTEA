@@ -22,10 +22,10 @@
             <ul>
                 <li><a href="inicio-voluntario">Início</a></li>
                 <li><a href="perfil-voluntario?id=<%= voluntario.getId()%>">Perfil</a></li>
-                <li><a href="#">Atividades</a></li>
+                <li><a href="#">Atividades agendadas</a></li>
                 <li><a href="#">Conversas</a></li>
                 <li><a href="#">Notificações</a></li>
-                <li><a href="#">Sair</a></li>
+                <li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>
@@ -43,6 +43,7 @@
             <p><strong>Localização:</strong> <%= atv.getLocalizacao() %></p>
             <p class="descricao">Descrição: <%= atv.getDescricao() %></p>
             <button class="botao-voluntariar">Voluntariar-se</button>
+             <-- if para o botao -->
         </div> 
 		<% } %>
     </div>

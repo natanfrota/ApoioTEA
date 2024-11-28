@@ -13,6 +13,7 @@ import java.util.List;
 
 import modelo.Atividade;
 import modelo.Familia;
+import modelo.Voluntario;
 
 public class AtividadeDAO {
 	public void inserirAtividade(Atividade atividade) {
@@ -61,6 +62,7 @@ public class AtividadeDAO {
 			ResultSet rs = ps.executeQuery()) {
 			
 			atividades = new ArrayList<Atividade>();
+			VoluntarioDAO voluntarioDAO = new VoluntarioDAO();
 			List<Familia> familias = new FamiliaDAO().selecionarFamilias();
 			
 			while(rs.next()) {
@@ -77,7 +79,7 @@ public class AtividadeDAO {
 				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
 						localizacao, status, data, hora);
 				atividades.add(atividade);
-				
+				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(id));
 				associarFamiliasAAtividades(familias, atividade,
 						idFamilia);
 			}
@@ -146,6 +148,7 @@ public class AtividadeDAO {
 			rs = ps.executeQuery();
 			
 			atividades = new ArrayList<Atividade>();
+			VoluntarioDAO voluntarioDAO = new VoluntarioDAO();
 			
 			while(rs.next()) {
 				int id = rs.getInt("id");
@@ -160,7 +163,7 @@ public class AtividadeDAO {
 				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
 						localizao, status, data, hora);
 				atividades.add(atividade);
-				
+				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(id));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -296,4 +299,15 @@ public class AtividadeDAO {
 		}
 		
 	}
+
+	/*public static void main(String[] args) {
+		AtividadeDAO atividadeDAO = new AtividadeDAO();
+		List<Atividade> asAtividades = atividadeDAO.selecionarAtividadesDeUmaFamilia(3);
+		for (Atividade atividade : asAtividades) {
+			System.out.println("Voluntario da atividade " + atividade.getTitulo());
+			for (Voluntario v : atividade.getVoluntariosCandidatos()) {
+				System.out.println(v.getNome());
+			}
+		}
+	}*/
 }

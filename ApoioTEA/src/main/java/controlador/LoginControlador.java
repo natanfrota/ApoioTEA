@@ -2,6 +2,7 @@ package controlador;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,9 @@ public class LoginControlador extends HttpServlet {
 					response.sendRedirect("inicio-familia");
 				}
 			} else {
-				response.sendRedirect("login.jsp");
+				request.setAttribute("status", "fracasso");
+				RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+				rd.forward(request, response);
 			}
 		}
 	}

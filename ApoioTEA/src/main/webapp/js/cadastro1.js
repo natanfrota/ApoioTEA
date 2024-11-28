@@ -11,4 +11,11 @@ function mostrarCamposEspecificos() {
     } else if (tipo === "familia") {
       familiaCampos.style.display = "block";
     }
-  }
+}
+
+let status = document.getElementById('status').value;
+console.log(status);
+let caixaMensagem = document.getElementById('caixaMensagem');
+if(status == 'erro'){
+	caixaMensagem.style.display = 'block';
+}

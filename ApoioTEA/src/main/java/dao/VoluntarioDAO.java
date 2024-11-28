@@ -203,8 +203,7 @@ public class VoluntarioDAO {
 	// testar
 	public List<Voluntario> selecionarCandidatosDeUmaAtividade(int atividadeId) {
 		String consulta = "select * from atividade_has_voluntario "
-						+ "where atividade_id = ? "
-						+ "and atividade_familia_usuario_id = ?";
+						+ "where atividade_id = ?";
 
 		Connection conexao = null;
 		PreparedStatement ps = null;
@@ -219,9 +218,13 @@ public class VoluntarioDAO {
 			rs = ps.executeQuery();
 
 			candidatos = new ArrayList<Voluntario>();
-
+			
 			while (rs.next()) {
-				
+				int voluntarioId = rs.getInt("voluntario_usuario_id");
+				Voluntario v = new Voluntario();
+				v.setId(voluntarioId);
+				v.selecionarVoluntario();
+				candidatos.add(v);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);

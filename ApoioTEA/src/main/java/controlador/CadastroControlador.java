@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import modelo.Familia;
 import modelo.Usuario;
@@ -38,29 +37,28 @@ public class CadastroControlador extends HttpServlet {
 		String experiencia = request.getParameter("experiencia");
 		String habilidades = request.getParameter("habilidades");
 		
-		boolean unico = new Usuario().isEmailUnico(email);
-		System.out.println("Único?:" + unico);
-		
 		if(tipo != null && nome != null && email != null && senha != null && 
 			dataNascimento != null &&	cidade != null && estado != null 
-			&& descricao != null && unico) {
-			if (tipo.equalsIgnoreCase("familia")) {
+			&& descricao != null) {
+			boolean unico = new Usuario().isEmailUnico(email);
+			if(!unico) {
+				request.setAttribute("status", "erro");
+				request.setAttribute("mensagem", "O email inserido já está cadastrado.");
+				request.getRequestDispatcher("cadastro.jsp").forward(request, response);
+			}
+			else if (tipo.equalsIgnoreCase("familia")) {
 				Familia familia =  new Familia(nome, email, LocalDate.parse(dataNascimento),
 						cidade, estado, descricao, "ativa");
 				familia.setSenha(senha);
 				familia.fazerCadastro();
-				HttpSession sessao = request.getSession();
-				sessao.setAttribute("familia", familia);
-				response.sendRedirect("inicio-familia");
+				response.sendRedirect("login.jsp");
 			}
 			else if(tipo.equalsIgnoreCase("voluntario") && experiencia != null && habilidades != null) {
 				Voluntario voluntario = new Voluntario(nome, email, LocalDate.parse(dataNascimento),
 						cidade, estado, descricao, "ativa", experiencia, habilidades);
 				voluntario.setSenha(senha);
 				voluntario.fazerCadastro();
-				HttpSession sessao = request.getSession();
-				sessao.setAttribute("voluntario", voluntario);
-				response.sendRedirect("inicio-voluntario");
+				response.sendRedirect("login.jsp");
 			}
 		}
 	}
