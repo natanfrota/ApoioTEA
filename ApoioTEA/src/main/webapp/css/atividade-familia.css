@@ -151,19 +151,18 @@ h2 {
 
 .botoes {
     display: flex;
-    justify-content: space-between;
+    justify-content:100px;
     margin-top: 10px;
 }
 
 .botoes button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #1e88e5;
+   background-color: #1e90ff;
     color: white;
-    transition: background-color 0.3s ease;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
 }
 
 .botoes button:hover {
