@@ -16,17 +16,18 @@ import modelo.Familia;
 import modelo.Voluntario;
 
 public class AtividadeDAO {
-	public void inserirAtividade(Atividade atividade) {
+	public boolean inserirAtividade(Atividade atividade) {
 		String insercao = "insert into atividade (titulo, categoria, descricao, "
 				+ "localizacao, status, data, hora, familia_usuario_id) "
 				+ "values (?,?,?,?,?,?,?,?)";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		
 		try {
 			conexao = Conexao.criarConexao();
-			ps = conexao.prepareStatement(insercao);
+			ps = conexao.prepareStatement(insercao, PreparedStatement.RETURN_GENERATED_KEYS);
 			ps.setString(1, atividade.getTitulo());
 			ps.setString(2, atividade.getCategoria());
 			ps.setString(3, atividade.getDescricao());
@@ -39,10 +40,20 @@ public class AtividadeDAO {
 			int linhas = ps.executeUpdate();
 			System.out.println("Linhas: " + linhas);
 			
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				int idGerado = rs.getInt(1);
+				System.out.println("Id da nova atividade: " + idGerado);
+				atividade.setId(idGerado);
+				return true;
+			}
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
 		} finally {
 			try {
+				if(rs != null)
+					rs.close();
 				if(ps != null)
 					ps.close();
 				if(conexao != null)
@@ -51,6 +62,8 @@ public class AtividadeDAO {
 				System.err.println(e2);
 			}
 		}
+		
+		return false;
 	}
 	
 	public List<Atividade> selecionarTodasAsAtividades(){
@@ -182,17 +195,16 @@ public class AtividadeDAO {
 		return atividades;
 	}
 	
-	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int familiaId,
-			int voluntarioId) {
+	//alterada
+	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int voluntarioId) {
 		String insercao = "insert into atividade_has_voluntario "
-						+ "(atividade_id, atividade_familia_usuario_id, voluntario_usuario_id) "
+						+ "(atividade_id, voluntario_usuario_id) "
 						+ "values (?,?,?)";
 		
 		try(Connection conexao = Conexao.criarConexao();
 			PreparedStatement ps = conexao.prepareStatement(insercao)){
 			ps.setInt(1, atividadeId);
-			ps.setInt(2, familiaId);
-			ps.setInt(3, voluntarioId);
+			ps.setInt(2, voluntarioId);
 			int linhas = ps.executeUpdate();
 			
 			if (linhas > 0) {
@@ -207,18 +219,16 @@ public class AtividadeDAO {
 		return false;
 	}
 	
-	
-	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int familiaId, int voluntarioId) {
+	// alterada
+	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int voluntarioId) {
 		String remocao = "delete from atividade_has_voluntario " 
 					   + "where atividade_id = ? "
-					   + "and atividade_familia_usuario_id = ? " 
 					   + "and voluntario_usuario_id = ?";
 
 		try (Connection conexao = Conexao.criarConexao(); 
 			 PreparedStatement ps = conexao.prepareStatement(remocao)) {
 			ps.setInt(1, atividadeId);
-			ps.setInt(2, familiaId);
-			ps.setInt(3, voluntarioId);
+			ps.setInt(2, voluntarioId);
 			int linhas = ps.executeUpdate();
 
 			if (linhas > 0) {
@@ -271,7 +281,7 @@ public class AtividadeDAO {
 	}
 	
 	
-	public void excluirAtividade(int id) {
+	public boolean excluirAtividade(int id) {
 		String exclusao = "delete from atividade where id = ?";
 		
 		Connection con = null;
@@ -283,7 +293,9 @@ public class AtividadeDAO {
 			ps.setInt(1, id);
 			
 			int linhas = ps.executeUpdate();
-			System.out.println("Linhas: " + linhas);
+			
+			if(linhas > 0)
+				return true;
 			
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -298,6 +310,7 @@ public class AtividadeDAO {
 			}
 		}
 		
+		return false;
 	}
 
 	/*public static void main(String[] args) {

@@ -49,8 +49,8 @@ public class Atividade {
 		this.voluntariosCandidatos = new ArrayList<Voluntario>();
 	}
 	
-	public void cadastrar() {
-		new AtividadeDAO().inserirAtividade(this);
+	public boolean criar() {
+		return new AtividadeDAO().inserirAtividade(this);
 	}
 	
 	public boolean selecionarAtividade() {
@@ -69,16 +69,16 @@ public class Atividade {
 		new AtividadeDAO().editarAtividade(this);
 	}
 	
-	public void excluir() {
-		new AtividadeDAO().excluirAtividade(id);
+	public boolean excluir() {
+		return new AtividadeDAO().excluirAtividade(id);
 	}
 	
-	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int familiaId, int voluntarioId) {
-		return new AtividadeDAO().registrarCandidaturaDeUmVoluntario(atividadeId, familiaId, voluntarioId);
+	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int voluntarioId) {
+		return new AtividadeDAO().registrarCandidaturaDeUmVoluntario(atividadeId, voluntarioId);
 	}
 	
-	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int familiaId, int voluntarioId) {
-		return new AtividadeDAO().removerCandidaturaDeUmaAtividade(atividadeId, familiaId, voluntarioId);
+	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int voluntarioId) {
+		return new AtividadeDAO().removerCandidaturaDeUmaAtividade(atividadeId, voluntarioId);
 	}
 
 	public Familia getFamilia() {

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.FamiliaDAO;
@@ -45,19 +46,33 @@ public class Familia extends Usuario{
 	
 	public void criarAtividade(Atividade atividade) {
 		atividade.setFamilia(this);
-		atividade.cadastrar();
+		boolean criada = atividade.criar();
+		
+		if (criada) {
+			if(atividades == null) {
+				atividades = new ArrayList<Atividade>();
+			}
+			atividades.add(atividade);
+		}
 	}
 	
 	public void excluirAtividade(int atividadeId) {
 		if(atividades == null)
 			return;
 		
-		for (Atividade atividade : atividades) {
-			if(atividade != null && atividade.getId() == atividadeId) {
-				atividade.excluir();
+		boolean excluida = false;
+		
+		int cont, tam;
+		for(cont = 0, tam = atividades.size(); cont < tam; cont++){
+			if(atividades.get(cont) != null && atividades.get(cont).getId() == atividadeId) {
+				excluida = atividades.get(cont).excluir();
+				System.out.println("Atividade excluída.");
 				break;
 			}
-				
+		}
+		
+		if(excluida) {
+			atividades.remove(cont);
 		}
 	}
 }

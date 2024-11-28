@@ -3,7 +3,6 @@ package controlador;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,12 +58,6 @@ public class AtividadesControlador extends HttpServlet {
 		String descricao = request.getParameter("descricao");
 		String categoria = request.getParameter("tipo");		
 		
-		System.out.println(descricao);
-		System.out.println(titulo);
-		System.out.println(data);
-		System.out.println(hora);
-		
-		
 		HttpSession sessao = request.getSession(false);
 		if(sessao != null && sessao.getAttribute("usuario") != null) {
 			Familia familia = (Familia) sessao.getAttribute("usuario");
@@ -110,15 +103,16 @@ public class AtividadesControlador extends HttpServlet {
 			System.err.println(e);
 		}
 		
-		if(id != null) {				
-			Familia familia = (Familia) request.getAttribute("usuario");
+		if(id != null) {		
+			HttpSession sessao = request.getSession();
+			Familia familia = (Familia) sessao.getAttribute("usuario");
+			
 			if(familia != null && familia.getAtividades() != null) {
 				familia.excluirAtividade(id);
 			}
 			
 			String paginaAnterior = request.getHeader("Referer");
 			if (paginaAnterior != null) {
-			    System.out.println(paginaAnterior);
 			    response.sendRedirect(paginaAnterior);
 			}
 		}
@@ -149,7 +143,6 @@ public class AtividadesControlador extends HttpServlet {
 	
 	protected void adicionarCandidatura(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
-		int familiaId = Integer.parseInt(request.getParameter("familiaId"));
 		
 		HttpSession sessao = request.getSession(false);
 		if(sessao != null) {
@@ -157,13 +150,12 @@ public class AtividadesControlador extends HttpServlet {
 			Atividade atv = new Atividade();
 			atv.setId(atividadeId);
 			atv.selecionarAtividade();
-			atv.registrarCandidaturaDeUmVoluntario(atividadeId, familiaId, voluntario.getId());
+			atv.registrarCandidaturaDeUmVoluntario(atividadeId, voluntario.getId());
 		}
 	}
 	
 	protected void removerCandidatura(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
-		int familiaId = Integer.parseInt(request.getParameter("familiaId"));
 		
 		HttpSession sessao = request.getSession(false);
 		if(sessao != null) {
@@ -171,7 +163,7 @@ public class AtividadesControlador extends HttpServlet {
 			Atividade atv = new Atividade();
 			atv.setId(atividadeId);
 			atv.selecionarAtividade();
-			atv.removerCandidaturaDeUmaAtividade(atividadeId, familiaId, voluntario.getId());
+			atv.removerCandidaturaDeUmaAtividade(atividadeId, voluntario.getId());
 		}
 	}
 }

@@ -112,17 +112,14 @@ public class PerfilControlador extends HttpServlet {
 		Familia familia = (Familia) sessao.getAttribute("usuario");
 		
 		if(familia != null) {
-			List<Atividade> atividades = new Atividade().selecionarAtividadesDeUmaFamilia(familia.getId());
-			request.setAttribute("atividades", atividades);
-			RequestDispatcher rd = request.getRequestDispatcher("inicio-familia.jsp");
-			rd.forward(request, response);
+			familia.setAtividades(new Atividade().selecionarAtividadesDeUmaFamilia(
+					familia.getId()));
+			response.sendRedirect("inicio-familia.jsp");
 		}
 	}
 	
 	protected void sair(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("dentro de sair");
 		HttpSession sessao = request.getSession(false);
-		System.out.println(sessao);
 		sessao.invalidate();
 		response.sendRedirect("login.jsp");
 	}

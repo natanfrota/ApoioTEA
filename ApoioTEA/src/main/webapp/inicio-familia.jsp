@@ -8,8 +8,8 @@
     
 <%  Familia familia = (Familia) session.getAttribute("usuario");
 	List<Atividade> atividades = null;
-	if (familia != null) {
-    	atividades = (List<Atividade>) request.getAttribute("atividades"); 
+	if (familia != null && familia.getAtividades() != null) {
+    	atividades = familia.getAtividades(); 
 	}
 %>    
 

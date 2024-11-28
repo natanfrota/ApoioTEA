@@ -19,7 +19,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ApoioTEA - <%=familia.getNome() %></title>
-    <link rel="stylesheet" href="css/perfil.css">
+    <link rel="stylesheet" href="css/perfil1.css">
 </head>
 <body>
     <div class="barraTarefas">
@@ -72,6 +72,7 @@
             
              <%
            DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+           int indice = 0;
            for(Atividade atividade : atividades) { %>
             
             <div class="atividade">
@@ -86,31 +87,38 @@
                 
                 <% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
                 	<div class="botoes">
-                    	<button onclick="window.location.href='editar-atividade?atividadeId=<%=atividade.getId()%>'">
+                    	<button type="button" onclick="window.location.href='editar-atividade?atividadeId=<%=atividade.getId()%>'">
                     	Editar</button>
-                    	<button>Voluntários</button>
-                    	<button onclick="window.location.href='excluir-atividade?atividadeId=<%=atividade.getId()%>'">
+                    	<% if(atividade.getVoluntariosCandidatos() != null && 
+                    			atividade.getVoluntariosCandidatos().size() > 0){%>
+                    	<button type="button" onclick="exibirVoluntarios(<%= indice %>)">Voluntários</button>
+                    	<% } %>
+                    	<button type="button" onclick="window.location.href='excluir-atividade?atividadeId=<%=atividade.getId()%>'">
                     	Excluir</button>
                 	</div> 
-               	<% } %>
+               	<% indice++; } %>
                	
-               	
-               	<% if(atividade.getVoluntariosCandidatos() != null){
-            	 	for(Voluntario v : atividade.getVoluntariosCandidatos()){ %>
-            		 	<div class="exibicao-voluntarios">
-                    		<div>
-                        		<%= v.getNome()%>
-                        		<button>Conversar</button>
-                        		<button>Aceitar</button>
-                   		</div>
-             		</div> 
-            		<%}	
-            	 } %> 
-            	 
+               	<div class="voluntarios">
+               	<% if(atividade.getVoluntariosCandidatos() != null){%>
+               		<h4>Voluntários</h4>
+            	 	<% for(Voluntario v : atividade.getVoluntariosCandidatos()){ %>
+            	 		
+					<div class="exibicao-voluntarios">
+						<span class="nome"><%=v.getNome()%></span> 
+							<span class="botoes">
+								<button type="button">Conversar</button>
+								<button type="button">Aceitar</button>
+							</span>
+					</div>
+            	 	
+            	 <% }	
+            } %> 
+            	 </div>
             	 
             </div>
             <% } %>
         </main>
     </div>
+    <script src="js/exibicaoVoluntarios.js"></script>
 </body>
 </html>
