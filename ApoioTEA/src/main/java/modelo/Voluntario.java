@@ -38,7 +38,6 @@ public class Voluntario extends Usuario {
 	
 	@Override
 	public void editarPerfil() {
-		super.editarPerfil();
 		new VoluntarioDAO().alterarDadosPerfil(this);
 	}
 	

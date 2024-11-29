@@ -228,7 +228,31 @@ header .botao-publicar {
     align-items: center;
 }
 
+.exibicao-voluntarios a {
+    text-decoration: none;
+    color: #1565c0;
+    font-weight: bold;      
+}
+
+.exibicao-voluntarios a:visited {
+    color: #1565c0;
+    font-weight: bold;
+}
+
 .voluntarios {
 	display: none;
 	margin-top: 1rem;
+}
+
+.botao-voluntariar {
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-voluntariar:hover {
+    background-color: #1565c0;
 }

@@ -66,20 +66,40 @@ public class AtividadeDAO {
 		return false;
 	}
 	
+	//testar
 	public List<Atividade> selecionarTodasAsAtividades(){
-		String consulta = "select * from atividade";
-		List<Atividade> atividades = null;
+		String consulta = "select u.id as id_familia, u.nome as nome_familia, "
+						+ "u2.id as id_voluntario, u2.nome as nome_voluntario, a.* "
+						+ "from atividade a "
+						+ "join usuario u on a.familia_usuario_id = u.id "
+						+ "left join usuario u2 on a.voluntario_usuario_id = u2.id;";
+		
+		List<Atividade> atividades = new ArrayList<Atividade>();
 		
 		try(Connection conexao = Conexao.criarConexao();
 			PreparedStatement ps = conexao.prepareStatement(consulta);
 			ResultSet rs = ps.executeQuery()) {
 			
-			atividades = new ArrayList<Atividade>();
+			
 			VoluntarioDAO voluntarioDAO = new VoluntarioDAO();
-			List<Familia> familias = new FamiliaDAO().selecionarFamilias();
 			
 			while(rs.next()) {
-				int id = rs.getInt("id");
+				int idFamilia = rs.getInt("id_familia");
+	            String nomeFamilia = rs.getString("nome_familia");
+	            Familia familia = new Familia();
+	            familia.setId(idFamilia);
+	            familia.setNome(nomeFamilia);
+				
+	            int idVoluntario = rs.getInt("id_voluntario");
+	            String nomeVoluntario = rs.getString("nome_voluntario");
+	            Voluntario voluntario = null;
+	            if (idVoluntario != 0) {
+	                voluntario = new Voluntario();
+	                voluntario.setId(idVoluntario);
+	                voluntario.setNome(nomeVoluntario);
+	            }
+	            
+				int idAtividade = rs.getInt("id");
 				String titulo = rs.getString("titulo");
 				String categoria = rs.getString("categoria");
 				String descricao = rs.getString("descricao");
@@ -87,14 +107,19 @@ public class AtividadeDAO {
 				String status = rs.getString("status");
 				LocalDate data = rs.getDate("data").toLocalDate();
 				LocalTime hora = rs.getTime("hora").toLocalTime();
-				int idFamilia = rs.getInt("familia_usuario_id");
 				
-				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
+				Atividade atividade = new Atividade(idAtividade, titulo, categoria, descricao, 
 						localizacao, status, data, hora);
 				atividades.add(atividade);
-				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(id));
-				associarFamiliasAAtividades(familias, atividade,
-						idFamilia);
+				
+				atividade.setFamilia(familia);
+				
+				if (voluntario != null) {
+	                atividade.setVoluntarioEscolhido(voluntario);
+	            }
+				
+				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(idAtividade));
+				
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -102,16 +127,6 @@ public class AtividadeDAO {
 		}
 		
 		return atividades;
-	}
-	
-	private void associarFamiliasAAtividades(List<Familia> familias,
-			Atividade atividade, int idFamilia) {
-		for (Familia familia : familias) {
-			if(familia.getId() == idFamilia) {
-				atividade.setFamilia(familia);
-				break;
-			}
-		}
 	}
 	
 	public boolean selecionarAtividade(Atividade atividade){
@@ -147,9 +162,14 @@ public class AtividadeDAO {
 		return false;
 	}
 	
+	//testar
 	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
-		String consulta = "select * from atividade where familia_usuario_id = ?";
-		List<Atividade> atividades = null;
+		String consulta = "select u.id as id_voluntario, u.nome as nome_voluntario, a.* "
+						+ "from atividade a "
+						+ "left join usuario u on a.voluntario_usuario_id = u.id "
+						+ "where a.familia_usuario_id = ?;";
+		
+		List<Atividade> atividades = new ArrayList<Atividade>();
 		Connection conexao = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -160,10 +180,18 @@ public class AtividadeDAO {
 			ps.setInt(1, idFamilia);
 			rs = ps.executeQuery();
 			
-			atividades = new ArrayList<Atividade>();
 			VoluntarioDAO voluntarioDAO = new VoluntarioDAO();
 			
 			while(rs.next()) {
+				int idVoluntario = rs.getInt("id_voluntario");
+	            String nomeVoluntario = rs.getString("nome_voluntario");
+	            Voluntario voluntario = null;
+	            if (idVoluntario != 0) {
+	                voluntario = new Voluntario();
+	                voluntario.setId(idVoluntario);
+	                voluntario.setNome(nomeVoluntario);
+	            }
+				
 				int id = rs.getInt("id");
 				String titulo = rs.getString("titulo");
 				String categoria = rs.getString("categoria");
@@ -176,6 +204,11 @@ public class AtividadeDAO {
 				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
 						localizao, status, data, hora);
 				atividades.add(atividade);
+				
+				if (voluntario != null) {
+	                atividade.setVoluntarioEscolhido(voluntario);
+	            }
+				
 				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(id));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
@@ -195,11 +228,10 @@ public class AtividadeDAO {
 		return atividades;
 	}
 	
-	//alterada
 	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int voluntarioId) {
 		String insercao = "insert into atividade_has_voluntario "
 						+ "(atividade_id, voluntario_usuario_id) "
-						+ "values (?,?,?)";
+						+ "values (?,?)";
 		
 		try(Connection conexao = Conexao.criarConexao();
 			PreparedStatement ps = conexao.prepareStatement(insercao)){
@@ -219,7 +251,6 @@ public class AtividadeDAO {
 		return false;
 	}
 	
-	// alterada
 	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int voluntarioId) {
 		String remocao = "delete from atividade_has_voluntario " 
 					   + "where atividade_id = ? "
@@ -243,6 +274,67 @@ public class AtividadeDAO {
 		return false;
 	}
 	
+	// testar
+	public void registrarVoluntarioEscolhido(int atividadeId, int voluntarioId) {
+		String insercao = "insert into atividade (voluntario_usuario_id) values (?) where id = ?";
+		
+		Connection conexao = null;
+		PreparedStatement ps = null;
+
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(insercao);
+			ps.setInt(1, voluntarioId);
+			ps.setInt(2, atividadeId);
+			
+			int linhas = ps.executeUpdate();
+			if (linhas > 0)
+				System.out.println("Voluntário aceito");
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+	}
+	
+	//testar
+	public void removerVoluntarioEscolhido(int atividadeId) {
+		String insercao = "update atividade set voluntario_usuario_id = ? where id = ?";
+		
+		Connection conexao = null;
+		PreparedStatement ps = null;
+
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(insercao);
+			ps.setNull(1, java.sql.Types.INTEGER);
+			ps.setInt(2, atividadeId);
+			
+			int linhas = ps.executeUpdate();
+			if (linhas > 0)
+				System.out.println("Voluntário aceito");
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if (ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+	}
 	
 	public void editarAtividade(Atividade atividade) {
 		String edicao = "update atividade set titulo = ?, categoria = ?, "
@@ -312,15 +404,4 @@ public class AtividadeDAO {
 		
 		return false;
 	}
-
-	/*public static void main(String[] args) {
-		AtividadeDAO atividadeDAO = new AtividadeDAO();
-		List<Atividade> asAtividades = atividadeDAO.selecionarAtividadesDeUmaFamilia(3);
-		for (Atividade atividade : asAtividades) {
-			System.out.println("Voluntario da atividade " + atividade.getTitulo());
-			for (Voluntario v : atividade.getVoluntariosCandidatos()) {
-				System.out.println(v.getNome());
-			}
-		}
-	}*/
 }

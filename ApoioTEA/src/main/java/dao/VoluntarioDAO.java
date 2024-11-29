@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelo.Usuario;
 import modelo.Voluntario;
 
 public class VoluntarioDAO {
@@ -163,29 +164,44 @@ public class VoluntarioDAO {
 		return false;
 	}
 	
+	
 	public void alterarDadosPerfil(Voluntario voluntario) {
-		String alteracao = "update voluntario set experiencia = ?, habilidades = ? "
+		String alteracaoUsuario = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
+				+ " cidade = ?, estado = ?, descricao = ? where id = ?";
+		
+		String alteracaoVoluntario = "update voluntario set experiencia = ?, habilidades = ? "
 				+ "where usuario_id = ?";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
-		ResultSet rs = null;
-			
+		PreparedStatement ps2 = null;
+		
 		try {
 			conexao = Conexao.criarConexao();
-			ps = conexao.prepareStatement(alteracao);
-			ps.setString(1, voluntario.getExperiencia());
-			ps.setString(2, voluntario.getHabilidades());
-			ps.setInt(3, voluntario.getId());
-			
+			ps = conexao.prepareStatement(alteracaoUsuario);
+			ps.setString(1, voluntario.getNome());
+			ps.setString(2, voluntario.getEmail());
+			ps.setDate(3, Date.valueOf(voluntario.getDataNascimento()));
+			ps.setString(4, voluntario.getCidade());
+			ps.setString(5, voluntario.getEstado());
+			ps.setString(6, voluntario.getDescricao());
+			ps.setInt(7, voluntario.getId());
 			ps.executeUpdate();
+			
+			ps2 = conexao.prepareStatement(alteracaoVoluntario);
+			ps2.setString(1, voluntario.getExperiencia());
+			ps2.setString(2, voluntario.getHabilidades());
+			ps2.setInt(3, voluntario.getId());
+			
+			ps2.executeUpdate();
+
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
-				
+			
 		} finally {
 			try {
-				if(rs != null)
-					rs.close();
+				if(ps2 != null)
+					ps2.close();
 				if(ps != null)
 					ps.close();
 				if (conexao != null)
@@ -196,14 +212,12 @@ public class VoluntarioDAO {
 		}
 	}
 	
-	
-	
-	
-	
 	// testar
 	public List<Voluntario> selecionarCandidatosDeUmaAtividade(int atividadeId) {
-		String consulta = "select * from atividade_has_voluntario "
-						+ "where atividade_id = ?";
+		String consulta = "select u.id, u.nome "
+						+ "from atividade_has_voluntario as ahv "
+						+ "join usuario as u on ahv.voluntario_usuario_id = u.id "
+						+ "where ahv.atividade_id = ?";
 
 		Connection conexao = null;
 		PreparedStatement ps = null;
@@ -220,11 +234,13 @@ public class VoluntarioDAO {
 			candidatos = new ArrayList<Voluntario>();
 			
 			while (rs.next()) {
-				int voluntarioId = rs.getInt("voluntario_usuario_id");
-				Voluntario v = new Voluntario();
-				v.setId(voluntarioId);
-				v.selecionarVoluntario();
-				candidatos.add(v);
+				int voluntarioId = rs.getInt("id");
+				String nome = rs.getString("nome");
+				Voluntario voluntario = new Voluntario();
+				voluntario.setId(voluntarioId);
+				voluntario.setNome(nome);
+				
+				candidatos.add(voluntario);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
