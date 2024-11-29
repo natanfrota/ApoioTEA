@@ -168,3 +168,28 @@ h2 {
 .botoes button:hover {
     background-color: #1565c0;
 }
+
+
+
+
+.exibicao-voluntarios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exibicao-voluntarios a {
+    text-decoration: none;
+    color: #1565c0;
+    font-weight: bold;      
+}
+
+.exibicao-voluntarios a:visited {
+    color: #1565c0;
+    font-weight: bold;
+}
+
+.voluntarios {
+	display: none;
+	margin-top: 1rem;
+}

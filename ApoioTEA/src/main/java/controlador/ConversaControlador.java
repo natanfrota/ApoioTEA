@@ -15,7 +15,7 @@ import dao.Conexao;
 import dao.ConversaDAO;
 import modelo.Conversa;
 
-@WebServlet("/conversas")
+@WebServlet("/conversar")
 public class ConversaControlador extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

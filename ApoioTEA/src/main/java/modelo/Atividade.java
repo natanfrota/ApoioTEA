@@ -73,12 +73,30 @@ public class Atividade {
 		return new AtividadeDAO().excluirAtividade(id);
 	}
 	
-	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int voluntarioId) {
-		return new AtividadeDAO().registrarCandidaturaDeUmVoluntario(atividadeId, voluntarioId);
+	public boolean registrarCandidaturaDeUmVoluntario(int voluntarioId) {
+		return new AtividadeDAO().registrarCandidaturaDeUmVoluntario(id, voluntarioId);
 	}
 	
-	public boolean removerCandidaturaDeUmaAtividade(int atividadeId, int voluntarioId) {
-		return new AtividadeDAO().removerCandidaturaDeUmaAtividade(atividadeId, voluntarioId);
+	public boolean removerCandidaturaDeUmaAtividade(int voluntarioId) {
+		return new AtividadeDAO().removerCandidaturaDeUmaAtividade(id, voluntarioId);
+	}
+	
+	public void registrarVoluntarioEscolhido(int voluntarioId) {
+		new AtividadeDAO().registrarVoluntarioEscolhido(id, voluntarioId); 
+	}
+	
+	public void removerVoluntarioEscolhido() {
+		new AtividadeDAO().removerVoluntarioEscolhido(id);
+	}
+	
+	public boolean buscarCandidato(int candidatoId) {
+		if(voluntariosCandidatos != null) {
+			for (Voluntario voluntario : voluntariosCandidatos) {
+				if(voluntario.getId() == candidatoId)
+					return true;
+			}
+		}
+		return false;
 	}
 
 	public Familia getFamilia() {

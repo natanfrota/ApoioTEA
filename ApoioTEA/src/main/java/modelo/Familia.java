@@ -46,14 +46,7 @@ public class Familia extends Usuario{
 	
 	public void criarAtividade(Atividade atividade) {
 		atividade.setFamilia(this);
-		boolean criada = atividade.criar();
-		
-		if (criada) {
-			if(atividades == null) {
-				atividades = new ArrayList<Atividade>();
-			}
-			atividades.add(atividade);
-		}
+		atividade.criar();
 	}
 	
 	public void excluirAtividade(int atividadeId) {
@@ -74,5 +67,14 @@ public class Familia extends Usuario{
 		if(excluida) {
 			atividades.remove(cont);
 		}
+	}
+	
+	public Atividade retornarAtividade(int atividadeId) {
+		for (Atividade atividade : atividades) {
+			if(atividade.getId() == atividadeId) {
+				return atividade;
+			}
+		}
+		return null;
 	}
 }
