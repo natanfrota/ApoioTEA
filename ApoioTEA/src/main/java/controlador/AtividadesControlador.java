@@ -20,7 +20,8 @@ import modelo.Voluntario;
 
 @WebServlet(urlPatterns = {"/publicar", "/editar-atividade", "/salvar-edicao-atividade", 
 		"/adicionar-candidato", "/cancelar-candidatura", "/cancelar-candidatura-confirmada",
-		"/excluir-atividade", "/aceitar-voluntario", "/remover-voluntario-escolhido"})
+		"/excluir-atividade", "/aceitar-voluntario", "/remover-voluntario-escolhido", 
+		"/marcar-como-realizada"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -54,6 +55,8 @@ public class AtividadesControlador extends HttpServlet {
 			aceitarVoluntario(request, response);
 		} else if(action.equals("/remover-voluntario-escolhido")) {
 			removerVoluntarioEscolhido(request, response);
+		} else if(action.equals("/marcar-como-realizada")) {
+			marcarComoRealizada(request, response);
 		}
 	}
 	
@@ -203,7 +206,6 @@ public class AtividadesControlador extends HttpServlet {
 		}
 	}
 	
-	//testar
 	protected void aceitarVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
 		int voluntarioId = Integer.parseInt(request.getParameter("voluntarioId"));
@@ -234,7 +236,6 @@ public class AtividadesControlador extends HttpServlet {
 		}
 	}
 
-	// testar
 				/* para o caso de a família querer remover o voluntário escolhido */
 	protected void removerVoluntarioEscolhido(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -256,6 +257,28 @@ public class AtividadesControlador extends HttpServlet {
 				if (paginaAnterior != null) {
 				    response.sendRedirect(paginaAnterior);
 				}
+			}
+		}
+	}
+	
+	// testar
+	protected void marcarComoRealizada(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
+		int voluntarioId = Integer.parseInt(request.getParameter("voluntarioId"));
+
+		HttpSession sessao = request.getSession(false);
+		Familia familia = (Familia) sessao.getAttribute("usuario");
+
+		if (familia != null && familia.getAtividades() != null) {
+			familia.excluirAtividade(atividadeId);
+			
+			Voluntario voluntario = new Voluntario();
+			voluntario.setId(voluntarioId);
+			boolean encontrado = voluntario.selecionarVoluntario();
+			if(encontrado) {
+				request.setAttribute("voluntario", voluntario);
+				RequestDispatcher rd = request.getRequestDispatcher("avaliacao.jsp");
+				rd.forward(request, response);
 			}
 		}
 	}

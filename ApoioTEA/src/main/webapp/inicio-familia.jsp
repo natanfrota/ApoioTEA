@@ -105,8 +105,8 @@
 					<% } else if(atividade.getVoluntarioEscolhido() != null && ((hoje.isEqual(diaAtividade) && agora.isAfter(horaAtividade) || 
 							hoje.isAfter(diaAtividade)))) { %>
 							<button type="button"
-							onclick="window.location.href='         voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
-							Marcar como concluída</button>
+							onclick="window.location.href='marcar-como-realizada?atividadeId=<%=atividade.getId()%>&voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
+							Marcar como realizada</button>
 					<% } %>
 
 				</div>
