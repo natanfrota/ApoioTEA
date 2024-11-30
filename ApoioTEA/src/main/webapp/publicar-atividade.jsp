@@ -70,7 +70,6 @@
 
                 <div class="form-grupo botoes">
                     <button type="submit" class="btn-publicar">Publicar</button>
-                    <button type="reset" class="btn-cancelar">Cancelar</button>
                 </div>
             </form>
         </main>
