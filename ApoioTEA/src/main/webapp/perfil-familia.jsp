@@ -59,7 +59,7 @@
 		</div>
 		<% if(usuarioDaSessao != null && familia.getId() 
                     		== usuarioDaSessao.getId()){ %>
-			<button class="botao-editarperfil">Editar perfil</button>
+			<button class="botao-editarperfil" type="button">Editar perfil</button>
 		<% } %>
 		<% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
 			<header>
@@ -74,100 +74,95 @@
 			<h2>Atividades</h2>
 
 			<%
-           DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
-           int indice = 0;
-           for(Atividade atividade : atividades) { %>
-
-			<div class="atividade">
-				<div class="info">
-					<h3><%=atividade.getTitulo() %></h3>
-					<p>
-						<strong>Data: </strong><%=atividade.getData().format(dt) %></p>
-					<p>
-						<strong>Hora:</strong>
-						<%=atividade.getHora() %></p>
-					<p>
-						<strong>Localização:</strong>
-						<%= atividade.getLocalizacao() %></p>
-					<p>
-						<strong>Tipo:</strong>
-						<%=atividade.getCategoria() %></p>
-					<p>
-						<strong>Descrição:</strong>
-						<%=atividade.getDescricao() %></p>
-						
-					<% if(atividade.getVoluntarioEscolhido() != null && 
-					usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()) {%>
-						<p><strong>Voluntário(a) escolhido(a): </strong>
-							<a href="perfil-voluntario?id=<%= atividade.getVoluntarioEscolhido().getId() %>">
-							<%= atividade.getVoluntarioEscolhido().getNome() %>
-							</a>
-						</p>
-					<% } %>
-
-				<% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
-				<div class="botoes">
-					<button type="button"
-						onclick="window.location.href='editar-atividade?atividadeId=<%=atividade.getId()%>'">
-						Editar</button>
-					<% if(atividade.getVoluntariosCandidatos() != null && 
-                    			atividade.getVoluntariosCandidatos().size() > 0){%>
-						<button type="button" onclick="exibirVoluntarios(<%= indice %>)">Voluntários</button>
-					<% } %>
-						<button type="button"
-							onclick="window.location.href='excluir-atividade?atividadeId=<%=atividade.getId()%>'">
-							Excluir</button>
-					
-						<%
-						LocalDate hoje = LocalDate.now();
-						LocalTime agora = LocalTime.now();
-						LocalDate diaAtividade = atividade.getData();
-						LocalTime horaAtividade = atividade.getHora();
-					
-						if(atividade.getVoluntarioEscolhido() != null && (hoje.isBefore(diaAtividade) || (hoje.equals(diaAtividade) && agora.isBefore(horaAtividade)))){ %>
-								<button type="button"
-								onclick="window.location.href='remover-voluntario-escolhido?atividadeId=<%=atividade.getId()%>&voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
-								Remover voluntário</button>
-						<% } else if(atividade.getVoluntarioEscolhido() != null && ((hoje.isEqual(diaAtividade) && agora.isAfter(horaAtividade) || 
-								hoje.isAfter(diaAtividade)))) { %>
-								<button type="button"
-								onclick="window.location.href='         voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
-								Marcar como concluída</button>
+           	DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
+            int indice = 0;
+            for(Atividade atividade : atividades) { %>
+            	<div class="atividade">
+            		<div class="info">
+						<h3><%=atividade.getTitulo() %></h3>
+						<p>
+							<strong>Data: </strong><%=atividade.getData().format(dt) %></p>
+						<p>
+							<strong>Hora:</strong>
+							<%=atividade.getHora() %></p>
+						<p>
+							<strong>Localização:</strong>
+							<%= atividade.getLocalizacao() %></p>
+						<p>
+							<strong>Tipo:</strong>
+							<%=atividade.getCategoria() %></p>
+						<p>
+							<strong>Descrição:</strong>
+							<%=atividade.getDescricao() %></p>
+							
+						<% if(atividade.getVoluntarioEscolhido() != null && 
+						usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()) {%>
+							<p><strong>Voluntário(a) escolhido(a): </strong>
+								<a href="perfil-voluntario?id=<%= atividade.getVoluntarioEscolhido().getId() %>">
+								<%= atividade.getVoluntarioEscolhido().getNome() %>
+								</a>
+							</p>
 						<% } %>
-					
-				</div>
-				<% indice++; %>
-
-				<div class="voluntarios">
-					<% if(atividade.getVoluntariosCandidatos() != null){%>
-						<h4>Voluntários</h4>
-						<% for(Voluntario v : atividade.getVoluntariosCandidatos()){ %>
-
-							<div class="exibicao-voluntarios">
-								<span class="nome"><a href="perfil-voluntario?id=<%= v.getId() %>"> 
-									<%=v.getNome()%> </a></span> 
-									<% if(atividade.getVoluntarioEscolhido() == null) { %>
-										<span class="botoes">
-											<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
-        									Conversar</button>
-    										<button type="button" onclick="window.location.href='aceitar-voluntario?atividadeId=<%= atividade.getId() %>&voluntarioId=<%= v.getId() %>'">
-        									Aceitar</button>
-										</span>
-									<%} else if(atividade.getVoluntarioEscolhido() != null && atividade.getVoluntarioEscolhido().getId()
-											== v.getId()) { %>
-										<span class="botoes">
-											<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
-        									Conversar</button>
-        								</span>
-        				   			<%}%>
-							</div>
-
-				   		<% }
-					}	 %>
-            	}
-			   </div>
-
-						<%if(usuarioDaSessao.getTipo().equals("voluntario")){ 
+            		</div> <%-- fechamento da div .info --%>
+            		<% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
+						<div class="botoes">
+							<button type="button"
+								onclick="window.location.href='editar-atividade?atividadeId=<%=atividade.getId()%>'">
+								Editar</button>
+							<% if(atividade.getVoluntariosCandidatos() != null && 
+		                    			atividade.getVoluntariosCandidatos().size() > 0){%>
+								<button type="button" onclick="exibirVoluntarios(<%= indice %>)">Voluntários</button>
+							<% } %>
+							<% indice++; %>
+								<button type="button"
+									onclick="window.location.href='excluir-atividade?atividadeId=<%=atividade.getId()%>'">
+									Excluir</button>
+							
+								<%
+								LocalDate hoje = LocalDate.now();
+								LocalTime agora = LocalTime.now();
+								LocalDate diaAtividade = atividade.getData();
+								LocalTime horaAtividade = atividade.getHora();
+							
+								if(atividade.getVoluntarioEscolhido() != null && (hoje.isBefore(diaAtividade) || (hoje.equals(diaAtividade) && agora.isBefore(horaAtividade)))){ %>
+										<button type="button"
+										onclick="window.location.href='remover-voluntario-escolhido?atividadeId=<%=atividade.getId()%>&voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
+										Remover voluntário</button>
+								<% } else if(atividade.getVoluntarioEscolhido() != null && ((hoje.isEqual(diaAtividade) && agora.isAfter(horaAtividade) || 
+										hoje.isAfter(diaAtividade)))) { %>
+										<button type="button"
+										onclick="window.location.href='         voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
+										Marcar como concluída</button>
+								<% } %>
+						<% } %>
+						</div> <%-- fechamento da div .botoes --%>
+            			<div class="voluntarios">
+						<% if(atividade.getVoluntariosCandidatos() != null){%>
+							<h4>Voluntários</h4>
+							<% for(Voluntario v : atividade.getVoluntariosCandidatos()){ %>
+								<div class="exibicao-voluntarios">
+									<span class="nome"><a href="perfil-voluntario?id=<%= v.getId() %>"> 
+										<%=v.getNome()%> </a></span> 
+										<% if(atividade.getVoluntarioEscolhido() == null) { %>
+											<span class="botoes">
+												<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+	        									Conversar</button>
+	    										<button type="button" onclick="window.location.href='aceitar-voluntario?atividadeId=<%= atividade.getId() %>&voluntarioId=<%= v.getId() %>'">
+	        									Aceitar</button>
+											</span>
+										<%} else if(atividade.getVoluntarioEscolhido() != null && atividade.getVoluntarioEscolhido().getId()
+												== v.getId()) { %>
+											<span class="botoes">
+												<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+	        									Conversar</button>
+	        								</span>
+	        				   			<%}%>
+								</div>
+							
+							<% } %>
+						<% } %>
+            		   </div> <%-- fechamento da div voluntarios --%>
+            		   <%if(usuarioDaSessao.getTipo().equals("voluntario")){ 
 							
 							boolean candidatoNaoEscolhido = atividade.getVoluntarioEscolhido() == null 
 							                                || atividade.getVoluntarioEscolhido().getId() != usuarioDaSessao.getId();
@@ -191,11 +186,11 @@
 							        Cancelar candidatura
 							    </button>
 							<% } %>
-						<% } 
-						} %>
-				</div>
-			</div>
+						<% } %> 
+            	</div> <%-- fechamento da div .atividade --%>
+			<% } %>
 		</main>
+	</div> <%-- fechamento da div .conteudo --%>
 	<script src="js/exibicaoVoluntarios.js"></script>
 </body>
 </html>
