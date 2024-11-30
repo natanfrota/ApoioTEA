@@ -178,13 +178,13 @@ h2 {
     align-items: center;
 }
 
-.exibicao-voluntarios a {
+.info a, .exibicao-voluntarios a {
     text-decoration: none;
     color: #1565c0;
     font-weight: bold;      
 }
 
-.exibicao-voluntarios a:visited {
+.info a:visited, .exibicao-voluntarios a:visited {
     color: #1565c0;
     font-weight: bold;
 }

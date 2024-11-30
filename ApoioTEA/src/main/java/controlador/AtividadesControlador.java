@@ -208,17 +208,25 @@ public class AtividadesControlador extends HttpServlet {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
 		int voluntarioId = Integer.parseInt(request.getParameter("voluntarioId"));
 	
+		System.out.println("a_id: " + atividadeId + "v_id: " + voluntarioId);
+		
 		HttpSession sessao = request.getSession(false);
 		Familia familia = (Familia) sessao.getAttribute("usuario");
 		
 		if(familia != null && familia.getAtividades() != null) {
 			Atividade atividade = familia.retornarAtividade(atividadeId);
 			boolean encontrado = atividade.buscarCandidato(voluntarioId);
+			
+			System.out.println("dentro do primeiro if de aceitar");
+			
 			if(atividade != null && encontrado) {
 				atividade.registrarVoluntarioEscolhido(voluntarioId);
-				atividade.removerCandidaturaDeUmaAtividade(voluntarioId);
+				//atividade.removerCandidaturaDeUmaAtividade(voluntarioId);
+				
+				System.out.println("dentro do segundo if de aceitar");
 				
 				String paginaAnterior = request.getHeader("Referer");
+				System.out.println("pagina anterior:" + paginaAnterior);
 				if (paginaAnterior != null) {
 				    response.sendRedirect(paginaAnterior);
 				}
@@ -227,6 +235,7 @@ public class AtividadesControlador extends HttpServlet {
 	}
 
 	// testar
+				/* para o caso de a família querer remover o voluntário escolhido */
 	protected void removerVoluntarioEscolhido(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));

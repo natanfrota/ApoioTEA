@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.time.LocalTime"%>
+<%@page import="java.time.LocalDate"%>
 <%@ page import="java.util.List"%>
 <%@ page import="modelo.Usuario"%>
 <%@ page import="modelo.Familia"%>
@@ -67,6 +69,14 @@
 					<p>
 						<strong>Descrição:</strong>
 						<%=atividade.getDescricao() %></p>
+					
+					<% if(atividade.getVoluntarioEscolhido() != null) {%>
+						<p><strong>Voluntário(a) escolhido(a): </strong>
+						<a href="perfil-voluntario?id=<%= atividade.getVoluntarioEscolhido().getId() %>">
+						<%= atividade.getVoluntarioEscolhido().getNome() %>
+						</a>
+						</p>
+					<% } %>
 				</div>
 
 
@@ -81,6 +91,24 @@
 					<button type="button"
 						onclick="window.location.href='excluir-atividade?atividadeId=<%=atividade.getId()%>'">
 						Excluir</button>
+					
+					<%
+					LocalDate hoje = LocalDate.now();
+					LocalTime agora = LocalTime.now();
+					LocalDate diaAtividade = atividade.getData();
+					LocalTime horaAtividade = atividade.getHora();
+					
+					if(atividade.getVoluntarioEscolhido() != null && (hoje.isBefore(diaAtividade) || (hoje.equals(diaAtividade) && agora.isBefore(horaAtividade)))){ %>
+							<button type="button"
+							onclick="window.location.href='remover-voluntario-escolhido?atividadeId=<%=atividade.getId()%>&voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
+							Remover voluntário</button>
+					<% } else if(atividade.getVoluntarioEscolhido() != null && ((hoje.isEqual(diaAtividade) && agora.isAfter(horaAtividade) || 
+							hoje.isAfter(diaAtividade)))) { %>
+							<button type="button"
+							onclick="window.location.href='         voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
+							Marcar como concluída</button>
+					<% } %>
+
 				</div>
 				<% indice++;  %>
 
@@ -92,12 +120,20 @@
 					<div class="exibicao-voluntarios">
 						<span class="nome"><a href="perfil-voluntario?id=<%= v.getId() %>"> 
 						<%=v.getNome()%> </a></span> 
-						<span class="botoes">
-							<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
-        					Conversar</button>
-    						<button type="button" onclick="window.location.href='aceitar-voluntario?atividadeId=<%= atividade.getId() %>&voluntarioId=<%= v.getId() %>'">
-        					Aceitar</button>
-						</span>
+						<% if(atividade.getVoluntarioEscolhido() == null) { %>
+							<span class="botoes">
+								<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+        						Conversar</button>
+    							<button type="button" onclick="window.location.href='aceitar-voluntario?atividadeId=<%= atividade.getId() %>&voluntarioId=<%= v.getId() %>'">
+        						Aceitar</button>
+							</span>
+						<%} else if(atividade.getVoluntarioEscolhido() != null && atividade.getVoluntarioEscolhido().getId()
+						== v.getId()) { %>
+							<span class="botoes">
+								<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+        						Conversar</button>
+        					</span>
+        				<%}%>
 					</div>
 
 					<% }	

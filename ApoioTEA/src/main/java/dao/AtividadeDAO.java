@@ -119,7 +119,6 @@ public class AtividadeDAO {
 	            }
 				
 				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(idAtividade));
-				
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
@@ -274,9 +273,8 @@ public class AtividadeDAO {
 		return false;
 	}
 	
-	// testar
 	public void registrarVoluntarioEscolhido(int atividadeId, int voluntarioId) {
-		String insercao = "insert into atividade (voluntario_usuario_id) values (?) where id = ?";
+		String insercao = "update atividade set voluntario_usuario_id = ? where id = ?";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
@@ -305,7 +303,6 @@ public class AtividadeDAO {
 		}
 	}
 	
-	//testar
 	public void removerVoluntarioEscolhido(int atividadeId) {
 		String insercao = "update atividade set voluntario_usuario_id = ? where id = ?";
 		
@@ -320,7 +317,7 @@ public class AtividadeDAO {
 			
 			int linhas = ps.executeUpdate();
 			if (linhas > 0)
-				System.out.println("Voluntário aceito");
+				System.out.println("Voluntário removido");
 
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -404,4 +401,15 @@ public class AtividadeDAO {
 		
 		return false;
 	}
+	
+	/*
+	public static void main(String[] args) {
+		AtividadeDAO a = new AtividadeDAO();
+		List<Atividade> as = a.selecionarAtividadesDeUmaFamilia(1);
+		for (Atividade atividade : as) {
+			System.out.println("escolhido " + atividade.getVoluntarioEscolhido().getNome());
+			System.out.println("familia "  + atividade.getFamilia().getNome());
+		}
+		
+	}*/
 }
