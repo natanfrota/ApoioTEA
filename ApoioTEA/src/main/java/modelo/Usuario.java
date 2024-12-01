@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import dao.UsuarioDAO;
 
@@ -17,6 +18,7 @@ public class Usuario {
 	private String descricao;
 	private String tipo;
 	private String statusConta;
+	private List<Conversa> conversas;
 	
 	public Usuario() {
 		
@@ -171,5 +173,13 @@ public class Usuario {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	public List<Conversa> getConversas() {
+		return conversas;
+	}
+
+	public void setConversas(List<Conversa> conversas) {
+		this.conversas = conversas;
 	}
 }
