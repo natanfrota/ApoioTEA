@@ -145,7 +145,7 @@
 										<%=v.getNome()%> </a></span> 
 										<% if(atividade.getVoluntarioEscolhido() == null) { %>
 											<span class="botoes">
-												<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+												<button type="button" onclick="window.location.href='conversar?usuario2Id=<%= v.getId() %>'">
 	        									Conversar</button>
 	    										<button type="button" onclick="window.location.href='aceitar-voluntario?atividadeId=<%= atividade.getId() %>&voluntarioId=<%= v.getId() %>'">
 	        									Aceitar</button>
