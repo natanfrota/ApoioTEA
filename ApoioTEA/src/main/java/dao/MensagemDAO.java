@@ -9,14 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MensagemDAO {
-	public void criarMensagem(Mensagem mensagem) {
+	public void criarMensagem(Mensagem mensagem, int conversaId) {
         String insercao = "insert into mensagem (conteudo, conversa_id, usuario_id) VALUES (?, ?, ?)";
+        
         try (Connection conexao = Conexao.criarConexao();
         	PreparedStatement ps = conexao.prepareStatement(insercao)){
             ps.setString(1, mensagem.getConteudo());
-            ps.setInt(2, mensagem.getConversa().getId());
+            ps.setInt(2, conversaId);
             ps.setInt(3, mensagem.getRemetente().getId());
             ps.executeUpdate();
+            
+            System.out.println("enviando mensagem...");
+            
+            
         } catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
         }

@@ -28,8 +28,8 @@
 			<ul>
 				<li><a href="inicio-familia">Início</a></li>
 				<li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
-				<li><a href="#">Atividades agendadas</a></li>
-				<li><a href="#">Conversas</a></li>
+				<li><a href="atividades-agendadas-familia">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
 				<li><a href="#">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
 			</ul>
@@ -122,7 +122,7 @@
 						<%} else if(atividade.getVoluntarioEscolhido() != null && atividade.getVoluntarioEscolhido().getId()
 						== v.getId()) { %>
 							<span class="botoes">
-								<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+								<button type="button" onclick="window.location.href='conversar?usuario2Id=<%= v.getId() %>'">
         						Conversar</button>
         					</span>
         				<%}%>

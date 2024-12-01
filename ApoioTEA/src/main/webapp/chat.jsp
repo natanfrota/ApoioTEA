@@ -1,7 +1,13 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="modelo.Conversa"%>
+<%@page import="modelo.Usuario"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="modelo.Mensagem" %>
+<% Usuario usuarioOnline = (Usuario) session.getAttribute("usuario"); 
+   Conversa conversa = (Conversa) request.getAttribute("conversa");
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -10,7 +16,7 @@
     <title>ApoioTEA - Chat</title>
     <link rel="stylesheet" href="css/chat.css">
 </head>
-<body>
+<body onload="rolarBarra()">
     <div class="barraTarefas">
         <h1>ApoioTEA</h1>
         <nav>
@@ -26,38 +32,43 @@
     </div>
     <div class="conteudo">
         <header class="chat-header">
-            <img src="<%= request.getAttribute("avatarContato") %>" alt="Avatar do Contato">
-            <h2><%= request.getAttribute("nomeContato") %></h2>
+            <img src="" alt="foto do destinatário">
+            <h2><%= conversa.getUsuario2().getNome() %></h2>
         </header>
 
         <main class="chat-area">
-            <%
-                List<Mensagem> mensagens = (List<Mensagem>) request.getAttribute("mensagens");
-                int usuarioAtualId = (int) session.getAttribute("usuarioId");
+            <%	DateTimeFormatter dt = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+            	List<Mensagem> mensagens = conversa.getMensagens();
                 if (mensagens != null) {
                     for (Mensagem mensagem : mensagens) {
             %>
-                        <div class="mensagem <%= mensagem.getUsuarioId() == usuarioAtualId ? "enviada" : "recebida" %>">
+                        <div class="mensagem <%= mensagem.getRemetente().getId() == usuarioOnline.getId() ? "enviada" : "recebida" %>">
                             <p><%= mensagem.getConteudo() %></p>
-                            <span><%= mensagem.getDataHoraDeEnvio() %></span>
+                            <span><%= mensagem.getDataHoraDeEnvio().format(dt) %></span>
                         </div>
             <%
                     }
                 } else {
             %>
-                <p>Nenhuma mensagem ainda.</p>
+                <p>Não há mensagens para exibir.</p>
             <%
                 }
             %>
         </main>
 
         <footer class="caixa-enviar">
-            <form action="chat" method="post">
-                <input type="hidden" name="conversaId" value="<%= request.getParameter("conversaId") %>">
+            <form action="enviar-mensagem" method="post">
+                <input type="hidden" name="conversaId" value="<%= conversa.getId() %>">
                 <input type="text" name="conteudo" placeholder="Digite sua mensagem..." required>
                 <button type="submit">Enviar</button>
             </form>
         </footer>
     </div>
+    <script> 
+    	function rolarBarra(){
+    		let area = document.getElementsByClassName('chat-area')[0];
+    		area.scrollTop = area.scrollHeight;
+    	}
+    </script>
 </body>
 </html>

@@ -29,10 +29,9 @@
 		<nav>
 			<ul>
 				<li><a href="inicio-<%= usuarioDaSessao.getTipo()%>">Início</a></li>
-				<li><a
-					href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
-				<li><a href="#">Atividades agendadas</a></li>
-				<li><a href="#">Conversas</a></li>
+				<li><a href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
+				<li><a href="atividades-agendadas-familia">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
 				<li><a href="#">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
 			</ul>
@@ -154,7 +153,7 @@
 										<%} else if(atividade.getVoluntarioEscolhido() != null && atividade.getVoluntarioEscolhido().getId()
 												== v.getId()) { %>
 											<span class="botoes">
-												<button type="button" onclick="window.location.href='conversar?voluntarioId=<%= v.getId() %>'">
+												<button type="button" onclick="window.location.href='conversar?usuario2Id=<%= v.getId() %>'">
 	        									Conversar</button>
 	        								</span>
 	        				   			<%}%>
@@ -167,7 +166,7 @@
 							
 							boolean candidatoNaoEscolhido = atividade.getVoluntarioEscolhido() == null 
 							                                || atividade.getVoluntarioEscolhido().getId() != usuarioDaSessao.getId();
-							boolean podeVoluntariar = !atividade.buscarCandidato(usuarioDaSessao.getId()) && candidatoNaoEscolhido;
+							boolean podeVoluntariar = !atividade.buscarCandidato(usuarioDaSessao.getId());
 							boolean candidatoAtivo = atividade.buscarCandidato(usuarioDaSessao.getId());
 							%>
 				
@@ -176,12 +175,14 @@
 							        onclick="window.location.href='adicionar-candidato?atividadeId=<%= atividade.getId() %>'">
 							        Voluntariar-se
 							    </button>
-							<% } else if (candidatoAtivo) { %>
+							<% } else if (!candidatoNaoEscolhido) { %>
 							    <button class="botao-voluntariar" type="button"
 							        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atividade.getId() %>'">
-							        Cancelar candidatura
+							        Cancelar presença
 							    </button>
-							<% } else if (!candidatoNaoEscolhido) { %>
+							    <button class="botao-voluntariar" type="button" onclick="window.location.href='conversar?usuario2Id=<%= atividade.getFamilia().getId() %>'">
+        						Conversar</button>
+							<% } else if (candidatoAtivo) { %>
 							    <button class="botao-voluntariar" type="button"
 							        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atividade.getId() %>'">
 							        Cancelar candidatura

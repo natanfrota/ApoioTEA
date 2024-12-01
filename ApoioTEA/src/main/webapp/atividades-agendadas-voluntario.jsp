@@ -23,8 +23,8 @@
 			<ul>
 				<li><a href="inicio-voluntario">Início</a></li>
 				<li><a href="perfil-voluntario?id=<%= voluntario.getId()%>">Perfil</a></li>
-				<li><a href="#">Atividades agendadas</a></li>
-				<li><a href="#">Conversas</a></li>
+				<li><a href="atividades-agendadas-voluntario">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
 				<li><a href="#">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
 			</ul>
@@ -65,6 +65,10 @@
 				        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atividade.getId() %>'">
 				        Cancelar presença
 				    </button>
+				    <button class="botao-voluntariar" type="button" 
+				    	onclick="window.location.href='conversar?usuario2Id=<%= atividade.getFamilia().getId() %>'">
+        				Conversar
+        			</button>
 			</div>
 			<% } %>
 		<% } %>

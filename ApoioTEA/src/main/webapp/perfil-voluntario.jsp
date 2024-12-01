@@ -26,12 +26,11 @@
 		<nav>
 			<ul>
 				<li><a href="inicio-<%= usuarioDaSessao.getTipo()%>">Início</a></li>
-				<li><a
-					href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
-				<li>Atividades agendadas</li>
-				<li>Conversas</li>
-				<li>Notificações</li>
-				<li><a href="sair">Sair</a></li>
+				<li><a href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
+				<li><a href="atividades-agendadas-voluntario">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
+				<li><a href="#">Notificações</a></li>
+				<li><a href="sair">Sair</a></li>			
 			</ul>
 		</nav>
 	</div>
