@@ -10,10 +10,7 @@
 <%@ page import="java.time.format.DateTimeFormatter"%>
 
 <%  Familia familia = (Familia) session.getAttribute("usuario");
-	List<Atividade> atividades = null;
-	if (familia != null && familia.getAtividades() != null) {
-    	atividades = familia.getAtividades(); 
-	}
+	List<Atividade> atividadesAgendadas = (List<Atividade>) request.getAttribute("atividadesAgendadas");
 %>
 
 <!DOCTYPE html>
@@ -31,7 +28,7 @@
 			<ul>
 				<li><a href="inicio-familia">Início</a></li>
 				<li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
-				<li><a href="atividades-agendadas-familia">Atividades agendadas</a></li>
+				<li><a href="#">Atividades agendadas</a></li>
 				<li><a href="#">Conversas</a></li>
 				<li><a href="#">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
@@ -39,18 +36,13 @@
 		</nav>
 	</div>
 	<div class="conteudo">
-		<header>
-			<button class="botao-publicar"
-				onclick="window.location.href='publicar-atividade.jsp'">Publicar
-				uma nova atividade</button>
-		</header>
 		<main>
-			<h2>Atividades publicadas por você</h2>
+			<h2>Atividades agendadas</h2>
 
-			<% if(atividades != null) { 
+			<% if(atividadesAgendadas != null && atividadesAgendadas.size() > 0) { 
            		DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
            		int indice = 0;
-           		for(Atividade atividade : atividades) { %>
+           		for(Atividade atividade : atividadesAgendadas) { %>
 
 			<div class="atividade">
 				<div class="info">

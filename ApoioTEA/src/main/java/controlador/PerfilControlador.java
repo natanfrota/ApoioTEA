@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import modelo.Atividade;
+import modelo.Avaliacao;
 import modelo.Familia;
 import modelo.Voluntario;
 
 
 @WebServlet(urlPatterns = {"/perfil-voluntario", "/perfil-familia", "/inicio-voluntario",
-		"/inicio-familia", "/sair"})
+		"/inicio-familia", "/salvar-edicao-perfil-familia", "/salvar-edicao-perfil-voluntario",
+		"/sair"})
 public class PerfilControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -47,6 +50,20 @@ public class PerfilControlador extends HttpServlet {
 		}
 	}
 	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+		String action = request.getServletPath();
+		System.out.println(action);
+		
+		if(action.equals("/salvar-edicao-perfil-familia")) {
+			salvarAlteracoesPerfilFamilia(request, response);
+		} else if(action.equals("/salvar-edicao-perfil-voluntario")) {
+			salvarAlteracoesPerfilVoluntario(request, response);
+		}
+	}
+
+
 	protected void exibirVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = null;
 
@@ -62,6 +79,9 @@ public class PerfilControlador extends HttpServlet {
 			boolean encontrado = voluntario.selecionarVoluntario();
 						
 			if(encontrado) { 
+				Avaliacao avaliacao = new Avaliacao();
+				List<Avaliacao> avaliacoes = avaliacao.selecionarAvaliacoesDeUmVoluntario(voluntario.getId());
+				request.setAttribute("avaliacoes", avaliacoes);
 				request.setAttribute("voluntario", voluntario);
 				RequestDispatcher rd = request.getRequestDispatcher("perfil-voluntario.jsp");
 				rd.forward(request, response);
@@ -115,6 +135,68 @@ public class PerfilControlador extends HttpServlet {
 			familia.setAtividades(new Atividade().selecionarAtividadesDeUmaFamilia(
 					familia.getId()));
 			response.sendRedirect("inicio-familia.jsp");
+		}
+	}
+	
+	protected void salvarAlteracoesPerfilVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("nome");
+		String email = request.getParameter("email");
+		String dataNascimento = request.getParameter("data_nascimento");
+		String cidade = request.getParameter("cidade");
+		String estado = request.getParameter("estado");
+		String descricao = request.getParameter("descricao");
+		String experiencia = request.getParameter("experiencia");
+		String habilidades = request.getParameter("habilidades");
+		
+		if(nome != null && email != null && dataNascimento != null && 
+				cidade != null && estado != null && descricao != null && experiencia != null &&
+				habilidades != null) {
+			
+			HttpSession sessao = request.getSession(false);
+			Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
+			
+			if(voluntario != null) {
+				voluntario.setNome(nome);
+				voluntario.setEmail(email);
+				voluntario.setDataNascimento(LocalDate.parse(dataNascimento));
+				voluntario.setCidade(cidade);
+				voluntario.setEstado(estado);
+				voluntario.setDescricao(descricao);
+				voluntario.setExperiencia(experiencia);
+				voluntario.setHabilidades(habilidades);
+				
+				voluntario.alterarDadosPerfil();
+				
+				response.sendRedirect("perfil-voluntario?id=" + voluntario.getId());
+			}
+		}
+	}
+	
+	protected void salvarAlteracoesPerfilFamilia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String nome = request.getParameter("nome");
+		String email = request.getParameter("email");
+		String dataNascimento = request.getParameter("data_nascimento");
+		String cidade = request.getParameter("cidade");
+		String estado = request.getParameter("estado");
+		String descricao = request.getParameter("descricao");
+		
+		if(nome != null && email != null && dataNascimento != null && 
+				cidade != null && estado != null && descricao != null) {
+			HttpSession sessao = request.getSession(false);
+			Familia familia = (Familia) sessao.getAttribute("usuario");
+			
+			if(familia != null) {
+				familia.setNome(nome);
+				familia.setEmail(email);
+				familia.setDataNascimento(LocalDate.parse(dataNascimento));
+				familia.setCidade(cidade);
+				familia.setEstado(estado);
+				familia.setDescricao(descricao);
+				
+				familia.alterarDadosPerfil();
+				
+				response.sendRedirect("perfil-familia?id=" + familia.getId());
+			}
 		}
 	}
 	

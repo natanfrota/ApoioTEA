@@ -212,6 +212,8 @@ header .botao-publicar {
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    position: relative;
+    left: 85%;
 }
 
 .botao-editarperfil:hover {
@@ -255,4 +257,8 @@ header .botao-publicar {
 
 .botao-voluntariar:hover {
     background-color: #1565c0;
+}
+
+.checked {
+	color: orange;
 }

@@ -22,7 +22,7 @@
 			<ul>
 				<li><a href="inicio-voluntario">Início</a></li>
 				<li><a href="perfil-voluntario?id=<%= voluntario.getId()%>">Perfil</a></li>
-				<li><a href="#">Atividades agendadas</a></li>
+				<li><a href="atividades-agendadas-voluntario">Atividades agendadas</a></li>
 				<li><a href="#">Conversas</a></li>
 				<li><a href="#">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
@@ -72,14 +72,14 @@
 			        onclick="window.location.href='adicionar-candidato?atividadeId=<%= atv.getId() %>'">
 			        Voluntariar-se
 			    </button>
-			<% } else if (candidatoAtivo) { %>
-			    <button class="botao-voluntariar" type="button"
-			        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atv.getId() %>'">
-			        Cancelar candidatura
-			    </button>
 			<% } else if (!candidatoNaoEscolhido) { %>
 			    <button class="botao-voluntariar" type="button"
 			        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atv.getId() %>'">
+			        Cancelar presença
+			    </button>
+			<% } else if (candidatoAtivo) { %>
+			    <button class="botao-voluntariar" type="button"
+			        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atv.getId() %>'">
 			        Cancelar candidatura
 			    </button>
 			<% } %>
