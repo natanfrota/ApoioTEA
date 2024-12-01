@@ -22,15 +22,6 @@ public class Voluntario extends Usuario {
 		this.habilidades = habilidades;
 	}
 
-	public Voluntario(int id, String nome, String email, LocalDate dataNascimento, String cidade, String estado,
-			String descricao, String statusConta, String experiencia, String habilidades,
-			double avaliacaoMedia) {
-		super(id, nome, email, dataNascimento, cidade, estado, descricao, "voluntario", statusConta);
-		this.experiencia = experiencia;
-		this.habilidades = habilidades;
-		this.avaliacaoMedia = avaliacaoMedia;
-	}
-
 	@Override
 	public void fazerCadastro() {
 		new VoluntarioDAO().inserirVoluntario(this);

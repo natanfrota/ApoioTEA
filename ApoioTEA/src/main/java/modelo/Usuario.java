@@ -79,17 +79,6 @@ public class Usuario {
 		return anos;
 	}
 	
-	public Conversa retornarConversa(List<Conversa> conversas, int conversaId) {
-		if(conversas != null) {
-			for (Conversa conversa : conversas) {
-				if(conversa.getId() == conversaId) {
-					return conversa;
-				}
-			}
-		}
-		return null;
-	}
-	
 	public Conversa retornarConversaComOutroUsuario(List<Conversa> conversas, int usuario2Id) {
 		if(conversas != null) {
 			for (Conversa conversa : conversas) {
