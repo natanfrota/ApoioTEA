@@ -21,7 +21,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ApoioTEA - <%=familia.getNome() %></title>
-<link rel="stylesheet" href="css/perfil.css">
+<link rel="stylesheet" href="css/perfil1.css">
 </head>
 <body>
 	<div class="barraTarefas">
@@ -59,7 +59,8 @@
 		</div>
 		<% if(usuarioDaSessao != null && familia.getId() 
                     		== usuarioDaSessao.getId()){ %>
-			<button class="botao-editarperfil" type="button">Editar perfil</button>
+			<button class="botao-editarperfil" type="button"onclick="window.location.href='editar-perfil-familia.jsp'">
+			Editar perfil</button>
 		<% } %>
 		<% if(usuarioDaSessao != null && familia.getId() == usuarioDaSessao.getId()){ %>
 			<header>

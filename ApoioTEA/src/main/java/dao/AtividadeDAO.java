@@ -66,13 +66,12 @@ public class AtividadeDAO {
 		return false;
 	}
 	
-	//testar
 	public List<Atividade> selecionarTodasAsAtividades(){
 		String consulta = "select u.id as id_familia, u.nome as nome_familia, "
 						+ "u2.id as id_voluntario, u2.nome as nome_voluntario, a.* "
 						+ "from atividade a "
 						+ "join usuario u on a.familia_usuario_id = u.id "
-						+ "left join usuario u2 on a.voluntario_usuario_id = u2.id;";
+						+ "left join usuario u2 on a.voluntario_usuario_id = u2.id";
 		
 		List<Atividade> atividades = new ArrayList<Atividade>();
 		
@@ -161,12 +160,11 @@ public class AtividadeDAO {
 		return false;
 	}
 	
-	//testar
 	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
 		String consulta = "select u.id as id_voluntario, u.nome as nome_voluntario, a.* "
 						+ "from atividade a "
 						+ "left join usuario u on a.voluntario_usuario_id = u.id "
-						+ "where a.familia_usuario_id = ?;";
+						+ "where a.familia_usuario_id = ?";
 		
 		List<Atividade> atividades = new ArrayList<Atividade>();
 		Connection conexao = null;
@@ -226,6 +224,133 @@ public class AtividadeDAO {
 		}
 		return atividades;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//testar
+	public List<Atividade> selecionarAtividadesConfirmadasDeUmaFamilia(int idFamilia){
+		String consulta = "select u.id as id_voluntario, u.nome as nome_voluntario, a.* "
+						+ "from atividade a "
+						+ "inner join usuario u on a.voluntario_usuario_id = u.id "
+						+ "where a.familia_usuario_id = ?";
+		
+		List<Atividade> atividades = new ArrayList<Atividade>();
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try{
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(consulta);
+			ps.setInt(1, idFamilia);
+			rs = ps.executeQuery();
+			
+			VoluntarioDAO voluntarioDAO = new VoluntarioDAO();
+			
+			while(rs.next()) {
+				int idVoluntario = rs.getInt("id_voluntario");
+	            String nomeVoluntario = rs.getString("nome_voluntario");
+	            Voluntario voluntario = new Voluntario();
+                voluntario.setId(idVoluntario);
+                voluntario.setNome(nomeVoluntario);
+				
+				int id = rs.getInt("id");
+				String titulo = rs.getString("titulo");
+				String categoria = rs.getString("categoria");
+				String descricao = rs.getString("descricao");
+				String localizao = rs.getString("localizacao");
+				String status = rs.getString("status");
+				LocalDate data = rs.getDate("data").toLocalDate();
+				LocalTime hora = rs.getTime("hora").toLocalTime();
+				
+				Atividade atividade = new Atividade(id, titulo, categoria, descricao, 
+						localizao, status, data, hora);
+				atividades.add(atividade);
+				
+	            atividade.setVoluntarioEscolhido(voluntario);
+				
+				atividade.setVoluntariosCandidatos(voluntarioDAO.selecionarCandidatosDeUmaAtividade(id));
+				
+				System.out.println("atividades agendadas selecionadas");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(conexao != null)
+					conexao.close();
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+		return atividades;
+	}
+	
+	
+
+	
+	public List<Atividade> selecionarAtividadesConfirmadasDeUmVoluntario(int voluntarioId) {
+		String consulta = "select u.id as id_familia, u.nome as nome_familia, a.* "
+						+ "from atividade a "
+						+ "join usuario u on a.familia_usuario_id = u.id "
+						+ "where a.voluntario_usuario_id = ?";
+
+		List<Atividade> atividades = new ArrayList<Atividade>();
+
+		try (Connection conexao = Conexao.criarConexao(); PreparedStatement ps = conexao.prepareStatement(consulta)) {
+
+			ps.setInt(1, voluntarioId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+
+				while (rs.next()) {
+					int idFamilia = rs.getInt("id_familia");
+					String nomeFamilia = rs.getString("nome_familia");
+					Familia familia = new Familia();
+					familia.setId(idFamilia);
+					familia.setNome(nomeFamilia);
+
+					int idAtividade = rs.getInt("id");
+					String titulo = rs.getString("titulo");
+					String categoria = rs.getString("categoria");
+					String descricao = rs.getString("descricao");
+					String localizacao = rs.getString("localizacao");
+					String status = rs.getString("status");
+					LocalDate data = rs.getDate("data").toLocalDate();
+					LocalTime hora = rs.getTime("hora").toLocalTime();
+
+					Atividade atividade = new Atividade(idAtividade, titulo, categoria, descricao, localizacao, status,
+							data, hora);
+					atividades.add(atividade);
+
+					atividade.setFamilia(familia);
+				}
+			}
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		}
+
+		return atividades;
+	}
+	
+	
+	
+	
+	
 	
 	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int voluntarioId) {
 		String insercao = "insert into atividade_has_voluntario "
@@ -369,7 +494,6 @@ public class AtividadeDAO {
 		}
 	}
 	
-	
 	public boolean excluirAtividade(int id) {
 		String exclusao = "delete from atividade where id = ?";
 		
@@ -401,15 +525,4 @@ public class AtividadeDAO {
 		
 		return false;
 	}
-	
-	/*
-	public static void main(String[] args) {
-		AtividadeDAO a = new AtividadeDAO();
-		List<Atividade> as = a.selecionarAtividadesDeUmaFamilia(1);
-		for (Atividade atividade : as) {
-			System.out.println("escolhido " + atividade.getVoluntarioEscolhido().getNome());
-			System.out.println("familia "  + atividade.getFamilia().getNome());
-		}
-		
-	}*/
 }

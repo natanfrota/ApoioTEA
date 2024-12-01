@@ -84,44 +84,6 @@ public class UsuarioDAO {
 	}
 	
 	//ainda não testada
-	public void alterarDadosPerfilUsuario(Usuario usuario) {
-		String alteracao = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
-				+ " cidade = ?, estado = ?, descricao = ? where id = ?";
-		
-		Connection conexao = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		
-		try {
-			conexao = Conexao.criarConexao();
-			ps = conexao.prepareStatement(alteracao);
-			ps.setString(1, usuario.getNome());
-			ps.setString(2, usuario.getEmail());
-			ps.setDate(3, Date.valueOf(usuario.getDataNascimento()));
-			ps.setString(4, usuario.getCidade());
-			ps.setString(5, usuario.getEstado());
-			ps.setString(6, usuario.getDescricao());
-			ps.setInt(7, usuario.getId());
-			ps.executeUpdate();
-
-		} catch (ClassNotFoundException | SQLException e) {
-			System.err.println(e);
-			
-		} finally {
-			try {
-				if(rs != null)
-					rs.close();
-				if(ps != null)
-					ps.close();
-				if (conexao != null)
-					conexao.close();			
-			} catch (SQLException e2) {
-				System.err.println(e2);
-			}
-		}
-	}
-	
-	//ainda não testada
 	public void excluirConta(Usuario usuario) {
 		String exclusao = "update usuario set status_conta = 'excluida' "
 				+ "where id = ?";

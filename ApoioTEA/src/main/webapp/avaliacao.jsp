@@ -6,7 +6,7 @@
 	Voluntario voluntario = (Voluntario) request.getAttribute("voluntario");
  %>
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
 <title>ApoioTEA</title>
@@ -29,9 +29,11 @@
     <div class="centralizada">
         <h2>Avaliação do(a) voluntário(a) </h2>
         <div class="nome"><%= voluntario.getNome() %></div>
-        <form action="" method="get">
-            <label for="avaliacao">Avaliação (1 a 5):</label>
-            <select id="avaliacao" name="avaliacao" required>
+        
+        <form action="salvar-avaliação" method="get">
+            
+            <label for="nota">Avaliação (1 a 5):</label>
+            <select id="nota" name="nota" required>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -39,9 +41,11 @@
                 <option value="5">5</option>
             </select>
 
-            <label for="comentarios">Comentários:</label>
-            <textarea id="comentarios" name="comentarios" rows="4"></textarea>
+            <label for="comentario">Comentários:</label>
+            <textarea id="comentario" name="comentario" rows="4"></textarea>
+            
             <input type="hidden" name="voluntarioId" value="<%= voluntario.getId() %>">
+            
             <button type="submit">Enviar avaliação</button>
         </form>
     </div>

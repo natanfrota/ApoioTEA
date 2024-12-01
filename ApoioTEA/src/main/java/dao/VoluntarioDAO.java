@@ -5,11 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import modelo.Usuario;
 import modelo.Voluntario;
 
 public class VoluntarioDAO {
@@ -92,21 +90,21 @@ public class VoluntarioDAO {
 			voluntarios = new ArrayList<>();
 
 			while(rs.next()) {
+				Voluntario voluntario = new Voluntario();
 				
-				int id = rs.getInt("id");
-				String nome = rs.getString("nome");
-				String email = rs.getString("email");
-				//String foto = rs.getString("foto");
-				LocalDate dataNascimento = rs.getDate("data_nascimento").toLocalDate();
-				String cidade = rs.getString("cidade");
-				String estado = rs.getString("estado");
-				String descricao = rs.getString("descricao");
-				String statusConta = rs.getString("status_conta");
-				String experiencia = rs.getString("experiencia");
-				String habilidades = rs.getString("habilidades");
-				
-				voluntarios.add(new Voluntario(id, nome, email, dataNascimento, cidade, 
-						estado, descricao, statusConta, experiencia, habilidades, id));
+				voluntario.setId(rs.getInt("id"));
+			    voluntario.setNome(rs.getString("nome"));
+			    voluntario.setEmail(rs.getString("email"));
+			    // voluntario.setFoto(rs.getString("foto")); 
+			    voluntario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
+			    voluntario.setCidade(rs.getString("cidade"));
+			    voluntario.setEstado(rs.getString("estado"));
+			    voluntario.setDescricao(rs.getString("descricao"));
+			    voluntario.setStatusConta(rs.getString("status_conta"));
+			    voluntario.setExperiencia(rs.getString("experiencia"));
+			    voluntario.setHabilidades(rs.getString("habilidades"));
+			    
+			    voluntarios.add(voluntario);
 			}			
 		} catch (ClassNotFoundException | SQLException e) {
 			System.err.println(e);
@@ -132,13 +130,13 @@ public class VoluntarioDAO {
 			if(rs.next()) {			
 				voluntario.setNome(rs.getString("nome"));
 				voluntario.setEmail(rs.getString("email"));
-				//voluntario.setSenha(rs.getString("senha"));
 				//voluntario.setFoto(rs.getString("foto"));
 				voluntario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
 				voluntario.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
 				voluntario.setCidade(rs.getString("cidade"));
 				voluntario.setEstado(rs.getString("estado"));
 				voluntario.setDescricao(rs.getString("descricao"));
+				voluntario.setAvaliacaoMedia(rs.getDouble("avaliacao_media"));
 				voluntario.setStatusConta(rs.getString("status_conta"));
 				voluntario.setTipo(rs.getString("tipo"));
 				voluntario.setExperiencia(rs.getString("experiencia"));
@@ -163,7 +161,6 @@ public class VoluntarioDAO {
 		}
 		return false;
 	}
-	
 	
 	public void alterarDadosPerfil(Voluntario voluntario) {
 		String alteracaoUsuario = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
@@ -212,7 +209,6 @@ public class VoluntarioDAO {
 		}
 	}
 	
-	// testar
 	public List<Voluntario> selecionarCandidatosDeUmaAtividade(int atividadeId) {
 		String consulta = "select u.id, u.nome "
 						+ "from atividade_has_voluntario as ahv "

@@ -33,7 +33,6 @@ public class Atividade {
 		this.status = status;
 		this.data = data;
 		this.hora = hora;
-		this.voluntariosCandidatos = new ArrayList<Voluntario>();
 	}
 
 	public Atividade(int id, String titulo, String categoria, String descricao, 
@@ -46,7 +45,6 @@ public class Atividade {
 		this.status = status;
 		this.data = data;
 		this.hora = hora;
-		this.voluntariosCandidatos = new ArrayList<Voluntario>();
 	}
 	
 	public boolean criar() {
@@ -87,6 +85,14 @@ public class Atividade {
 	
 	public void removerVoluntarioEscolhido() {
 		new AtividadeDAO().removerVoluntarioEscolhido(id);
+	}
+	
+	public List<Atividade> selecionarAtividadesConfirmadasDeUmaFamilia(int idFamilia){
+		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmaFamilia(idFamilia);
+	}
+	
+	public List<Atividade> selecionarAtividadesConfirmadasDeUmVoluntario(int voluntarioId){
+		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmVoluntario(voluntarioId);
 	}
 	
 	public boolean buscarCandidato(int candidatoId) {

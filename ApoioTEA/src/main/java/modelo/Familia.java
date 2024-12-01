@@ -1,7 +1,6 @@
 package modelo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import dao.FamiliaDAO;
@@ -53,19 +52,13 @@ public class Familia extends Usuario{
 		if(atividades == null)
 			return;
 		
-		boolean excluida = false;
-		
 		int cont, tam;
 		for(cont = 0, tam = atividades.size(); cont < tam; cont++){
 			if(atividades.get(cont) != null && atividades.get(cont).getId() == atividadeId) {
-				excluida = atividades.get(cont).excluir();
+				atividades.get(cont).excluir();
 				System.out.println("Atividade excluída.");
 				break;
 			}
-		}
-		
-		if(excluida) {
-			atividades.remove(cont);
 		}
 	}
 	
@@ -76,5 +69,9 @@ public class Familia extends Usuario{
 			}
 		}
 		return null;
+	}
+	
+	public void alterarDadosPerfil() {
+		new FamiliaDAO().alterarDadosPerfil(this);
 	}
 }

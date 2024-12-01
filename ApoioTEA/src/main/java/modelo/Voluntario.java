@@ -36,8 +36,7 @@ public class Voluntario extends Usuario {
 		new VoluntarioDAO().inserirVoluntario(this);
 	}
 	
-	@Override
-	public void editarPerfil() {
+	public void alterarDadosPerfil() {
 		new VoluntarioDAO().alterarDadosPerfil(this);
 	}
 	
@@ -64,7 +63,15 @@ public class Voluntario extends Usuario {
 	public void setAvaliacaoMedia(double avaliacaoMedia) {
 		this.avaliacaoMedia = avaliacaoMedia;
 	}
-	
+		
+	public List<Atividade> getAtividadesAgendadas() {
+		return atividadesAgendadas;
+	}
+
+	public void setAtividadesAgendadas(List<Atividade> atividadesAgendadas) {
+		this.atividadesAgendadas = atividadesAgendadas;
+	}
+
 	public List<Voluntario> retornarVoluntarios(){
 		return new VoluntarioDAO().selecionarVoluntarios();
 	}

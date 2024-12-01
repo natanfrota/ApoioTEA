@@ -3,6 +3,7 @@ package controlador;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.AtividadeDAO;
 import modelo.Atividade;
+import modelo.Avaliacao;
 import modelo.Familia;
 import modelo.Usuario;
 import modelo.Voluntario;
@@ -21,7 +24,8 @@ import modelo.Voluntario;
 @WebServlet(urlPatterns = {"/publicar", "/editar-atividade", "/salvar-edicao-atividade", 
 		"/adicionar-candidato", "/cancelar-candidatura", "/cancelar-candidatura-confirmada",
 		"/excluir-atividade", "/aceitar-voluntario", "/remover-voluntario-escolhido", 
-		"/marcar-como-realizada"})
+		"/marcar-como-realizada", "/salvar-avaliação", "/atividades-agendadas-familia", 
+		"/atividades-agendadas-voluntario"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -57,6 +61,12 @@ public class AtividadesControlador extends HttpServlet {
 			removerVoluntarioEscolhido(request, response);
 		} else if(action.equals("/marcar-como-realizada")) {
 			marcarComoRealizada(request, response);
+		} else if(action.equals("/salvar-avaliação")) {
+			salvarAvaliacao(request, response);
+		} else if(action.equals("atividades-agendadas-familia")) {
+			exibirAtividadesAgendadasDeUmaFamilia(request, response);
+		} else if(action.equals("/atividades-agendadas-voluntario")) {
+			exibirAtividadesAgendadasDeUmVoluntario(request, response);
 		}
 	}
 	
@@ -219,11 +229,10 @@ public class AtividadesControlador extends HttpServlet {
 			Atividade atividade = familia.retornarAtividade(atividadeId);
 			boolean encontrado = atividade.buscarCandidato(voluntarioId);
 			
-			System.out.println("dentro do primeiro if de aceitar");
+			System.out.println("entrou no primeiro if");
 			
 			if(atividade != null && encontrado) {
 				atividade.registrarVoluntarioEscolhido(voluntarioId);
-				//atividade.removerCandidaturaDeUmaAtividade(voluntarioId);
 				
 				System.out.println("dentro do segundo if de aceitar");
 				
@@ -261,7 +270,6 @@ public class AtividadesControlador extends HttpServlet {
 		}
 	}
 	
-	// testar
 	protected void marcarComoRealizada(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
 		int voluntarioId = Integer.parseInt(request.getParameter("voluntarioId"));
@@ -280,6 +288,53 @@ public class AtividadesControlador extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("avaliacao.jsp");
 				rd.forward(request, response);
 			}
+		}
+	}
+	
+	protected void salvarAvaliacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int nota = Integer.parseInt(request.getParameter("nota"));
+		String comentario = request.getParameter("comentario");
+		int voluntarioId = Integer.parseInt(request.getParameter("voluntarioId"));
+		
+		HttpSession sessao = request.getSession(false);
+		Familia familia = (Familia) sessao.getAttribute("usuario");
+
+		if (familia != null) {
+			Avaliacao avaliacao = new Avaliacao();
+			avaliacao.setNota(nota);
+			avaliacao.setComentario(comentario);
+			avaliacao.registrarAvalicao(familia.getId(), voluntarioId);
+			response.sendRedirect("inicio-familia");
+		}		
+	}
+	
+	protected void exibirAtividadesAgendadasDeUmaFamilia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sessao = request.getSession(false);
+		Familia familia = (Familia) sessao.getAttribute("usuario");
+		
+		System.out.println(familia);
+		
+		if(familia != null) {
+			System.out.println("exibir atividades agendadas familia");
+			
+			Atividade atividade = new Atividade();
+			List<Atividade> atividadesAgendadas = atividade.selecionarAtividadesConfirmadasDeUmaFamilia(familia.getId());
+			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
+			RequestDispatcher rd = request.getRequestDispatcher("atividades-agendadas-familia.jsp");
+			rd.forward(request, response);
+		}
+	}
+	
+	protected void exibirAtividadesAgendadasDeUmVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sessao = request.getSession(false);
+		Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
+		
+		if(voluntario != null) {
+			Atividade atividade = new Atividade();
+			List<Atividade> atividadesAgendadas = atividade.selecionarAtividadesConfirmadasDeUmVoluntario(voluntario.getId());
+			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
+			RequestDispatcher rd = request.getRequestDispatcher("atividades-agendadas-voluntario.jsp");
+			rd.forward(request, response);
 		}
 	}
 }

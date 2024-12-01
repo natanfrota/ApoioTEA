@@ -124,7 +124,6 @@ public class FamiliaDAO {
 			if(rs.next()) {			
 				familia.setNome(rs.getString("nome"));
 				familia.setEmail(rs.getString("email"));
-				//familia.setSenha(rs.getString("senha"));
 				//familia.setFoto(rs.getString("foto"));
 				familia.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
 				familia.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
@@ -152,5 +151,41 @@ public class FamiliaDAO {
 			}
 		}
 		return false;
+	}
+	
+	public void alterarDadosPerfil(Familia familia) {
+		String alteracaoUsuario = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
+				+ " cidade = ?, estado = ?, descricao = ? where id = ?";
+		
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(alteracaoUsuario);
+			ps.setString(1, familia.getNome());
+			ps.setString(2, familia.getEmail());
+			ps.setDate(3, Date.valueOf(familia.getDataNascimento()));
+			ps.setString(4, familia.getCidade());
+			ps.setString(5, familia.getEstado());
+			ps.setString(6, familia.getDescricao());
+			ps.setInt(7, familia.getId());
+			ps.executeUpdate();
+			
+			System.out.println("dados alterados");
+
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+			
+		} finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if (conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
 	}
 }
