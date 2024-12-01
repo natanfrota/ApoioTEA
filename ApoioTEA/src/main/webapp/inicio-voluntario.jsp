@@ -23,7 +23,7 @@
 				<li><a href="inicio-voluntario">Início</a></li>
 				<li><a href="perfil-voluntario?id=<%= voluntario.getId()%>">Perfil</a></li>
 				<li><a href="atividades-agendadas-voluntario">Atividades agendadas</a></li>
-				<li><a href="#">Conversas</a></li>
+				<li><a href="conversas">Conversas</a></li>
 				<li><a href="#">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
 			</ul>
@@ -63,7 +63,7 @@
 			<%
 			boolean candidatoNaoEscolhido = atv.getVoluntarioEscolhido() == null 
 			                                || atv.getVoluntarioEscolhido().getId() != voluntario.getId();
-			boolean podeVoluntariar = !atv.buscarCandidato(voluntario.getId()) && candidatoNaoEscolhido;
+			boolean podeVoluntariar = !atv.buscarCandidato(voluntario.getId());
 			boolean candidatoAtivo = atv.buscarCandidato(voluntario.getId());
 			%>
 
@@ -77,6 +77,8 @@
 			        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atv.getId() %>'">
 			        Cancelar presença
 			    </button>
+			    <button class="botao-voluntariar" type="button" onclick="window.location.href='conversar?usuario2Id=<%= atv.getFamilia().getId() %>'">
+        		Conversar</button>
 			<% } else if (candidatoAtivo) { %>
 			    <button class="botao-voluntariar" type="button"
 			        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atv.getId() %>'">

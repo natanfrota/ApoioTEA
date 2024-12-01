@@ -2,6 +2,8 @@ package modelo;
 
 import java.util.List;
 
+import dao.ConversaDAO;
+
 public class Conversa {
     private int id;
     private Usuario usuario1;
@@ -38,5 +40,9 @@ public class Conversa {
 	
 	public void setMensagens(List<Mensagem> mensagens) {
 		this.mensagens = mensagens;
+	}
+	
+	public int criar(int idUsuario1, int idUsuario2) {
+		return new ConversaDAO().criarConversa(idUsuario1, idUsuario2);
 	}
 }

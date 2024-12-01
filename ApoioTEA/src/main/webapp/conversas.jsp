@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="modelo.Conversa" %>
+<%@ page import="modelo.Usuario" %>
+<% Usuario usuarioOnline = (Usuario) session.getAttribute("usuario"); 
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -15,44 +18,35 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="inicio">Início</a></li>
-                <li><a href="perfil">Perfil</a></li>
-                <li><a href="atividades">Atividades agendadas</a></li>
-                <li><a href="conversas">Conversas</a></li>
-                <li><a href="notificacoes">Notificações</a></li>
-                <li><a href="sair">Sair</a></li>
+                <li><a href="inicio-<%= usuarioOnline.getTipo() %>">Início</a></li>
+				<li><a href="perfil-<%= usuarioOnline.getTipo() %>?id=<%= usuarioOnline.getId()%>">Perfil</a></li>
+				<li><a href="atividades-agendadas-<%= usuarioOnline.getTipo() %>">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
+				<li><a href="#">Notificações</a></li>
+				<li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>
     <div class="conteudo">
         <header>
             <h2>Conversas</h2>
-            <input type="text" placeholder="Buscar conversa...">
         </header>
 
         <main>
-            <%
-                List<Conversa> conversas = (List<Conversa>) request.getAttribute("conversas");
+             <% List<Conversa> conversas = (List<Conversa>) request.getAttribute("conversas");
                 if (conversas != null) {
-                    for (Conversa conversa : conversas) {
-            %>
+                    for (Conversa conversa : conversas) { %>
                         <div class="conversa">
-                            <img src="<%= conversa.getAvatar() != null ? conversa.getAvatar() : "imagens/img-perfil-padrao.jpeg" %>" alt="Avatar">
                             <div class="detalhes">
-                                <h3><%= conversa.getTitulo() %></h3>
-                                <p><%= conversa.getUltimaMensagem() != null ? conversa.getUltimaMensagem() : "Sem mensagens ainda" %></p>
+                                <a href="conversar?usuario2Id=<%= conversa.getUsuario2().getId() %>">
+                                <h3><%= conversa.getUsuario2().getNome() %></h3>
+                                </a>                                
                             </div>
-                            <span class="hora"><%= conversa.getUltimaAtualizacao() != null ? conversa.getUltimaAtualizacao() : "" %></span>
-                            <a href="chat?conversaId=<%= conversa.getId() %>">Abrir</a>
                         </div>
-            <%
-                    }
-                } else {
-            %>
+            		<% } %>
+           	<% } else { %>
                 <p>Não há conversas disponíveis.</p>
-            <%
-                }
-            %>
+            <% } %>
         </main>
     </div>
 </body>
