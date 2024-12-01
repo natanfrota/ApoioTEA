@@ -298,8 +298,6 @@ public class AtividadeDAO {
 		}
 		return atividades;
 	}
-	
-	
 
 	
 	public List<Atividade> selecionarAtividadesConfirmadasDeUmVoluntario(int voluntarioId) {
@@ -309,8 +307,9 @@ public class AtividadeDAO {
 						+ "where a.voluntario_usuario_id = ?";
 
 		List<Atividade> atividades = new ArrayList<Atividade>();
-
-		try (Connection conexao = Conexao.criarConexao(); PreparedStatement ps = conexao.prepareStatement(consulta)) {
+		
+		try (Connection conexao = Conexao.criarConexao(); 
+			 PreparedStatement ps = conexao.prepareStatement(consulta)) {
 
 			ps.setInt(1, voluntarioId);
 
@@ -322,7 +321,7 @@ public class AtividadeDAO {
 					Familia familia = new Familia();
 					familia.setId(idFamilia);
 					familia.setNome(nomeFamilia);
-
+					
 					int idAtividade = rs.getInt("id");
 					String titulo = rs.getString("titulo");
 					String categoria = rs.getString("categoria");
@@ -332,10 +331,11 @@ public class AtividadeDAO {
 					LocalDate data = rs.getDate("data").toLocalDate();
 					LocalTime hora = rs.getTime("hora").toLocalTime();
 
+					
 					Atividade atividade = new Atividade(idAtividade, titulo, categoria, descricao, localizacao, status,
 							data, hora);
 					atividades.add(atividade);
-
+					
 					atividade.setFamilia(familia);
 				}
 			}
@@ -345,12 +345,7 @@ public class AtividadeDAO {
 		}
 
 		return atividades;
-	}
-	
-	
-	
-	
-	
+	}	
 	
 	public boolean registrarCandidaturaDeUmVoluntario(int atividadeId, int voluntarioId) {
 		String insercao = "insert into atividade_has_voluntario "

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.AtividadeDAO;
 import modelo.Atividade;
 import modelo.Avaliacao;
 import modelo.Familia;
@@ -63,7 +62,7 @@ public class AtividadesControlador extends HttpServlet {
 			marcarComoRealizada(request, response);
 		} else if(action.equals("/salvar-avaliação")) {
 			salvarAvaliacao(request, response);
-		} else if(action.equals("atividades-agendadas-familia")) {
+		} else if(action.equals("/atividades-agendadas-familia")) {
 			exibirAtividadesAgendadasDeUmaFamilia(request, response);
 		} else if(action.equals("/atividades-agendadas-voluntario")) {
 			exibirAtividadesAgendadasDeUmVoluntario(request, response);
@@ -311,12 +310,8 @@ public class AtividadesControlador extends HttpServlet {
 	protected void exibirAtividadesAgendadasDeUmaFamilia(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession sessao = request.getSession(false);
 		Familia familia = (Familia) sessao.getAttribute("usuario");
-		
-		System.out.println(familia);
-		
+				
 		if(familia != null) {
-			System.out.println("exibir atividades agendadas familia");
-			
 			Atividade atividade = new Atividade();
 			List<Atividade> atividadesAgendadas = atividade.selecionarAtividadesConfirmadasDeUmaFamilia(familia.getId());
 			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
@@ -332,6 +327,7 @@ public class AtividadesControlador extends HttpServlet {
 		if(voluntario != null) {
 			Atividade atividade = new Atividade();
 			List<Atividade> atividadesAgendadas = atividade.selecionarAtividadesConfirmadasDeUmVoluntario(voluntario.getId());
+			
 			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
 			RequestDispatcher rd = request.getRequestDispatcher("atividades-agendadas-voluntario.jsp");
 			rd.forward(request, response);
