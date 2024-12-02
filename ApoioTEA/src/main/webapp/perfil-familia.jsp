@@ -180,7 +180,7 @@
 							        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atividade.getId() %>'">
 							        Cancelar presença
 							    </button>
-							    <button class="botao-voluntariar" type="button" onclick="window.location.href='conversar?usuario2Id=<%= atividade.getFamilia().getId() %>'">
+							    <button class="botao-voluntariar" type="button" onclick="window.location.href='conversar?usuario2Id=<%= familia.getId() %>'">
         						Conversar</button>
 							<% } else if (candidatoAtivo) { %>
 							    <button class="botao-voluntariar" type="button"
