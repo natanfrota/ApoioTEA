@@ -16,12 +16,12 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Perfil</a></li>
-                <li><a href="#">Atividades</a></li>
-                <li><a href="#">Conversas</a></li>
-                <li><a href="#">Notificações</a></li>
-                <li><a href="#">Sair</a></li>
+                <li><a href="inicio-voluntario">Início</a></li>
+				<li><a href="perfil-voluntario?id=<%= voluntario.getId()%>">Perfil</a></li>
+				<li><a href="atividades-agendadas-voluntario">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
+				<li><a href="#">Notificações</a></li>
+				<li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>
