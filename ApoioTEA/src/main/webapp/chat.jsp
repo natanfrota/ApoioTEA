@@ -25,14 +25,14 @@
 				<li><a href="perfil-<%= usuarioOnline.getTipo() %>?id=<%= usuarioOnline.getId()%>">Perfil</a></li>
 				<li><a href="atividades-agendadas-<%= usuarioOnline.getTipo() %>">Atividades agendadas</a></li>
 				<li><a href="conversas">Conversas</a></li>
-				<li><a href="#">Notificações</a></li>
+				<li><a href="notificacoes">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>
     <div class="conteudo">
         <header class="chat-header">
-            <img src="" alt="foto do destinatário">
+            <img src="imagens/img-perfil-padrao.jpeg" alt="foto do destinatário">
             <h2><%= conversa.getUsuario2().getNome() %></h2>
         </header>
 
@@ -59,7 +59,8 @@
         <footer class="caixa-enviar">
             <form action="enviar-mensagem" method="post">
                 <input type="hidden" name="conversaId" value="<%= conversa.getId() %>">
-                <input type="text" name="conteudo" placeholder="Digite sua mensagem..." required>
+                <input type="text" name="conteudo" placeholder="Digite sua mensagem..." required 
+                autocomplete="off" autofocus>
                 <button type="submit">Enviar</button>
             </form>
         </footer>

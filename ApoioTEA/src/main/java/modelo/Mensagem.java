@@ -7,7 +7,6 @@ public class Mensagem {
     private String conteudo;
     private LocalDateTime dataHoraDeEnvio;
     private Usuario remetente;
-    private Conversa conversa;
 	
     public int getId() {
 		return id;
@@ -39,13 +38,5 @@ public class Mensagem {
 	
 	public void setRemetente(Usuario remetente) {
 		this.remetente = remetente;
-	}
-
-	public Conversa getConversa() {
-		return conversa;
-	}
-
-	public void setConversa(Conversa conversa) {
-		this.conversa = conversa;
 	}
 }

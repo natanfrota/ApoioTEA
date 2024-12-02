@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -83,7 +82,7 @@ public class UsuarioDAO {
 		return true;
 	}
 	
-	//ainda não testada
+	
 	public void excluirConta(Usuario usuario) {
 		String exclusao = "update usuario set status_conta = 'excluida' "
 				+ "where id = ?";

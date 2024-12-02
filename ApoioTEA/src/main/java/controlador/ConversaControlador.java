@@ -79,6 +79,7 @@ public class ConversaControlador extends HttpServlet {
 		}
 		
 		request.setAttribute("conversa", conversa);
+		//response.setIntHeader("Refresh", 4);
 		RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");
 		rd.forward(request, response);
 	}

@@ -1,5 +1,11 @@
+<%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="modelo.Notificacao"%>
+<%@page import="modelo.Usuario"%>
+<%@page import="java.util.List"%>
+<% Usuario usuarioOnline = (Usuario) session.getAttribute("usuario"); 
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,12 +19,12 @@
         <h1>ApoioTEA</h1>
         <nav>
             <ul>
-                <li><a href="#">Início</a></li>
-                <li><a href="#">Perfil</a></li>
-                <li><a href="#">Atividades agendadas</a></li>
-                <li><a href="#">Conversas</a></li>
-                <li><a href="#" class="ativo">Notificações</a></li>
-                <li><a href="sair">Sair</a></li>
+                <li><a href="inicio-<%= usuarioOnline.getTipo() %>">Início</a></li>
+				<li><a href="perfil-<%= usuarioOnline.getTipo() %>?id=<%= usuarioOnline.getId()%>">Perfil</a></li>
+				<li><a href="atividades-agendadas-<%= usuarioOnline.getTipo() %>">Atividades agendadas</a></li>
+				<li><a href="conversas">Conversas</a></li>
+				<li><a href="notificacoes">Notificações</a></li>
+				<li><a href="sair">Sair</a></li>
             </ul>
         </nav>
     </div>
@@ -27,21 +33,14 @@
             <h2>Notificações</h2>
         </header>
         <main>
-            <div class="notificacao">
-                <h3>Nova atividade criada</h3>
-                <p>Você criou a atividade "Ajuda em evento escolar" em 25 de novembro às 9h.</p>
-                <span class="horario">Há 2 horas</span>
-            </div>
-            <div class="notificacao">
-                <h3>Voluntário confirmado</h3>
-                <p>Valéria Albuquerque confirmou presença na atividade "Acompanhamento em consulta médica".</p>
-                <span class="horario">Há 5 horas</span>
-            </div>
-            <div class="notificacao">
-                <h3>Atividade concluída</h3>
-                <p>A atividade "Assistência em consulta médica" foi marcada como concluída.</p>
-                <span class="horario">Há 1 dia</span>
-            </div>
+        <% List<Notificacao> notificacoes = (List<Notificacao>) request.getAttribute("notificacoes");
+            DateTimeFormatter dt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        	for(Notificacao notificacao : notificacoes){ %>
+	            <div class="notificacao">
+	                <h3><%= notificacao.getDescricao() %></h3>
+	                <span class="horario"><%= notificacao.getData().format(dt) %></span>
+	            </div>
+	    <% } %>
         </main>
     </div>
 </body>

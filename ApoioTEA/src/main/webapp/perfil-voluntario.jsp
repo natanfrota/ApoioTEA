@@ -29,7 +29,7 @@
 				<li><a href="perfil-<%=usuarioDaSessao.getTipo() %>?id=<%= usuarioDaSessao.getId()%>">Perfil</a></li>
 				<li><a href="atividades-agendadas-voluntario">Atividades agendadas</a></li>
 				<li><a href="conversas">Conversas</a></li>
-				<li><a href="#">Notificações</a></li>
+				<li><a href="notificacoes">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>			
 			</ul>
 		</nav>

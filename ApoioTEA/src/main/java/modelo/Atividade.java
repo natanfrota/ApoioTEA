@@ -50,18 +50,6 @@ public class Atividade {
 		return new AtividadeDAO().inserirAtividade(this);
 	}
 	
-	public boolean selecionarAtividade() {
-		return new AtividadeDAO().selecionarAtividade(this); 
-	}
-	
-	public List<Atividade> selecionarTodasAsAtividades(){
-		return new AtividadeDAO().selecionarTodasAsAtividades();
-	}
-	
-	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
-		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(idFamilia);
-	}
-	
 	public void editarAtividade() {
 		new AtividadeDAO().editarAtividade(this);
 	}
@@ -84,14 +72,6 @@ public class Atividade {
 	
 	public void removerVoluntarioEscolhido() {
 		new AtividadeDAO().removerVoluntarioEscolhido(id);
-	}
-	
-	public List<Atividade> selecionarAtividadesConfirmadasDeUmaFamilia(int idFamilia){
-		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmaFamilia(idFamilia);
-	}
-	
-	public List<Atividade> selecionarAtividadesConfirmadasDeUmVoluntario(int voluntarioId){
-		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmVoluntario(voluntarioId);
 	}
 	
 	public boolean buscarCandidato(int candidatoId) {
@@ -190,5 +170,25 @@ public class Atividade {
 
 	public void setHora(LocalTime hora) {
 		this.hora = hora;
+	}
+	
+	public boolean selecionarAtividade() {
+		return new AtividadeDAO().selecionarAtividade(this); 
+	}
+	
+	public List<Atividade> selecionarTodasAsAtividades(){
+		return new AtividadeDAO().selecionarTodasAsAtividades();
+	}
+	
+	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
+		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(idFamilia);
+	}
+	
+	public List<Atividade> selecionarAtividadesConfirmadasDeUmaFamilia(int idFamilia){
+		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmaFamilia(idFamilia);
+	}
+	
+	public List<Atividade> selecionarAtividadesConfirmadasDeUmVoluntario(int voluntarioId){
+		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmVoluntario(voluntarioId);
 	}
 }

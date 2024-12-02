@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.NotificacaoDAO;
 import modelo.Atividade;
 import modelo.Avaliacao;
 import modelo.Familia;
@@ -27,7 +28,7 @@ import modelo.Voluntario;
 		"/atividades-agendadas-voluntario"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private NotificacaoDAO notificacaoDAO = new NotificacaoDAO();
     
     public AtividadesControlador() {
         super();
@@ -203,10 +204,16 @@ public class AtividadesControlador extends HttpServlet {
 		
 		HttpSession sessao = request.getSession(false);
 		if(sessao != null) {
-			Atividade atv = new Atividade();
-			atv.setId(atividadeId);
-			atv.selecionarAtividade();
-			atv.removerVoluntarioEscolhido();
+			Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
+			Atividade atividade = new Atividade();
+			atividade.setId(atividadeId);
+			atividade.selecionarAtividade();
+			atividade.removerVoluntarioEscolhido();
+			atividade.removerCandidaturaDeUmaAtividade(voluntario.getId());
+			
+			String descricao = "O(a) voluntário(a) " + voluntario.getNome() + " cancelou a participação dele(a) na atividade" + 
+			atividade.getTitulo();
+			notificacaoDAO.inserirNotificacao(descricao, atividadeId);
 			
 			String paginaAnterior = request.getHeader("Referer");
 			if (paginaAnterior != null) {
@@ -232,6 +239,10 @@ public class AtividadesControlador extends HttpServlet {
 			
 			if(atividade != null && encontrado) {
 				atividade.registrarVoluntarioEscolhido(voluntarioId);
+				
+				String descricao = "Você foi aceito como voluntário na atividade " + atividade.getTitulo() + 
+						" da família de " + familia.getNome();
+				notificacaoDAO.inserirNotificacao(descricao, voluntarioId);
 				
 				System.out.println("dentro do segundo if de aceitar");
 				
@@ -261,6 +272,10 @@ public class AtividadesControlador extends HttpServlet {
 			if (atividade != null && encontrado) {
 				atividade.removerVoluntarioEscolhido();
 				
+				String descricao = "Sua participação na atividade " + atividade.getTitulo() + 
+						" foi cancelada.";
+				notificacaoDAO.inserirNotificacao(descricao, voluntarioId);
+						
 				String paginaAnterior = request.getHeader("Referer");
 				if (paginaAnterior != null) {
 				    response.sendRedirect(paginaAnterior);
@@ -303,6 +318,10 @@ public class AtividadesControlador extends HttpServlet {
 			avaliacao.setNota(nota);
 			avaliacao.setComentario(comentario);
 			avaliacao.registrarAvalicao(familia.getId(), voluntarioId);
+			
+			String descricao = "Você recebeu uma nova avaliação.";
+			notificacaoDAO.inserirNotificacao(descricao, voluntarioId);
+			
 			response.sendRedirect("inicio-familia");
 		}		
 	}

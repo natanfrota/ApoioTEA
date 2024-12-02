@@ -63,6 +63,10 @@ public class Usuario {
 		return usuarioDAO.buscarEmailESenha(this);
 	}
 	
+	public void alterarDadosPerfil() {
+
+	}
+	
 	public void excluirConta() {
 		new UsuarioDAO().excluirConta(this);
 	}

@@ -30,7 +30,7 @@
 				<li><a href="perfil-familia?id=<%= familia.getId()%>">Perfil</a></li>
 				<li><a href="atividades-agendadas-familia">Atividades agendadas</a></li>
 				<li><a href="conversas">Conversas</a></li>
-				<li><a href="#">Notificações</a></li>
+				<li><a href="notificacoes">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
 			</ul>
 		</nav>

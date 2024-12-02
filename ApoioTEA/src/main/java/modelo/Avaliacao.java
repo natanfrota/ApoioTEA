@@ -20,10 +20,6 @@ public class Avaliacao {
 		new AvaliacaoDAO().inserirAvalicao(this, familiaId, voluntarioId);
 	}
 	
-	public List<Avaliacao> selecionarAvaliacoesDeUmVoluntario(int voluntarioId){
-		return new AvaliacaoDAO().selecionarAvaliacoesDeUmVoluntario(voluntarioId);
-	}
-	
 	public int getId() {
 		return id;
 	}
@@ -62,5 +58,9 @@ public class Avaliacao {
 
 	public void setFamilia(Familia familia) {
 		this.familia = familia;
+	}
+	
+	public List<Avaliacao> selecionarAvaliacoesDeUmVoluntario(int voluntarioId){
+		return new AvaliacaoDAO().selecionarAvaliacoesDeUmVoluntario(voluntarioId);
 	}
 }

@@ -22,7 +22,7 @@
 				<li><a href="perfil-<%= usuarioOnline.getTipo() %>?id=<%= usuarioOnline.getId()%>">Perfil</a></li>
 				<li><a href="atividades-agendadas-<%= usuarioOnline.getTipo() %>">Atividades agendadas</a></li>
 				<li><a href="conversas">Conversas</a></li>
-				<li><a href="#">Notificações</a></li>
+				<li><a href="notificacoes">Notificações</a></li>
 				<li><a href="sair">Sair</a></li>
             </ul>
         </nav>
