@@ -78,8 +78,7 @@ public class FamiliaDAO {
 	public List<Familia> selecionarFamilias() {
 		List<Familia> familias = null;
 		
-		String selecao = "select * from usuario u "
-				+ "join familia f on u.id = f.usuario_id where status_conta = 'ativa'";
+		String selecao = "select * from usuario u join familia f on u.id = f.usuario_id";
 		
 		try(PreparedStatement ps = Conexao.criarConexao().prepareStatement(selecao);
 			ResultSet rs = ps.executeQuery()) {

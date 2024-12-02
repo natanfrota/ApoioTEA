@@ -82,8 +82,7 @@ public class VoluntarioDAO {
 	public List<Voluntario> selecionarVoluntarios() {
 		List<Voluntario> voluntarios = null;
 		
-		String selecao = "select * from usuario u "
-				+ "join voluntario v on u.id = v.usuario_id where status_conta = 'ativa'";
+		String selecao = "select * from usuario u join voluntario v on u.id = v.usuario_id";
 		
 		try(PreparedStatement ps = Conexao.criarConexao().prepareStatement(selecao);
 			ResultSet rs = ps.executeQuery()) {

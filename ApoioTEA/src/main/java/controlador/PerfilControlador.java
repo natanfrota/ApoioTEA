@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.AtividadeDAO;
 import modelo.Atividade;
 import modelo.Avaliacao;
 import modelo.Familia;
@@ -23,7 +24,7 @@ import modelo.Voluntario;
 		"/sair"})
 public class PerfilControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private AtividadeDAO atividadeDAO = new AtividadeDAO();
     
     public PerfilControlador() {
         super();
@@ -105,7 +106,7 @@ public class PerfilControlador extends HttpServlet {
 			boolean encontrado = familia.selecionarFamilia();
 						
 			if(encontrado) { 
-				familia.setAtividades(new Atividade().selecionarAtividadesDeUmaFamilia(
+				familia.setAtividades(atividadeDAO.selecionarAtividadesDeUmaFamilia(
 						familia.getId()));
 				request.setAttribute("familia", familia);
 				RequestDispatcher rd = request.getRequestDispatcher("perfil-familia.jsp");
@@ -120,7 +121,7 @@ public class PerfilControlador extends HttpServlet {
 		Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
 		
 		if(voluntario != null) {
-			List<Atividade> atividades = new Atividade().selecionarTodasAsAtividades();
+			List<Atividade> atividades = atividadeDAO.selecionarTodasAsAtividades();
 			request.setAttribute("atividades", atividades);
 			RequestDispatcher rd = request.getRequestDispatcher("inicio-voluntario.jsp");
 			rd.forward(request, response);
@@ -132,7 +133,7 @@ public class PerfilControlador extends HttpServlet {
 		Familia familia = (Familia) sessao.getAttribute("usuario");
 		
 		if(familia != null) {
-			familia.setAtividades(new Atividade().selecionarAtividadesDeUmaFamilia(
+			familia.setAtividades(atividadeDAO.selecionarAtividadesDeUmaFamilia(
 					familia.getId()));
 			response.sendRedirect("inicio-familia.jsp");
 		}

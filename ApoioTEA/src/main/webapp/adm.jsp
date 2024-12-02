@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel Administrativo</title>
+  <title>Painel administrativo</title>
   <link rel="stylesheet" href="css/adm.css">
   <style>
     .section {
@@ -23,9 +23,9 @@
 </header>
 
 <nav>
-  <a href="#voluntarios" onclick="showSection('voluntarios')">Voluntários</a>
-  <a href="#familias" onclick="showSection('familias')">Famílias</a>
-  <a href="#conversas" onclick="showSection('conversas')">Conversas</a>
+  <a href="#voluntarios" onclick="mostrarSessao('voluntarios')">Voluntários</a>
+  <a href="#familias" onclick="mostrarSessao('familias')">Famílias</a>
+  <a href="#conversas" onclick="mostrarSessao('conversas')">Conversas</a>
 </nav>
 
 <div class="container">
@@ -35,7 +35,7 @@
       <thead>
         <tr>
           <th>Nome</th>
-          <th>Contato</th>
+          <th>Email</th>
           <th>Status</th>
           <th>Data de Cadastro</th>
           <th>Ações</th>
@@ -92,16 +92,14 @@
 </div>
 
 <script>
-  function showSection(sectionId) {
-    // Esconde todas as seções
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
+  function mostrarSessao(sectionId) {
+    const sessoes = document.querySelectorAll('.section');
+    sessoes.forEach(section => {
       section.classList.remove('active');
     });
 
-    // Mostra a seção clicada
-    const targetSection = document.getElementById(sectionId);
-    targetSection.classList.add('active');
+    const alvo = document.getElementById(sectionId);
+    alvo.classList.add('active');
   }
 </script>
 

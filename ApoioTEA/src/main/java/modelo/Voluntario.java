@@ -62,10 +62,6 @@ public class Voluntario extends Usuario {
 	public void setAtividadesAgendadas(List<Atividade> atividadesAgendadas) {
 		this.atividadesAgendadas = atividadesAgendadas;
 	}
-
-	public List<Voluntario> retornarVoluntarios(){
-		return new VoluntarioDAO().selecionarVoluntarios();
-	}
 	
 	public boolean selecionarVoluntario() {
 		return new VoluntarioDAO().selecionarVoluntario(this);

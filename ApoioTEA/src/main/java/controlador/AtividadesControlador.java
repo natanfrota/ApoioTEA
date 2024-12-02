@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.AtividadeDAO;
 import dao.NotificacaoDAO;
 import modelo.Atividade;
 import modelo.Avaliacao;
@@ -28,6 +29,7 @@ import modelo.Voluntario;
 		"/atividades-agendadas-voluntario"})
 public class AtividadesControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private AtividadeDAO atividadeDAO = new AtividadeDAO();
     private NotificacaoDAO notificacaoDAO = new NotificacaoDAO();
     
     public AtividadesControlador() {
@@ -331,8 +333,8 @@ public class AtividadesControlador extends HttpServlet {
 		Familia familia = (Familia) sessao.getAttribute("usuario");
 				
 		if(familia != null) {
-			Atividade atividade = new Atividade();
-			List<Atividade> atividadesAgendadas = atividade.selecionarAtividadesConfirmadasDeUmaFamilia(familia.getId());
+			//Atividade atividade = new Atividade();
+			List<Atividade> atividadesAgendadas = atividadeDAO.selecionarAtividadesConfirmadasDeUmaFamilia(familia.getId());
 			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
 			RequestDispatcher rd = request.getRequestDispatcher("atividades-agendadas-familia.jsp");
 			rd.forward(request, response);
@@ -344,8 +346,8 @@ public class AtividadesControlador extends HttpServlet {
 		Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
 		
 		if(voluntario != null) {
-			Atividade atividade = new Atividade();
-			List<Atividade> atividadesAgendadas = atividade.selecionarAtividadesConfirmadasDeUmVoluntario(voluntario.getId());
+			//Atividade atividade = new Atividade();
+			List<Atividade> atividadesAgendadas = atividadeDAO.selecionarAtividadesConfirmadasDeUmVoluntario(voluntario.getId());
 			
 			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
 			RequestDispatcher rd = request.getRequestDispatcher("atividades-agendadas-voluntario.jsp");

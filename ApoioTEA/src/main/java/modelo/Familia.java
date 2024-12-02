@@ -35,10 +35,6 @@ public class Familia extends Usuario{
 		new FamiliaDAO().inserirFamilia(this);
 	}
 	
-	public List<Familia> retornarFamilias(){
-		return new FamiliaDAO().selecionarFamilias();
-	}
-	
 	public boolean selecionarFamilia() {
 		return new FamiliaDAO().selecionarFamilia(this);
 	}

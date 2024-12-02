@@ -175,20 +175,4 @@ public class Atividade {
 	public boolean selecionarAtividade() {
 		return new AtividadeDAO().selecionarAtividade(this); 
 	}
-	
-	public List<Atividade> selecionarTodasAsAtividades(){
-		return new AtividadeDAO().selecionarTodasAsAtividades();
-	}
-	
-	public List<Atividade> selecionarAtividadesDeUmaFamilia(int idFamilia){
-		return new AtividadeDAO().selecionarAtividadesDeUmaFamilia(idFamilia);
-	}
-	
-	public List<Atividade> selecionarAtividadesConfirmadasDeUmaFamilia(int idFamilia){
-		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmaFamilia(idFamilia);
-	}
-	
-	public List<Atividade> selecionarAtividadesConfirmadasDeUmVoluntario(int voluntarioId){
-		return new AtividadeDAO().selecionarAtividadesConfirmadasDeUmVoluntario(voluntarioId);
-	}
 }
