@@ -20,7 +20,7 @@ import modelo.Familia;
 import modelo.Mensagem;
 import modelo.Voluntario;
 
-@WebServlet(urlPatterns = {"/login-moderador", "inicio-moderador", "/exibir-voluntarios", "/exibir-familias",
+@WebServlet(urlPatterns = {"/login-moderador", "/inicio-moderador", "/exibir-voluntarios", "/exibir-familias",
 		"/exibir-conversas", "/exibir-conversa", "/suspender-conta", "/reativar-conta"})
 public class ModeradorControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
