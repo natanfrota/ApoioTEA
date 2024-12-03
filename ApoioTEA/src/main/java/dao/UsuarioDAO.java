@@ -83,7 +83,65 @@ public class UsuarioDAO {
 	}
 	
 	
-	public void excluirConta(Usuario usuario) {
+	public void reativarConta(int usuarioId) {
+		String reativacao = "update usuario set status_conta = 'ativa' "
+				+ "where id = ?";
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(reativacao);
+			ps.setInt(1, usuarioId);
+			ps.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+	}
+	
+	public void suspenderConta(int usuarioId) {
+		String suspensao = "update usuario set status_conta = 'suspensa' "
+				+ "where id = ?";
+		Connection conexao = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			conexao = Conexao.criarConexao();
+			ps = conexao.prepareStatement(suspensao);
+			ps.setInt(1, usuarioId);
+			ps.executeUpdate();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		} finally {
+			try {
+				if(rs != null)
+					rs.close();
+				if(ps != null)
+					ps.close();
+				if(conexao != null)
+					conexao.close();			
+			} catch (SQLException e2) {
+				System.err.println(e2);
+			}
+		}
+	}
+	
+	public void excluirConta(int usuarioId) {
 		String exclusao = "update usuario set status_conta = 'excluida' "
 				+ "where id = ?";
 		Connection conexao = null;
@@ -93,7 +151,7 @@ public class UsuarioDAO {
 		try {
 			conexao = Conexao.criarConexao();
 			ps = conexao.prepareStatement(exclusao);
-			ps.setInt(1, usuario.getId());
+			ps.setInt(1, usuarioId);
 			ps.executeUpdate();
 			
 		} catch (ClassNotFoundException | SQLException e) {

@@ -68,7 +68,7 @@ public class Usuario {
 	}
 	
 	public void excluirConta() {
-		new UsuarioDAO().excluirConta(this);
+		new UsuarioDAO().excluirConta(id);
 	}
 	
 	public int calcularIdade() {

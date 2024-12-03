@@ -120,6 +120,48 @@ public class ConversaDAO {
     	return conversas;
     }
     
+    public List<Conversa> selecionarConversasDeUmUsuario(int usuario1Id){
+    	String consulta = "select u.id as usuario2_id, u.nome as usuario2_nome, u_c.conversa_id "
+    					+ "from usuario u "
+    					+ "join usuario_has_conversa u_c "
+    					+ "on u.id = u_c.usuario_id "
+    					+ "join usuario_has_conversa u_c2 "
+    					+ "on u_c.conversa_id = u_c2.conversa_id "    		
+    					+ "where u_c.usuario_id <> u_c2.usuario_id and "
+    					+ "u_c2.usuario_id = ?";
+    	
+    	List<Conversa> conversas = new ArrayList<>();
+    	
+    	Connection conexao = null;
+    	PreparedStatement ps = null;
+    	ResultSet rs = null;
+    	
+    	try {
+    		conexao = Conexao.criarConexao();
+    		ps = conexao.prepareStatement(consulta);
+    		ps.setInt(1, usuario1Id);
+    		rs = ps.executeQuery();
+    		
+    		while(rs.next()) {
+    			Usuario usuario2 = new Usuario();
+    			usuario2.setId(rs.getInt("usuario2_id"));
+    			usuario2.setNome(rs.getString("usuario2_nome"));
+    			
+    			Conversa conversa = new Conversa();
+    			conversa.setId(rs.getInt("conversa_id"));
+    			
+    			conversa.setUsuario2(usuario2);
+    			
+    			conversas.add(conversa);
+    		}
+    		
+    	} catch (ClassNotFoundException | SQLException e) {
+			System.err.println(e);
+		}
+    	
+    	return conversas;
+    }
+    
     public void selecionarConversa(Conversa conversa) {
     	String consulta = "select u.id as usuario1_id, u.nome as usuario1_nome, "
     					+ "u2.id as usuario2_id, u2.nome as usuario2_nome, u_c.conversa_id "
@@ -149,7 +191,7 @@ public class ConversaDAO {
     			usuario2.setId(rs.getInt("usuario2_id"));
     			usuario2.setNome(rs.getString("usuario2_nome"));
     			
-    			//System.out.println("Usuarios retornados: " + usuario1.getNome() + " " + usuario2.getNome());
+    			System.out.println("Usuarios retornados: " + usuario1.getNome() + " " + usuario2.getNome());
     			
     			conversa.setUsuario1(usuario1);
     			conversa.setUsuario2(usuario2);
