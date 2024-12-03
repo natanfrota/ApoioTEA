@@ -23,6 +23,7 @@
 			<tr>
 				<td>Nome</td>
 				<td>Email</td>
+				<td>Avaliação média</td>
 				<td>Estado da conta</td>
 				<td>Ações</td>
 			</tr>
@@ -31,6 +32,7 @@
 			<tr>
 				<td><%= voluntario.getNome() %></td>
 				<td><%= voluntario.getEmail() %></td>
+				<td><%= voluntario.getAvaliacaoMedia() %></td>
 				<td><%= voluntario.getStatusConta() %></td>
 			 	<td class="actions">
             		<button type="button" class="botao">Perfil</button>
