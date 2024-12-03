@@ -92,15 +92,18 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: stretch;
 }
 
 .mensagem {
-    max-width: 70%;
-    padding: 15px 10px 25px 10px; 
+    max-width: 70%; 
+    padding: 15px 10px 25px 10px;
     border-radius: 10px;
     font-size: 1rem;
     position: relative;
-    word-wrap: break-word;
+    word-wrap: break-word; 
+    word-break: break-word; 
+    display: inline-block;
 }
 
 .mensagem p {
@@ -111,9 +114,9 @@ body {
 .mensagem span {
     font-size: 0.8rem;
     color: #999;
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
+    display: block; 
+    text-align: right; 
+    margin-top: 5px; 
 }
 
 .mensagem.recebida {
