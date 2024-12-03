@@ -33,7 +33,7 @@
 				<td><%= familia.getEmail() %></td>
 				<td><%= familia.getStatusConta() %></td>
 			 	<td class="actions">
-            		<button type="button" class="botao">Perfil</button>
+            		
             		<button type="button" class="botao" onclick="window.location.href='exibir-conversas?usuarioId=<%= familia.getId() %>'">Conversas</button>
             		<% if(familia.getStatusConta().equals("ativa")) { %>
             			<button type="button" class="botao" onclick="window.location.href='suspender-conta?usuarioId=<%= familia.getId() %>'">Suspender</button>

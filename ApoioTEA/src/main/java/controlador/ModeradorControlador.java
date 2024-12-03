@@ -3,11 +3,13 @@ package controlador;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ConversaDAO;
 import dao.FamiliaDAO;
@@ -78,23 +80,40 @@ public class ModeradorControlador extends HttpServlet {
 			boolean encontrado = moderadorDAO.selecionarModerador(email, senha);
 			
 			if(encontrado == true) {
+				HttpSession sessao = request.getSession();
 				response.sendRedirect("inicio-moderador.jsp");
+				return;
 			}
-		}
+		} 
+		
+		request.setAttribute("status", "fracasso");
+		RequestDispatcher rd = request.getRequestDispatcher("moderador.jsp");
+		rd.forward(request, response);
 	}
 	
 	protected void exibirVoluntarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Voluntario> voluntarios = voluntarioDAO.selecionarVoluntarios();
-		
-		request.setAttribute("voluntarios", voluntarios);
-		request.getRequestDispatcher("moderar-voluntarios.jsp").forward(request, response);
+		HttpSession sessao = request.getSession(false);
+		if(sessao != null) {
+			List<Voluntario> voluntarios = voluntarioDAO.selecionarVoluntarios();
+			
+			request.setAttribute("voluntarios", voluntarios);
+			request.getRequestDispatcher("moderar-voluntarios.jsp").forward(request, response);
+		} else {
+			response.sendRedirect("moderador.jsp");
+		}
 	}
 	
 	protected void exibirFamilias(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Familia> familias = familiaDAO.selecionarFamilias();
+		HttpSession sessao = request.getSession(false);
+		if(sessao != null) {
 		
-		request.setAttribute("familias", familias);
-		request.getRequestDispatcher("moderar-familias.jsp").forward(request, response);
+			List<Familia> familias = familiaDAO.selecionarFamilias();
+		
+			request.setAttribute("familias", familias);
+			request.getRequestDispatcher("moderar-familias.jsp").forward(request, response);
+		} else {
+			response.sendRedirect("moderador.jsp");
+		}
 	}
 	
 	protected void exibirConversas(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

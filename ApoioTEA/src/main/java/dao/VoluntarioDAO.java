@@ -102,6 +102,7 @@ public class VoluntarioDAO {
 			    voluntario.setStatusConta(rs.getString("status_conta"));
 			    voluntario.setExperiencia(rs.getString("experiencia"));
 			    voluntario.setHabilidades(rs.getString("habilidades"));
+			    voluntario.setAvaliacaoMedia(rs.getDouble("avaliacao_media"));
 			    
 			    voluntarios.add(voluntario);
 			}			

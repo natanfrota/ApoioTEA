@@ -35,7 +35,7 @@
 				<td><%= voluntario.getAvaliacaoMedia() %></td>
 				<td><%= voluntario.getStatusConta() %></td>
 			 	<td class="actions">
-            		<button type="button" class="botao">Perfil</button>
+            		
             		<button type="button" class="botao" onclick="window.location.href='exibir-conversas?usuarioId=<%= voluntario.getId() %>'">Conversas</button>
             		<% if(voluntario.getStatusConta().equals("ativa")) { %>
             			<button type="button" class="botao" onclick="window.location.href='suspender-conta?usuarioId=<%= voluntario.getId() %>'">Suspender</button>
