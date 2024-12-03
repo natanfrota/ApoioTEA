@@ -134,8 +134,8 @@
 										onclick="window.location.href='marcar-como-realizada?atividadeId=<%=atividade.getId()%>&voluntarioId=<%= atividade.getVoluntarioEscolhido().getId() %>'">
 										Marcar como concluída</button>
 								<% } %>
-						<% } %>
 						</div> <%-- fechamento da div .botoes --%>
+						<% } %>
             			<div class="voluntarios">
 						<% if(atividade.getVoluntariosCandidatos() != null){%>
 							<h4>Voluntários</h4>
