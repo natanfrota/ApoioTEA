@@ -27,7 +27,8 @@ public class NotificacaoDAO {
 	}
 	
 	public List<Notificacao> selecionarNotificacoesDeUmUsuario(int usuarioId){
-		String consulta = "select * from notificacao where usuario_id = ?";
+		String consulta = "select * from notificacao where usuario_id = ? "
+						+ "order by data desc";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
