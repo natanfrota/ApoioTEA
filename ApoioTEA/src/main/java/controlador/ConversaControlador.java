@@ -17,7 +17,7 @@ import modelo.Conversa;
 import modelo.Mensagem;
 import modelo.Usuario;
 
-@WebServlet(urlPatterns = {"/conversas", "/conversar", "/enviar-mensagem"})
+@WebServlet(urlPatterns = {"/conversas", "/conversar", "/enviar-mensagem", "/mensagens"})
 public class ConversaControlador extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ConversaDAO conversaDAO = new ConversaDAO();
@@ -32,6 +32,8 @@ public class ConversaControlador extends HttpServlet {
 			exibirConversas(request, response);
 		} else if (action.equals("/conversar")) {
 			exibirConversa(request, response);
+		} else if (action.equals("/mensagens")) {
+			exibirMensagens(request, response);
 		}
 	}
 
@@ -54,6 +56,7 @@ public class ConversaControlador extends HttpServlet {
         request.getRequestDispatcher("conversas.jsp").forward(request, response);
 	}
 	
+	// -------------->>>>>>> AQUI 
 	public void exibirConversa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int usuario2Id = Integer.parseInt(request.getParameter("usuario2Id"));
 		
@@ -62,10 +65,7 @@ public class ConversaControlador extends HttpServlet {
 		List<Conversa> conversas = conversaDAO.selecionarConversasDeUmUsuario(usuario);
 		Conversa conversa = usuario.retornarConversaComOutroUsuario(conversas, usuario2Id);
 		
-		if(conversa != null) { 			
-			conversa.setMensagens(mensagemDAO.selecionarMensagens(conversa));
-			
-		} else { 						
+		if(conversa == null) { 								
 			conversa = new Conversa();
 			int conversaId = conversa.criar(usuario.getId(), usuario2Id);
 			conversa.setId(conversaId);
@@ -79,10 +79,31 @@ public class ConversaControlador extends HttpServlet {
 		}
 		
 		request.setAttribute("conversa", conversa);
-		//response.setIntHeader("Refresh", 4);
 		RequestDispatcher rd = request.getRequestDispatcher("chat.jsp");
 		rd.forward(request, response);
 	}
+	
+	
+	public void exibirMensagens(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int conversaId = Integer.parseInt(request.getParameter("conversaId"));
+		
+		System.out.println("entrou no iframe");
+		
+		HttpSession sessao = request.getSession(false);
+		//Usuario usuario = (Usuario) sessao.getAttribute("usuario");
+		Conversa conversa = new Conversa();
+		conversa.setId(conversaId);
+		conversaDAO.selecionarConversa(conversa);
+		
+		List<Mensagem> mensagens = mensagemDAO.selecionarMensagens(conversa);
+		
+		request.setAttribute("mensagens", mensagens);
+		response.setIntHeader("Refresh", 4);
+		RequestDispatcher rd = request.getRequestDispatcher("mensagens.jsp");
+		rd.forward(request, response);
+	}
+	
+	
 	
 	public void enviarMensagem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int conversaId = Integer.parseInt(request.getParameter("conversaId"));

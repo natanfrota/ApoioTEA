@@ -16,7 +16,7 @@
     <title>ApoioTEA - Chat</title>
     <link rel="stylesheet" href="css/chat1.css">
 </head>
-<body onload="rolarBarra()">
+<body>
     <div class="barraTarefas">
         <h1>ApoioTEA</h1>
         <nav>
@@ -36,25 +36,8 @@
             <h2><%= conversa.getUsuario2().getNome() %></h2>
         </header>
 
-        <main class="chat-area">
-            <%	DateTimeFormatter dt = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-            	List<Mensagem> mensagens = conversa.getMensagens();
-                if (mensagens != null) {
-                    for (Mensagem mensagem : mensagens) {
-            %>
-                        <div class="mensagem <%= mensagem.getRemetente().getId() == usuarioOnline.getId() ? "enviada" : "recebida" %>">
-                            <p><%= mensagem.getConteudo() %></p>
-                            <span><%= mensagem.getDataHoraDeEnvio().format(dt) %></span>
-                        </div>
-            <%
-                    }
-                } else {
-            %>
-                <p>Não há mensagens para exibir.</p>
-            <%
-                }
-            %>
-        </main>
+        <iframe title="conversa" id="conversa" class="chat-area" 
+        src="mensagens?conversaId=<%= conversa.getId() %>"></iframe>
 
         <footer class="caixa-enviar">
             <form action="enviar-mensagem" method="post">
@@ -65,11 +48,11 @@
             </form>
         </footer>
     </div>
-    <script> 
-    	function rolarBarra(){
-    		let area = document.getElementsByClassName('chat-area')[0];
-    		area.scrollTop = area.scrollHeight;
-    	}
-    </script>
+    <script>
+   	document.getElementById('conversa').onload = function() {
+   		let iframe = document.getElementById('conversa');
+   		iframe.contentWindow.scrollTo(0, iframe.contentDocument.body.scrollHeight);
+   	};
+   </script>
 </body>
 </html>
