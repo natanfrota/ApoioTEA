@@ -96,7 +96,6 @@ main {
 }
 
 .notificacao .horario {
-    position: absolute;
     top: 15px;
     right: 20px;
     font-size: 0.9rem;
