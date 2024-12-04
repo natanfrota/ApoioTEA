@@ -19,7 +19,7 @@
     <main class="chat-area">
             <%	DateTimeFormatter dt = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
             	List<Mensagem> mensagens = (List<Mensagem>) request.getAttribute("mensagens") ;
-                if (mensagens != null) {
+                if (mensagens != null && !mensagens.isEmpty()) {
                     for (Mensagem mensagem : mensagens) {
             %>
                         <div class="mensagem <%= mensagem.getRemetente().getId() == usuarioOnline.getId() ? "enviada" : "recebida" %>">

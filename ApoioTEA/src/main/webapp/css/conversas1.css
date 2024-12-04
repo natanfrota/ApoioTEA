@@ -115,3 +115,13 @@ header input {
     font-size: 0.9rem;
     color: #999;
 }
+
+.detalhes a {
+	color: #1565c0;
+	text-decoration: none;
+}
+
+.detalhes a:visited {
+	color: #1565c0;
+	text-decoration: none; 
+}
