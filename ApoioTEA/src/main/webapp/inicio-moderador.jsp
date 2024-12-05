@@ -23,6 +23,9 @@
             <h2>Famílias</h2>
         </a>
     </section>
+    <div>
+    	<button class="sair" type="button" onclick="window.location.href='moderador-sair'">Sair</button>
+    </div>
 
 </body>
 

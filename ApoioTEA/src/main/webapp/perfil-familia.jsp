@@ -179,14 +179,14 @@
 							    </button>
 							<% } else if (!candidatoNaoEscolhido) { %>
 							    <button class="botao-voluntariar" type="button"
-							        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atividade.getId() %>'">
+							        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atividade.getId() %>&familiaId=<%= familia.getId() %>'">
 							        Cancelar presença
 							    </button>
 							    <button class="botao-voluntariar" type="button" onclick="window.location.href='conversar?usuario2Id=<%= familia.getId() %>'">
         						Conversar</button>
 							<% } else if (candidatoAtivo) { %>
 							    <button class="botao-voluntariar" type="button"
-							        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atividade.getId() %>'">
+							        onclick="window.location.href='cancelar-candidatura?atividadeId=<%= atividade.getId() %>'">
 							        Cancelar candidatura
 							    </button>
 							<% } %>

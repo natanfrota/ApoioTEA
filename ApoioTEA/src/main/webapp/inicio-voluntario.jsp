@@ -74,7 +74,7 @@
 			    </button>
 			<% } else if (!candidatoNaoEscolhido) { %>
 			    <button class="botao-voluntariar" type="button"
-			        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atv.getId() %>'">
+			        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atv.getId() %>&familiaId=<%= atv.getFamilia().getId() %>'">
 			        Cancelar presença
 			    </button>
 			    <button class="botao-voluntariar" type="button" onclick="window.location.href='conversar?usuario2Id=<%= atv.getFamilia().getId() %>'">

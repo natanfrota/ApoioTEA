@@ -62,7 +62,7 @@
 	
 				
 				    <button class="botao-voluntariar" type="button"
-				        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atividade.getId() %>'">
+				        onclick="window.location.href='cancelar-candidatura-confirmada?atividadeId=<%= atividade.getId() %>&familiaId=<%=atividade.getFamilia().getId() %>'">
 				        Cancelar presença
 				    </button>
 				    <button class="botao-voluntariar" type="button" 

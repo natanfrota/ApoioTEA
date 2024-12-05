@@ -23,7 +23,8 @@ import modelo.Mensagem;
 import modelo.Voluntario;
 
 @WebServlet(urlPatterns = {"/login-moderador", "/inicio-moderador", "/exibir-voluntarios", "/exibir-familias",
-		"/exibir-conversas", "/exibir-conversa", "/suspender-conta", "/reativar-conta"})
+		"/exibir-conversas", "/exibir-conversa", "/suspender-conta", "/reativar-conta",
+		"/moderador-sair"})
 public class ModeradorControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ModeradorDAO moderadorDAO = new ModeradorDAO();
@@ -58,6 +59,8 @@ public class ModeradorControlador extends HttpServlet {
 			suspenderConta(request, response);
 		} else if(action.equals("/reativar-conta")) {
 			reativarConta(request, response);
+		} else if(action.equals("/moderador-sair")) {
+			sair(request, response);
 		}
 	}
 	
@@ -156,6 +159,12 @@ public class ModeradorControlador extends HttpServlet {
 		if(paginaAnterior != null) {
 			response.sendRedirect(paginaAnterior);
 		}
-
+	}
+	
+	protected void sair(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sessao = request.getSession(false);
+		sessao.invalidate();
+		response.sendRedirect("moderador.jsp");
+		
 	}
 }

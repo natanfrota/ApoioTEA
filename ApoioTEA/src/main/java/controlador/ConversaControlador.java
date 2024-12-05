@@ -55,8 +55,7 @@ public class ConversaControlador extends HttpServlet {
         request.setAttribute("conversas", conversas);
         request.getRequestDispatcher("conversas.jsp").forward(request, response);
 	}
-	
-	// -------------->>>>>>> AQUI 
+	 
 	public void exibirConversa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int usuario2Id = Integer.parseInt(request.getParameter("usuario2Id"));
 		
@@ -86,8 +85,6 @@ public class ConversaControlador extends HttpServlet {
 	
 	public void exibirMensagens(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int conversaId = Integer.parseInt(request.getParameter("conversaId"));
-		
-		System.out.println("entrou no iframe");
 		
 		HttpSession sessao = request.getSession(false);
 		//Usuario usuario = (Usuario) sessao.getAttribute("usuario");

@@ -141,7 +141,6 @@ public class AtividadesControlador extends HttpServlet {
 }
 	
 	protected void salvarEdicaoAtividade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		System.out.println("entrou aqui");
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
 		String titulo = request.getParameter("titulo");
 		String data = request.getParameter("data");
@@ -203,6 +202,7 @@ public class AtividadesControlador extends HttpServlet {
 				/* para o caso de o voluntário querer cancelar depois de ser escolhido */
 	protected void cancelarCandidaturaConfirmada(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
+		int familiaId = Integer.parseInt(request.getParameter("familiaId"));
 		
 		HttpSession sessao = request.getSession(false);
 		if(sessao != null) {
@@ -215,7 +215,7 @@ public class AtividadesControlador extends HttpServlet {
 			
 			String descricao = "O(a) voluntário(a) " + voluntario.getNome() + " cancelou a participação dele(a) na atividade" + 
 			atividade.getTitulo();
-			notificacaoDAO.inserirNotificacao(descricao, atividadeId);
+			notificacaoDAO.inserirNotificacao(descricao, familiaId);
 			
 			String paginaAnterior = request.getHeader("Referer");
 			if (paginaAnterior != null) {
@@ -227,8 +227,6 @@ public class AtividadesControlador extends HttpServlet {
 	protected void aceitarVoluntario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int atividadeId = Integer.parseInt(request.getParameter("atividadeId"));
 		int voluntarioId = Integer.parseInt(request.getParameter("voluntarioId"));
-	
-		System.out.println("a_id: " + atividadeId + "v_id: " + voluntarioId);
 		
 		HttpSession sessao = request.getSession(false);
 		Familia familia = (Familia) sessao.getAttribute("usuario");
@@ -237,16 +235,12 @@ public class AtividadesControlador extends HttpServlet {
 			Atividade atividade = familia.retornarAtividade(atividadeId);
 			boolean encontrado = atividade.buscarCandidato(voluntarioId);
 			
-			System.out.println("entrou no primeiro if");
-			
 			if(atividade != null && encontrado) {
 				atividade.registrarVoluntarioEscolhido(voluntarioId);
 				
 				String descricao = "Você foi aceito como voluntário na atividade " + atividade.getTitulo() + 
 						" da família de " + familia.getNome();
 				notificacaoDAO.inserirNotificacao(descricao, voluntarioId);
-				
-				System.out.println("dentro do segundo if de aceitar");
 				
 				String paginaAnterior = request.getHeader("Referer");
 				System.out.println("pagina anterior:" + paginaAnterior);
@@ -333,7 +327,6 @@ public class AtividadesControlador extends HttpServlet {
 		Familia familia = (Familia) sessao.getAttribute("usuario");
 				
 		if(familia != null) {
-			//Atividade atividade = new Atividade();
 			List<Atividade> atividadesAgendadas = atividadeDAO.selecionarAtividadesConfirmadasDeUmaFamilia(familia.getId());
 			request.setAttribute("atividadesAgendadas", atividadesAgendadas);
 			RequestDispatcher rd = request.getRequestDispatcher("atividades-agendadas-familia.jsp");
@@ -346,7 +339,6 @@ public class AtividadesControlador extends HttpServlet {
 		Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
 		
 		if(voluntario != null) {
-			//Atividade atividade = new Atividade();
 			List<Atividade> atividadesAgendadas = atividadeDAO.selecionarAtividadesConfirmadasDeUmVoluntario(voluntario.getId());
 			
 			request.setAttribute("atividadesAgendadas", atividadesAgendadas);

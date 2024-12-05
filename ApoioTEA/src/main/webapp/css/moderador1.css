@@ -104,3 +104,16 @@ p {
     display: block;
     width: 60%;
 }
+
+div {
+	width: 100%;
+	text-align: center;
+}
+
+.sair {
+	background-color: red;
+	margin: auto;
+	width: 108px;
+	height: 54px;
+	font: inherit;
+}
