@@ -30,7 +30,7 @@
             <h2>Editar perfil</h2>
         </header>
         <main>
-            <form class="formulario" action="salvar-edicao-perfil-voluntario" method="post">
+            <form class="formulario" action="salvar-edicao-perfil-voluntario" method="post" enctype="multipart/form-data">
                 
                 <input type="hidden" id="id" name="id" value="<%= voluntario.getId() %>">
                 

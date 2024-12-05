@@ -94,7 +94,7 @@ public class VoluntarioDAO {
 				voluntario.setId(rs.getInt("id"));
 			    voluntario.setNome(rs.getString("nome"));
 			    voluntario.setEmail(rs.getString("email"));
-			    // voluntario.setFoto(rs.getString("foto")); 
+			    voluntario.setFoto(rs.getString("foto")); 
 			    voluntario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
 			    voluntario.setCidade(rs.getString("cidade"));
 			    voluntario.setEstado(rs.getString("estado"));
@@ -130,7 +130,7 @@ public class VoluntarioDAO {
 			if(rs.next()) {			
 				voluntario.setNome(rs.getString("nome"));
 				voluntario.setEmail(rs.getString("email"));
-				//voluntario.setFoto(rs.getString("foto"));
+				voluntario.setFoto(rs.getString("foto"));
 				voluntario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
 				voluntario.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
 				voluntario.setCidade(rs.getString("cidade"));
@@ -164,7 +164,7 @@ public class VoluntarioDAO {
 	
 	public void alterarDadosPerfil(Voluntario voluntario) {
 		String alteracaoUsuario = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
-				+ " cidade = ?, estado = ?, descricao = ? where id = ?";
+				+ " cidade = ?, estado = ?, descricao = ?, foto = ? where id = ?";
 		
 		String alteracaoVoluntario = "update voluntario set experiencia = ?, habilidades = ? "
 				+ "where usuario_id = ?";
@@ -182,7 +182,13 @@ public class VoluntarioDAO {
 			ps.setString(4, voluntario.getCidade());
 			ps.setString(5, voluntario.getEstado());
 			ps.setString(6, voluntario.getDescricao());
-			ps.setInt(7, voluntario.getId());
+			
+			if(voluntario.getFoto() == null)
+				ps.setNull(7, java.sql.Types.VARCHAR);
+			else
+				ps.setString(7, voluntario.getFoto());
+			
+			ps.setInt(8, voluntario.getId());
 			ps.executeUpdate();
 			
 			ps2 = conexao.prepareStatement(alteracaoVoluntario);

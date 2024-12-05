@@ -41,7 +41,9 @@
 		<div class="perfil-container">
 			<div class="perfil-header">
 				<div class="img-container">
-					<img src="imagens/img-perfil-padrao.jpeg" alt="Foto de Perfil"
+					<img src=<%= familia.getFoto() == null 
+								? "imagens/img-perfil-padrao.jpeg" : familia.getFoto() %> 
+								alt="Foto de Perfil"
 						class="perfil-photo">
 				</div>
 				<div class="perfil-info">

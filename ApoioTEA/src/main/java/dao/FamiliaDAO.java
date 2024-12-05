@@ -89,7 +89,7 @@ public class FamiliaDAO {
 				int id = rs.getInt("id");
 				String nome = rs.getString("nome");
 				String email = rs.getString("email");
-				//String foto = rs.getString("foto");
+				String foto = rs.getString("foto");
 				LocalDate dataNascimento = rs.getDate("data_nascimento").toLocalDate();
 				String cidade = rs.getString("cidade");
 				String estado = rs.getString("estado");
@@ -123,7 +123,7 @@ public class FamiliaDAO {
 			if(rs.next()) {			
 				familia.setNome(rs.getString("nome"));
 				familia.setEmail(rs.getString("email"));
-				//familia.setFoto(rs.getString("foto"));
+				familia.setFoto(rs.getString("foto"));
 				familia.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
 				familia.setDataCadastro(rs.getDate("data_cadastro").toLocalDate());
 				familia.setCidade(rs.getString("cidade"));
@@ -154,7 +154,7 @@ public class FamiliaDAO {
 	
 	public void alterarDadosPerfil(Familia familia) {
 		String alteracaoUsuario = "update usuario set nome = ?, email = ?, data_nascimento = ?,"
-				+ " cidade = ?, estado = ?, descricao = ? where id = ?";
+				+ " cidade = ?, estado = ?, descricao = ?, foto = ? where id = ?";
 		
 		Connection conexao = null;
 		PreparedStatement ps = null;
@@ -168,7 +168,13 @@ public class FamiliaDAO {
 			ps.setString(4, familia.getCidade());
 			ps.setString(5, familia.getEstado());
 			ps.setString(6, familia.getDescricao());
-			ps.setInt(7, familia.getId());
+			
+			if(familia.getFoto() == null)
+				ps.setNull(7, java.sql.Types.VARCHAR);
+			else
+				ps.setString(7, familia.getFoto());
+			
+			ps.setInt(8, familia.getId());
 			ps.executeUpdate();
 			
 			System.out.println("dados alterados");

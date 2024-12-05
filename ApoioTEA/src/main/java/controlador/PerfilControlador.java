@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import dao.AtividadeDAO;
 import modelo.Atividade;
@@ -22,6 +24,10 @@ import modelo.Voluntario;
 @WebServlet(urlPatterns = {"/perfil-voluntario", "/perfil-familia", "/inicio-voluntario",
 		"/inicio-familia", "/salvar-edicao-perfil-familia", "/salvar-edicao-perfil-voluntario",
 		"/sair"})
+@MultipartConfig (
+		location = "C:\\Users\\Sistema2\\git\\ApoioTEA\\ApoioTEA\\src\\main\\webapp\\imagens",
+		maxFileSize = 1024 * 1024 * 100
+		)
 public class PerfilControlador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private AtividadeDAO atividadeDAO = new AtividadeDAO();
@@ -148,10 +154,24 @@ public class PerfilControlador extends HttpServlet {
 		String descricao = request.getParameter("descricao");
 		String experiencia = request.getParameter("experiencia");
 		String habilidades = request.getParameter("habilidades");
+		Part foto = request.getPart("foto");
 		
 		if(nome != null && email != null && dataNascimento != null && 
 				cidade != null && estado != null && descricao != null && experiencia != null &&
 				habilidades != null) {
+			
+			String nomeFoto = null;
+			if(foto != null && foto.getSize() > 0) {
+				nomeFoto = LocalDate.now() + foto.getSubmittedFileName();
+				try {
+					foto.write(nomeFoto);
+				} catch(IOException e) {
+					System.err.println(e);
+				}
+				
+				if(nomeFoto != null)
+					nomeFoto = "imagens/" + nomeFoto;
+			}
 			
 			HttpSession sessao = request.getSession(false);
 			Voluntario voluntario = (Voluntario) sessao.getAttribute("usuario");
@@ -165,6 +185,7 @@ public class PerfilControlador extends HttpServlet {
 				voluntario.setDescricao(descricao);
 				voluntario.setExperiencia(experiencia);
 				voluntario.setHabilidades(habilidades);
+				voluntario.setFoto(nomeFoto);
 				
 				voluntario.alterarDadosPerfil();
 				
@@ -180,9 +201,26 @@ public class PerfilControlador extends HttpServlet {
 		String cidade = request.getParameter("cidade");
 		String estado = request.getParameter("estado");
 		String descricao = request.getParameter("descricao");
+		Part foto = request.getPart("foto");
+		
+		System.out.println(foto);
 		
 		if(nome != null && email != null && dataNascimento != null && 
 				cidade != null && estado != null && descricao != null) {
+			
+			String nomeFoto = null;
+			if(foto != null && foto.getSize() > 0) {
+				nomeFoto = LocalDate.now() + foto.getSubmittedFileName();
+				try {
+					foto.write(nomeFoto);
+				} catch(IOException e) {
+					System.err.println(e);
+				}
+				
+				if(nomeFoto != null)
+					nomeFoto = "imagens/" + nomeFoto;
+			}
+			
 			HttpSession sessao = request.getSession(false);
 			Familia familia = (Familia) sessao.getAttribute("usuario");
 			
@@ -193,6 +231,7 @@ public class PerfilControlador extends HttpServlet {
 				familia.setCidade(cidade);
 				familia.setEstado(estado);
 				familia.setDescricao(descricao);
+				familia.setFoto(nomeFoto);
 				
 				familia.alterarDadosPerfil();
 				
