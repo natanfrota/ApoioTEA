@@ -9,7 +9,7 @@ Apache Tomcat
 MySQL Server
 
 Configuração do Banco de Dados
-Execute no MySQL o script presente na pasta Script SQL.
+Execute no MySQL o script presente na pasta.
 
 Importe o projeto para o Eclipse em File > Import
 Mude as credenciais do banco de dados na classe Conexao localizada em ApoioTEA\src\main\java\dao\Conexao.java
