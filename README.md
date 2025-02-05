@@ -2,14 +2,7 @@ Um sistema web que conecta voluntários a famílias de pessoas com TEA para ofer
 
 Instruções de instalação do sistema
 
-Antes de começar, é preciso ter os seguintes softwares instalados:
-
-Java Development Kit (JDK)
-Eclipse IDE
-
-Apache Tomcat 
-
-MySQL Server
+Antes de começar, é preciso ter os seguintes softwares instalados: Java Development Kit (JDK), Eclipse IDE, Apache Tomcat e MySQL Server
 
 Configuração do Banco de Dados
 
