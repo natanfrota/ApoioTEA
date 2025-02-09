@@ -11,7 +11,6 @@ Execute no MySQL o script presente na pasta.
 Importe o projeto para o Eclipse em File > Import
 
 Mude as credenciais do banco de dados na classe Conexao localizada em ApoioTEA\src\main\java\dao\Conexao.java
-Para indicar onde imagens de perfil devem ser salvas, mude o caminho que leva até à pasta webapp/imagens no seu computador na linha 28 do arquivo \src\main\java\controlador\PerfilControlador.java.
 
 Configuração do servidor Tomcat
 
